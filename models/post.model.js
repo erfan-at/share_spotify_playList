@@ -1,24 +1,24 @@
 const mongoose = require('mongoose');
+const moment = require("jalali-moment");
 const postSchema = new mongoose.Schema({
-    title: String,
-    content: String,
-    description: String,
-    like: Number,
-    date: Number,
+    title: { type: String, required: true },
+    content: { type: String, required: true },
+    description: { type: String, required: true },
+    like: { type: Number, default: 0 },
+    date: { type: Number, default: moment(new Date()).format('X') },
     userLikes: [{ type: mongoose.Types.ObjectId, ref: 'User' }],
-    authorId: { type: mongoose.Types.ObjectId, ref: 'User' },
-    tags: Array,
+    authorId: { type: mongoose.Types.ObjectId, ref: 'User', required: true },
+    tags: { type: Array, required: true },
     // category: {
     //     type: String, enum: ['football', 'popular', 'Volleyball', 'basketball', 'wrestling', 'handball', 'tennis', 'other', 'CarRacing', 'skate', 'badminton', 'WheelchairBasketball',
     //         'boxing', 'bowling', 'baseball', 'pool', 'taekwondo', 'tableTennis', 'shooting']
     // },
     counter: { type: Number, default: 0 },
-    controversial: Boolean,
     fileIds: [{ type: mongoose.Schema.Types.ObjectId, ref: 'File' }],
-    isVideo: Boolean,
-    slider: Boolean,
+    isVideo: { type: Boolean, default: false },
+    slider: { type: Boolean, default: false },
     videoLink: String,
-    softDelete: Boolean,
+    softDelete: { type: Boolean, default: false }
 },
     { timestamps: true }
 );

@@ -1,18 +1,20 @@
 const mongoose = require('mongoose');
-const playList = new mongoose.Schema({
-    title: String,
+const moment = require("jalali-moment");
+const playListSchema = new mongoose.Schema({
+    title: { type: String, required: true },
     content: String,
     description: String,
-    link: String,
-    like: Number,
-    date: Number,
+    link: { type: String, required: true },
+    like: { type: String, required: true, default: 0 },
+    date: { type: Number, default: moment(new Date()).format('X') },
     userLikes: [{ type: mongoose.Types.ObjectId, ref: 'User' }],
-    authorId: { type: mongoose.Types.ObjectId, ref: 'User' },
-    tags: Array,
+    authorId: { type: mongoose.Types.ObjectId, ref: 'User', required: true },
+    tags: { type: Array, required: true },
     // category: {    type: String, enum: ['','','',''] },
     counter: { type: Number, default: 0 },
     fileId: { type: mongoose.Schema.Types.ObjectId, ref: 'File' },
-    softDelete: Boolean,
+    // shareTelegramChannel: Boolean,
+    softDelete: { type: Boolean, default: false }
 },
     { timestamps: true }
 );

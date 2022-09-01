@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const moment = require("jalali-moment");
 const fileSchema = new mongoose.Schema({
     name: String,
     description: String,
@@ -7,10 +8,10 @@ const fileSchema = new mongoose.Schema({
     showName: String,
     rawUrl: String,
     url: String,
-    date: Number,
+    date: { type: Number, default: moment(new Date()).format('X') },
     status: String,
-    type: String,
-    softDelete: Boolean
+    type: { type: String, enum: ["avatar", "playList", "post", "postCover"] },
+    softDelete: { type: Boolean, default: false }
 },
     { timestamps: true });
 
