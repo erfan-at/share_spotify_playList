@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const controller = require('../../controllers/admin/index')
+const controller = require('../../controllers/index').admin
 
 router.get('/dashboard/post', controller.post.getAll)
 router.get('/dashboard/post/:id', controller.post.getOne)

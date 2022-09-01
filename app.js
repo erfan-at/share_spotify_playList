@@ -4,7 +4,16 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const indexRouter = require('./routes/index');
+const { default: mongoose } = require('mongoose');
 const app = express();
+
+mongoose.connect("mongodb://localhost:27017/share_Spotify_PlayList", {
+  // useUnifiedTopology: true,
+  // useNewUrlParser: true,
+  // useFindAndModify: false,
+}).then(() => {
+  console.log('Connected to the mongoDB...');
+}).catch((err) => console.log({ message: err.message, stack: err.stack }));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
