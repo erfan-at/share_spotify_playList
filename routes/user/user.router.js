@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const controller = require('../../controllers/index').user
 
+
 router.get('/dashboard/post', controller.post.getAll)
 router.get('/dashboard/post/:id', controller.post.getOne)
 router.post('/dashboard/post', controller.post.create)

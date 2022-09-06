@@ -14,6 +14,7 @@ const playListSchema = new mongoose.Schema({
     counter: { type: Number, default: 0 },
     fileId: { type: mongoose.Schema.Types.ObjectId, ref: 'File' },
     // shareTelegramChannel: Boolean,
+    block: { type: Boolean, default: false },
     softDelete: { type: Boolean, default: false }
 },
     { timestamps: true }

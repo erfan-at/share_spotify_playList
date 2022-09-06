@@ -18,6 +18,7 @@ const postSchema = new mongoose.Schema({
     isVideo: { type: Boolean, default: false },
     slider: { type: Boolean, default: false },
     videoLink: String,
+    block: { type: Boolean, default: false },
     softDelete: { type: Boolean, default: false }
 },
     { timestamps: true }
