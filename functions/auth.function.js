@@ -2,17 +2,15 @@ var moment = require("moment");
 const Activity = require("../models/activity.model")
 const jwt = require("jsonwebtoken");
 
+const jwt = require("jsonwebtoken");
+var TOKEN_SECRET = config.clinicSalt;
+
 module.exports = {
 
 
-
-    generateAccessToken: function (username) {
-        const jwt = require("jsonwebtoken");
-        var TOKEN_SECRET = config.clinicSalt;
-        // expires after half and hour (1800 seconds = 30 minutes)
-        return jwt.sign(username, TOKEN_SECRET, { expiresIn: '100d' });
+    generateAccessToken: async (username) => {
+        return await jwt.sign(username, TOKEN_SECRET, { expiresIn: '100d' });
     },
-
 
     checkUser: function (req, res, next) {
         request.get(config.clinicHostClinicAdmins + '/' + req.userId, (err1, res1, body1) => {
@@ -28,8 +26,6 @@ module.exports = {
             };
         })
     },
-
-
 
     authenticateTokenClinic: function (req, res, next) {
         // Gather the jwt access token from the request header
@@ -70,23 +66,4 @@ module.exports = {
         });
         return promiseCheck;
     },
-    //     recordActivity: function (userId, endPoint, body) {
-    //         let promiseCheck = new Promise(function (resolve, reject) {
-    //             Activity.create({
-    //                 "userId": userId,
-    //                 "endPoint": endPoint ? endPoint : '',
-    //                 "body": body ? JSON.stringify(body) : '',
-    //                 "date": moment(new Date()).format('X'),
-    //                 "softDelete": false
-    //             }).exec((err, activity) => {
-    //                 if (activity) {
-    //                     resolve({ code: 201, text: "Activity is submitted." });
-    //                 } else {
-    //                     console.log(err)
-    //                     resolve({ code: 500, text: "لطفا دوباره تلاش کنید." });
-    //                 }
-    //             })
-    //         })
-    //         return promiseCheck;
-    //     }
 }
