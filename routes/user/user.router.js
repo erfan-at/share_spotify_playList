@@ -4,13 +4,13 @@ const controller = require('../../controllers/index').user
 router.get('/dashboard/post', controller.post.getAll)
 router.get('/dashboard/post/:id', controller.post.getOne)
 router.post('/dashboard/post', controller.post.create)
-router.put('/dashboard/post/:id', controller.post.upadte)
+router.put('/dashboard/post/:id', controller.post.update)
 router.delete('/dashboard/post/:id', controller.post.delete)
 //=========================================
 router.get('/dashboard/playList', controller.playList.getAll)
 router.get('/dashboard/playList/:id', controller.playList.getOne)
 router.post('/dashboard/playList', controller.playList.create)
-router.put('/dashboard/playList/:id', controller.playList.upadte)
+router.put('/dashboard/playList/:id', controller.playList.update)
 router.delete('/dashboard/playList/:id', controller.playList.delete)
 //=========================================
 router.get('/comments/post/:postId', controller.comment.post.getAll)

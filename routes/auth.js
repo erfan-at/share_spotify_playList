@@ -2,7 +2,7 @@ const router = require('express').Router();
 const controller = require('../controllers/auth/index')
 
 router.post("/adminLogin", controller.admin.adminLogin)
-router.post("/adminResetPasswordActivationCode", controller.admin.adminResetPasswordActivationCode);
+router.post("/adminResetPasswordActivationCode", controller.admin.adminResetPasswordGetActivationCode);
 router.post('/adminResetPassword', controller.admin.adminResetPassword)
 //===============================================
 router.post("/userSignup", controller.user.userSignup)

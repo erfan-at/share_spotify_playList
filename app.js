@@ -4,7 +4,8 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const indexRouter = require('./routes/index');
-const { default: mongoose } = require('mongoose');
+const mongoose = require('mongoose')
+const { client } = require('./connection/redis.connection');
 const app = express();
 
 mongoose.connect("mongodb://localhost:27017/share_Spotify_PlayList", {
@@ -37,4 +38,4 @@ app.use((err, req, res, next) => {
   res.render('error');
 });
 
-module.exports = app;
+module.exports = { app, client };
