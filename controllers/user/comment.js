@@ -7,7 +7,6 @@ module.exports = {
                 const comment = new Comment({
                     username: req.body.username ? req.body.username : undefined,
                     description: req.body.description ? req.body.description : undefined,
-                    date: moment(new Date()).format('X'),
                     postId: req.body.postId ? req.body.postId : undefined,
                     softDelete: false,
                     accepted: false

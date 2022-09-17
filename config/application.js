@@ -2,6 +2,7 @@
 require('dotenv').config()
 
 const appConfig = {
+  salt: "ffdfvdfdfdg_P:)P_:L(OLIKUJ",
   development: {
     serviceName: 'CONTENT',
     port: process.env.DEV_PORT,
