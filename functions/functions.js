@@ -7,7 +7,6 @@ module.exports = {
 
 
     generateAccessToken: function (username) {
-        const jwt = require("jsonwebtoken");
         var TOKEN_SECRET = appConfig.salt;
         // expires after half and hour (1800 seconds = 30 minutes)
         return jwt.sign(username, TOKEN_SECRET, { expiresIn: '100d' });

@@ -8,7 +8,7 @@ const fileSchema = new mongoose.Schema({
     showName: String,
     rawUrl: String,
     url: String,
-    date: { type: Number, default: moment(new Date()).format('X') },
+    createdAt: { type: Number, default: moment(new Date()).format('X') },
     status: String,
     type: { type: String, enum: ["avatar", "playList", "post", "postCover"] },
     softDelete: { type: Boolean, default: false }

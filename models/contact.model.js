@@ -7,7 +7,7 @@ const contactSchema = new mongoose.Schema({
     mobile: Number,
     userId: { type: mongoose.Types.ObjectId, ref: 'User' },
     message: { type: String, required: true },
-    date: { type: Number, default: moment(new Date()).format('X') },
+    createdAt: { type: Number, default: moment(new Date()).format('X') },
     softDelete: { type: Boolean, default: false }
 },
     { timestamps: true });

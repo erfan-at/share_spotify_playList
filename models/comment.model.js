@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const moment = require("jalali-moment");
 const commentSchema = new mongoose.Schema({
     username: String,
-    date: { type: Number, default: moment(new Date()).format('X') },
+    createdAt: { type: Number, default: moment(new Date()).format('X') },
     description: { type: String, required: true },
     userId: { type: mongoose.Types.ObjectId, ref: 'User' },
     postId: { type: mongoose.Types.ObjectId, ref: 'Post' },

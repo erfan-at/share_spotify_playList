@@ -25,5 +25,5 @@ module.exports = {
             return buff.toString('utf8');
         }
     },
-    md5: { encode: (data) => { return md5(data) } }
+    md5: (data) => { return md5(data) }
 }

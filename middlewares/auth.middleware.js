@@ -1,20 +1,27 @@
 const jwt = require("jsonwebtoken");
 const moment = require('jalali-moment');
-
-
+const appConfig = require('../config/application')
+const redisHandler = require('../library/redisHandler')
 module.exports = {
 
     authenticateToken: (req, res, next) => {
         const authHeader = req.headers['authorization']
         const token = authHeader && authHeader.split(' ')[1]
         if (token == null) return res.sendStatus(401)
-        jwt.verify(token, config.manageContactSalt, (err, userId) => {
+        jwt.verify(token, appConfig.salt, (err, userId) => {
             console.log(new Date())
             if (err) {
                 console.log(err)
                 return res.status(403).send('نشست شما در سامانه منقضی شده است، لطفا مجددا به سامانه ورود نمایید.')
             }
-            req.userId = userId.username
+            userId.username
+            try {
+                await redisHandler.get(userId.username)
+            } catch (err) {
+
+            }
+
+
             next()
         })
     },

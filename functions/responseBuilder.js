@@ -13,7 +13,7 @@ module.exports = {
   success: function (response, data, message) {
     const res = {
       status: '200',
-      data,
+      data: data ? data : undefined,
       message: message ? message : undefined,
     };
     return response.status(200).send({ response: res });
@@ -32,7 +32,7 @@ module.exports = {
   invalidReq: function (response, data, message) {
     const res = {
       status: '412',
-      data,
+      data: data ? data : undefined,
       message,
     };
     response.status(412).send({ response: res })
@@ -47,11 +47,11 @@ module.exports = {
     return response.status(500).send({ response: res })
   },
 
-  notFound: function (response, error) {
+  notFound: function (response, message) {
     const res = {
       status: '404',
       error: 'not_found',
-      message: error,
+      message: message,
     };
     // res.message = global.trans(res.message);
     response.status(404).send({ response: res })

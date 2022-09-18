@@ -6,7 +6,7 @@ const playListSchema = new mongoose.Schema({
     description: String,
     link: { type: String, required: true },
     like: { type: String, required: true, default: 0 },
-    date: { type: Number, default: moment(new Date()).format('X') },
+    createdAt: { type: Number, default: moment(new Date()).format('X') },
     userLikes: [{ type: mongoose.Types.ObjectId, ref: 'User' }],
     authorId: { type: mongoose.Types.ObjectId, ref: 'User', required: true },
     tags: { type: Array, required: true },
