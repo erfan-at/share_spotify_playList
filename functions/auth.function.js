@@ -1,9 +1,8 @@
-const Activity = require("../models/activity.model")
 const jwt = require("jsonwebtoken");
-var TOKEN_SECRET = "ffdgdsf98g7df8g7df/gdf/";
-
+const Activity = require("../models/activity.model")
+const Model = require('../models/index')
+const appConfig = require('../config/application')
 module.exports = {
-
 
     generateAccessToken: async (username) => {
         return await jwt.sign(username, TOKEN_SECRET, { expiresIn: '100d' });
@@ -11,18 +10,20 @@ module.exports = {
 
     checkUserExist: async (req, res, next) => {
         try {
-            if (req.adminData.softDelete == false) {
-                // if (req.adminData.active == true) {
-                if (req.adminData.role == "user") {
-                    return next()
-                } else { return res.status(403).send("کاربر ادمین دسترسی محتوا ندارد") }
-                // } else { return res.status(404).send('کاربر غیر فعال است') }
-            } else { return res.status(404).send('کاربر ادمین وجود ندارد') }
+            const user = await Model.User.findById(req.userId);
+            req.adminData = user
+            next()
+            // } else { return res.status(404).send('کاربر غیر فعال است') }
+
+            // } else { return res.status(404).send('کاربر ادمین وجود ندارد') }
         } catch (error) {
             console.log(error);
             return res.status(404).send('کاربر ادمین در سامانه وجود ندارد')
         }
     },
+
+
+
 
     checkAdminExist: async (req, res, next) => {
         try {
@@ -45,7 +46,7 @@ module.exports = {
         const token = authHeader && authHeader.split(' ')[1]
         if (token == null) return res.sendStatus(401) // if there isn't any token
         // console.log('token', res.locals.TOKEN_SECRET)
-        jwt.verify(token, config.clinicSalt, (err, userId) => {
+        jwt.verify(token, appConfig.salt, (err, userId) => {
             if (err) console.log(err)
             console.log(new Date())
             if (err) return res.status(403).send('نشست شما در سامانه منقضی شده است، لطفا مجددا به سامانه ورود نمایید.')
@@ -81,7 +82,6 @@ module.exports = {
             "userId": userId,
             "endPoint": endPoint ? endPoint : '',
             "body": body ? JSON.stringify(body) : '',
-            "date": moment(new Date()).format('X'),
             "softDelete": false
         }).then((activity) => {
             return next()

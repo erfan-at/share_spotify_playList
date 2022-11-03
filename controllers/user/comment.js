@@ -1,8 +1,8 @@
 module.exports = {
 
-    getOne: async (req, res, next) => { },
+    getOne: async (req, res) => { },
     post: {
-        create: async (req, res, next) => {
+        create: async (req, res) => {
             try {
                 const comment = new Comment({
                     username: req.body.username ? req.body.username : undefined,
@@ -19,13 +19,13 @@ module.exports = {
                 return res.status(500).send("مشکلی پیش آمده است لطفا با پشتیبانی تماس بگیرید")
             }
         },
-        getOne: async (req, res, next) => { },
-        getAll: async (req, res, next) => { },
-        upadte: async (req, res, next) => { },
-        delete: async (req, res, next) => { },
+        getOne: async (req, res) => { },
+        getAll: async (req, res) => { },
+        upadte: async (req, res) => { },
+        delete: async (req, res) => { },
     },
     playList: {
-        create: async (req, res, next) => {
+        create: async (req, res) => {
             try {
                 const comment = new Comment({
                     username: req.body.username ? req.body.username : undefined,
@@ -43,10 +43,10 @@ module.exports = {
                 return res.status(500).send("مشکلی پیش آمده است لطفا با پشتیبانی تماس بگیرید")
             }
         },
-        getOne: async (req, res, next) => { },
-        getAll: async (req, res, next) => { },
-        upadte: async (req, res, next) => { },
-        delete: async (req, res, next) => { },
+        getOne: async (req, res) => { },
+        getAll: async (req, res) => { },
+        upadte: async (req, res) => { },
+        delete: async (req, res) => { },
 
     }
 }

@@ -1,5 +1,5 @@
 module.exports = {
 
-    edit: async (req, res, next) => { },
-    get: async (req, res, next) => { },
+    edit: async (req, res) => { },
+    get: async (req, res) => { },
 }

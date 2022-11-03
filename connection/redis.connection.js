@@ -1,8 +1,6 @@
 const appConfig = require('../config/application');
+const Redis = require("ioredis");
+const redisClient = new Redis(appConfig.Redis);
+console.log('======> appConfig.redis: ', JSON.stringify(appConfig.redis));
 
-const { createClient } = require('redis')
-const client = createClient({ url: 'redis://localhost:6379' });
-client.connect()
-client.on('error', (err) => console.log('Redis Client Error', err));
-
-module.exports = { client }
+module.exports = { redisClient }

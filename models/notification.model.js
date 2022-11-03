@@ -1,12 +1,7 @@
 const mongoose = require('mongoose');
 const moment = require("jalali-moment");
-const contactSchema = new mongoose.Schema({
-    firstName: String,
-    lastName: String,
-    email: String,
-    mobile: Number,
-    userId: { type: mongoose.Types.ObjectId, ref: 'User' },
-    message: { type: String, required: true },
+const notificationSchema = new mongoose.Schema({
+    value: String,
     createdAt: { type: Number, required: true, default: moment(new Date()).format('X') },
     updatedAt: Number,
     deletedAt: Number,
@@ -21,5 +16,5 @@ const contactSchema = new mongoose.Schema({
     }
 );
 
-const Contact = mongoose.model('Contact', contactSchema);
-module.exports = Contact;
+const Notification = mongoose.model('Notification', notificationSchema);
+module.exports = Notification;

@@ -1,73 +1,43 @@
-const asyncHandler = require("express-async-handler");
+
+const resBuilder = require('../../functions/responseBuilder')
 
 module.exports = {
-	authSignupRequirementCheck: asyncHandler(async (req, res, next) => {
+	authSignupRequirementCheck: async (req, res, next) => {
 		try {
-			if (!req.body.mobile) {
-				return res.status(412).send("ارسال کردن شماره موبایل ضروری است!");
-			}
-			if (!req.body.password) {
-				return res.status(412).send("ارسال کردن پسورد ضروری است!");
-			}
-			if (!req.body.name) {
-				return res.status(412).send("ارسال کردن نام و نام خانوادگی ضروری است!");
-			}
-			next();
+			if (!req.body.mobile) { return res.status(412).send("ارسال کردن شماره موبایل ضروری است!") }
+			if (!req.body.email) { return res.status(412).send("ارسال کردن ایمیل ضروری است!") }
+			if (!req.body.password) { return res.status(412).send("ارسال کردن پسورد ضروری است!") }
+			if (!req.body.name) { return res.status(412).send("ارسال کردن نام و نام خانوادگی ضروری است!") }
+			return next();
 
-		} catch (error) {
-			res.status(500).send("مشکلی پیش آمده است با پشتسبانی تماس بگیرید");
-		}
-	}),
-	authLoginRequirementCheck: asyncHandler(async (req, res, next) => {
+		} catch (error) { res.status(500).send("مشکلی پیش آمده است با پشتسبانی تماس بگیرید") }
+	},
+	authLoginRequirementCheck: async (req, res, next) => {
 		try {
-			if (!req.body.mobile) {
-				return res.status(412).send("ارسال کردن شماره موبایل ضروری است!");
-			}
-			if (!req.body.password) {
-				return res.status(412).send("ارسال کردن پسورد ضروری است!");
-			}
-			next();
-		} catch (error) {
-			res.status(500).send("مشکلی پیش آمده است با پشتسبانی تماس بگیرید");
-		}
-	}),
-	authEntranceRequirementCheck: asyncHandler(async (req, res, next) => {
+			if (!req.body.email && !req.body.mobile) { return resBuilder.invalidReq(res, "", "ارسال شماره موبایل یا آدرس ایمیل ضرروی است") }
+			if (!req.body.password) { return resBuilder.invalidReq(res, "", "ارسال رمز عبور ضرروی است") }
+			return next();
+		} catch (error) { return resBuilder.internalFa(res) }
+	},
+	authEntranceRequirementCheck: async (req, res, next) => {
 		try {
-			if (!req.body.mobile) {
-				return res.status(412).send("ارسال کردن شماره موبایل ضروری است!");
-			}
-			if (!req.body.activationCode) {
-				return res.status(412).send("ارسال کردن کد فعال سازی ضروری است!");
-			}
-			next();
-		} catch (error) {
-			res.status(500).send("مشکلی پیش آمده است با پشتسبانی تماس بگیرید");
-		}
-	}),
-	authResetPasswordActivatiobCodeRequirementCheck: asyncHandler(async (req, res, next) => {
+			if (!req.body.mobile) { return resBuilder.invalidReq(res, "", "ارسال شماره موبایل ضروری است") }
+			if (!req.body.activationCode) { return resBuilder.invalidReq(res, "", "ارسال کد ارسال شده ضروری است") }
+			return next();
+		} catch (error) { return resBuilder.internalFa(res) }
+	},
+	authResetPasswordActivatiobCodeRequirementCheck: async (req, res, next) => {
 		try {
-			if (!req.body.mobile) {
-				return res.status(412).send("ارسال کردن شماره موبایل ضروری است!");
-			}
-			next();
-		} catch (error) {
-			res.status(500).send("مشکلی پیش آمده است با پشتسبانی تماس بگیرید");
-		}
-	}),
-	authResetPasswordRequirementCheck: asyncHandler(async (req, res, next) => {
+			if (!req.body.mobile) { return resBuilder.invalidReq(res, "", "ارسال شماره موبایل ضروری است") }
+			return next();
+		} catch (error) { return resBuilder.internalFa(res) }
+	},
+	authResetPasswordRequirementCheck: async (req, res, next) => {
 		try {
-			if (!req.body.mobile) {
-				return res.status(412).send("ارسال کردن شماره موبایل ضروری است!");
-			}
-			if (!req.body.activationCode) {
-				return res.status(412).send("ارسال کردن کد فعال سازی ضروری است!");
-			}
-			if (!req.body.password) {
-				return res.status(412).send("ارسال کردن پسورد ضروری است!");
-			}
-			next();
-		} catch (error) {
-			res.status(500).send("مشکلی پیش آمده است با پشتسبانی تماس بگیرید");
-		}
-	}),
+			if (!req.body.mobile) { return resBuilder.invalidReq(res, "", "ارسال شماره موبایل ضروری است") }
+			if (!req.body.password) { return resBuilder.invalidReq(res, "", "ارسال رمز عبور ضروری است") }
+			if (!req.body.activationCode) { return resBuilder.invalidReq(res, "", "ارسال کد فعال سازی ضروری است") }
+			return next();
+		} catch (error) { return resBuilder.internalFa(res) }
+	},
 }

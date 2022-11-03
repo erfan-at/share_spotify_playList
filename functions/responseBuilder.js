@@ -19,6 +19,15 @@ module.exports = {
     return response.status(200).send({ response: res });
   },
 
+  created: function (response, data, message) {
+    const res = {
+      status: '201',
+      data: data ? data : undefined,
+      message: message ? message : undefined,
+    };
+    return response.status(200).send({ response: res });
+  },
+
   conflict: function (response, data, message) {
     const res = {
       status: '409',
@@ -43,6 +52,15 @@ module.exports = {
       status: '500',
       error: 'internal',
       message: message ? message : 'internal server error'
+    };
+    return response.status(500).send({ response: res })
+  },
+
+  internalFa: function (response, message) {
+    const res = {
+      status: '500',
+      error: 'internal',
+      message: message ? message : ".مشکلی پیش آمده است با پشتسبانی تماس بگیرید"
     };
     return response.status(500).send({ response: res })
   },
@@ -113,5 +131,4 @@ module.exports = {
     };
     response.status(parseInt(code)).send({ response: res })
   }
-
 };

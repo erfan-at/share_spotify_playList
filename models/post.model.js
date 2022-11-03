@@ -5,7 +5,6 @@ const postSchema = new mongoose.Schema({
     content: { type: String, required: true },
     description: { type: String, required: true },
     like: { type: Number, default: 0 },
-    createdAt: { type: Number, default: moment(new Date()).format('X') },
     userLikes: [{ type: mongoose.Types.ObjectId, ref: 'User' }],
     authorId: { type: mongoose.Types.ObjectId, ref: 'User', required: true },
     tags: { type: Array, required: true },
@@ -14,14 +13,23 @@ const postSchema = new mongoose.Schema({
     //         'boxing', 'bowling', 'baseball', 'pool', 'taekwondo', 'tableTennis', 'shooting']
     // },
     counter: { type: Number, default: 0 },
-    fileIds: [{ type: mongoose.Schema.Types.ObjectId, ref: 'File' }],
+    fileIds: [{ type: mongoose.Types.ObjectId, ref: 'File' }],
     isVideo: { type: Boolean, default: false },
     slider: { type: Boolean, default: false },
     videoLink: String,
     block: { type: Boolean, default: false },
+    createdAt: { type: Number, required: true, default: moment(new Date()).format('X') },
+    updatedAt: Number,
+    deletedAt: Number,
     softDelete: { type: Boolean, default: false }
 },
-    { timestamps: true }
+    {
+        timestamps: {
+            createdAt: "createdAt",
+            updatedAt: "updatedAt"
+        },
+        versionKey: false
+    }
 );
 const Post = mongoose.model('Post', postSchema);
 module.exports = Post;

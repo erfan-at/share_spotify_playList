@@ -6,7 +6,6 @@ const playListSchema = new mongoose.Schema({
     description: String,
     link: { type: String, required: true },
     like: { type: String, required: true, default: 0 },
-    createdAt: { type: Number, default: moment(new Date()).format('X') },
     userLikes: [{ type: mongoose.Types.ObjectId, ref: 'User' }],
     authorId: { type: mongoose.Types.ObjectId, ref: 'User', required: true },
     tags: { type: Array, required: true },
@@ -15,9 +14,18 @@ const playListSchema = new mongoose.Schema({
     fileId: { type: mongoose.Schema.Types.ObjectId, ref: 'File' },
     // shareTelegramChannel: Boolean,
     block: { type: Boolean, default: false },
+    createdAt: { type: Number, required: true, default: moment(new Date()).format('X') },
+    updatedAt: Number,
+    deletedAt: Number,
     softDelete: { type: Boolean, default: false }
 },
-    { timestamps: true }
+    {
+        timestamps: {
+            createdAt: "createdAt",
+            updatedAt: "updatedAt"
+        },
+        versionKey: false
+    }
 );
 const PlayList = mongoose.model('PlayList', playListSchema);
 module.exports = PlayList;

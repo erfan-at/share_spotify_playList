@@ -8,12 +8,21 @@ const fileSchema = new mongoose.Schema({
     showName: String,
     rawUrl: String,
     url: String,
-    createdAt: { type: Number, default: moment(new Date()).format('X') },
     status: String,
     type: { type: String, enum: ["avatar", "playList", "post", "postCover"] },
+    createdAt: { type: Number, required: true, default: moment(new Date()).format('X') },
+    updatedAt: Number,
+    deletedAt: Number,
     softDelete: { type: Boolean, default: false }
 },
-    { timestamps: true });
+    {
+        timestamps: {
+            createdAt: "createdAt",
+            updatedAt: "updatedAt"
+        },
+        versionKey: false
+    }
+);
 
 const File = mongoose.model('File', fileSchema);
 module.exports = File;

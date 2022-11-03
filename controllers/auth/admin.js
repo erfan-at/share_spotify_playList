@@ -7,7 +7,7 @@ const User = require("../../models/user.model")
 
 module.exports = {
 
-    adminLogin: async (req, res, next) => {
+    adminLogin: async (req, res) => {
         try {
             if (!req.body.email && !req.body.mobile) { return resBuilder.invalidReq(res, "", "ارسال شماره موبایل یا آدرس ایمیل ضرروی است") }
             if (!req.body.password) { return resBuilder.invalidReq(res, "", "ارسال رمز عبور ضرروی است") }
@@ -35,7 +35,7 @@ module.exports = {
     },
 
     //send activationCode
-    userResetPasswordActivationCode: async (req, res, next) => {
+    userResetPasswordActivationCode: async (req, res) => {
         try {
             if (!req.body.mobile) { return resBuilder.invalidReq(res, "", "ارسال شماره موبایل ضروری است") }
             const user = await User.findOne({ mobile: req.body.mobile, role: "admin", softDelete: false })
@@ -52,7 +52,7 @@ module.exports = {
         }
     },
 
-    adminResetPassword: async (req, res, next) => {
+    adminResetPassword: async (req, res) => {
         try {
             if (!req.body.mobile) { return resBuilder.invalidReq(res, "", "ارسال شماره موبایل ضروری است") }
             if (!req.body.password) { return resBuilder.invalidReq(res, "", "ارسال رمز عبور ضروری است") }

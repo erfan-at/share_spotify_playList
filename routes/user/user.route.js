@@ -1,6 +1,11 @@
 const router = require('express').Router();
 const controller = require('../../controllers/index').user
+const validator = require("../../validation/userProfile.validate")
 
+router.get('/dashboard/profile', controller.profile.get)
+router.put('/dashboard/profile', controller.profile.edit)
+router.post('/dashboard/profile/addAvatar', controller.profile.addAvatar)
+//=========================================
 router.get('/dashboard/post', controller.post.getAll)
 router.get('/dashboard/post/:id', controller.post.getOne)
 router.post('/dashboard/post', controller.post.create)
@@ -13,6 +18,8 @@ router.post('/dashboard/playList', controller.playList.create)
 router.put('/dashboard/playList/:id', controller.playList.update)
 router.delete('/dashboard/playList/:id', controller.playList.delete)
 //=========================================
+router.get('/dashboard/comment/:Id', controller.comment.getOne)
+//=========================================
 router.get('/comments/post/:postId', controller.comment.post.getAll)
 router.post('/comments/post/:postId', controller.comment.post.create)
 router.put('/comments/post/:postId', controller.comment.post.upadte)
@@ -22,8 +29,6 @@ router.get('/comments/playList/:playListId', controller.comment.playList.getAll)
 router.post('/comments/playList/:playListId', controller.comment.playList.create)
 router.put('/comments/playList/:playListId', controller.comment.playList.upadte)
 router.delete('/comments/playList/:playListId', controller.comment.playList.delete)
-//=========================================
-router.get('/dashboard/comment/:Id', controller.comment.getOne)
 //=========================================
 router.post('/like/post/:id', controller.post.like)
 router.post('/unLike/post/:id', controller.post.unLike)

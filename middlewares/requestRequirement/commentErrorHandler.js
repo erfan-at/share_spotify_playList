@@ -1,7 +1,6 @@
-const asyncHandler = require("express-async-handler");
 
 module.exports = {
-    requestRegisterRequirementCheck: asyncHandler(async (req, res, next) => {
+    commentRegisterRequirementCheck: async (req, res, next) => {
         try {
             if (!req.body.title) {
                 return res.status(412).send("ارسال کردن عنوان درخواست ضروری است!");
@@ -19,20 +18,20 @@ module.exports = {
                     return res.status(412).send("ارسال کردن نوع درخواست صحیح ضروری است!");
                 }
             }
-            next();
+            return next();
         } catch (error) {
             res.status(500).send("مشکلی پیش آمده است با پشتسبانی تماس بگیرید");
         }
-    }),
+    },
 
-    RequestIdRequirementCheck: asyncHandler(async (req, res, next) => {
+    commentIdRequirementCheck: async (req, res, next) => {
         try {
-            if (!req.body.requestId) {
+            if (!req.body.commentId) {
                 return res.status(412).send("ارسال کردن شناسه درخواست ضروری است!");
             }
-            next();
+            return next();
         } catch (error) {
             res.status(500).send("مشکلی پیش آمده است با پشتسبانی تماس بگیرید");
         }
-    }),
+    },
 }

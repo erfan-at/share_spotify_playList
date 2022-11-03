@@ -2,8 +2,9 @@
 require('dotenv').config()
 
 const appConfig = {
-  salt: "ffdfvdfdfdg_P:)P_:L(OLIKUJ",
   development: {
+    CDNPrivate: 'http://localhost:3000/lsdkfjdlfkj/',
+    salt: "ffdfvdfdfdg_P:)P_:L(OLIKUJ",
     serviceName: 'CONTENT',
     port: process.env.DEV_PORT,
     oauth: {

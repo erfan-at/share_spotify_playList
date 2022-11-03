@@ -38,7 +38,7 @@ module.exports = {
                     } else { return res.status(404).send('کاربر وجود ندارد') }
                 } else { return res.status(404).send('کاربر غیر فعال است') }
             } else { return res.status(404).send('کاربر  از سامانه حذف شده است') }
-            next();
+            return next();
         } catch (error) {
             console.log(error);
             return res.status(404).send('کاربر وجود ندارد')
