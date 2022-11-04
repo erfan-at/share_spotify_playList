@@ -25,7 +25,7 @@ module.exports = {
       data: data ? data : undefined,
       message: message ? message : undefined,
     };
-    return response.status(200).send({ response: res });
+    return response.status(201).send({ response: res });
   },
 
   conflict: function (response, data, message) {

@@ -1,37 +1,25 @@
 
+const resBuilder = require('../../functions/responseBuilder')
+
 module.exports = {
-    commentRegisterRequirementCheck: async (req, res, next) => {
+    createRequirementCheckPost: async (req, res, next) => {
         try {
-            if (!req.body.title) {
-                return res.status(412).send("ارسال کردن عنوان درخواست ضروری است!");
-            }
-            if (!req.body.description) {
-                return res.status(412).send("ارسال کردن توضیحات درخواست ضروری است!");
-            }
-            if (!req.body.requirements) {
-                return res.status(412).send("ارسال کردن جدول نیازمندیهای درخواست ضروری است!");
-            }
-            if (!req.body.type) {
-                return res.status(412).send("ارسال کرد نوع درخواست ضروری است!");
-            } else {
-                if (req.body.type != "a" && req.body.type != "b" && req.body.type != "c") {
-                    return res.status(412).send("ارسال کردن نوع درخواست صحیح ضروری است!");
-                }
+            if (!req.body.text) { return resBuilder.invalidReq(res, "", "ارسال متن کامنت ضروری است") }
+            if (!req.params.postId) {
+                return resBuilder.invalidReq(res, "", "ارسال شناسه پست یا ضروری است ضروری است")
             }
             return next();
-        } catch (error) {
-            res.status(500).send("مشکلی پیش آمده است با پشتسبانی تماس بگیرید");
-        }
+        } catch (error) { return resBuilder.internalFa(res) }
+
     },
 
-    commentIdRequirementCheck: async (req, res, next) => {
+    idRequirementCheck: async (req, res, next) => {
         try {
             if (!req.body.commentId) {
                 return res.status(412).send("ارسال کردن شناسه درخواست ضروری است!");
             }
             return next();
-        } catch (error) {
-            res.status(500).send("مشکلی پیش آمده است با پشتسبانی تماس بگیرید");
-        }
+        } catch (error) { return resBuilder.internalFa(res) }
     },
 }
+

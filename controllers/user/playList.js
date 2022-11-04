@@ -35,8 +35,8 @@ module.exports = {
                 // .populate('fileIds')
                 .select({ softDelete: 0 })
                 .lean();
-            updatedPlayList.updatedAt = moment(updatedPlayList.updatedAt, "x").format("jYYYY/jMM/jDD HH:mm")
-            updatedPlayList.createdAt = moment(updatedPlayList.createdAt, "x").format("jYYYY/jMM/jDD HH:mm")
+            updatedPlayList.updatedAt = moment(updatedPlayList.updatedAt, "X").format("jYYYY/jMM/jDD HH:mm")
+            updatedPlayList.createdAt = moment(updatedPlayList.createdAt, "X").format("jYYYY/jMM/jDD HH:mm")
             return resBilder.success(res, updatedPlayList, ".پلی لیست شما با موفقیت ویرایش شد")
         } catch (err) {
             console.log(err)
@@ -52,8 +52,8 @@ module.exports = {
                 .lean();
             if (playlistData.softDelete == true) { return resBilder.notFound(res, "این پست حدف شده است") }
             delete playlistData.softDelete
-            playlistData.createdAt = moment(playlistData.createdAt, "x").format("jYYYY/jMM/jDD HH:mm")
-            playlistData.updatedAt = moment(playlistData.updatedAt, "x").format("jYYYY/jMM/jDD HH:mm")
+            playlistData.createdAt = moment(playlistData.createdAt, "X").format("jYYYY/jMM/jDD HH:mm")
+            playlistData.updatedAt = moment(playlistData.updatedAt, "X").format("jYYYY/jMM/jDD HH:mm")
             return resBilder.success(res, playlistData, "")
         } catch (error) {
             console.log("error for find a post === > ", error)

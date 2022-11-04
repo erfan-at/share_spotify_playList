@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const controller = require('../../controllers/index').user
-const validator = require("../../validation/userProfile.validate")
+const Middleware = require('../../middlewares/requestRequirement/commentErrorHandler')
 
 router.get('/dashboard/profile', controller.profile.get)
 router.put('/dashboard/profile', controller.profile.edit)
@@ -12,16 +12,21 @@ router.post('/dashboard/post', controller.post.create)
 router.put('/dashboard/post/:id', controller.post.update)
 router.delete('/dashboard/post/:id', controller.post.delete)
 //=========================================
-router.get('/dashboard/playList', controller.playList.getAll)
-router.get('/dashboard/playList/:id', controller.playList.getOne)
-router.post('/dashboard/playList', controller.playList.create)
-router.put('/dashboard/playList/:id', controller.playList.update)
-router.delete('/dashboard/playList/:id', controller.playList.delete)
+router
+    .route("/dashboard/playList")
+    .get(controller.playList.getAll)
+    .post(controller.playList.create)
+
+router
+    .route('/dashboard/playList/:id')
+    .get(controller.playList.getOne)
+    .put(controller.playList.update)
+    .post(controller.playList.delete)
 //=========================================
-router.get('/dashboard/comment/:Id', controller.comment.getOne)
+router.get('/dashboard/comment/:id', controller.comment.getOne)
 //=========================================
 router.get('/comments/post/:postId', controller.comment.post.getAll)
-router.post('/comments/post/:postId', controller.comment.post.create)
+router.post('/comments/post/:postId', Middleware.createRequirementCheckPost, controller.comment.post.create)
 router.put('/comments/post/:postId', controller.comment.post.upadte)
 router.delete('/comments/post/:postId', controller.comment.post.delete)
 //=========================================

@@ -35,8 +35,8 @@ module.exports = {
                 .populate('fileIds')
                 .select({ softDelete: 0 })
                 .lean();
-            updatedPost.updatedAt = moment(updatedPost.updatedAt, "x").format("jYYYY/jMM/jDD HH:mm")
-            updatedPost.createdAt = moment(updatedPost.createdAt, "x").format("jYYYY/jMM/jDD HH:mm")
+            updatedPost.updatedAt = moment(updatedPost.updatedAt, "X").format("jYYYY/jMM/jDD HH:mm")
+            updatedPost.createdAt = moment(updatedPost.createdAt, "X").format("jYYYY/jMM/jDD HH:mm")
             return resBilder.success(res, updatedPost, ".مطلب شما با موفقیت ویرایش شد")
         } catch (err) {
             console.log(err)
@@ -52,8 +52,8 @@ module.exports = {
                 .lean();
             if (postData.softDelete == true) { return resBilder.notFound(res, "این پست حدف شده است") }
             delete postData.softDelete
-            postData.createdAt = moment(postData.createdAt, "x").format("jYYYY/jMM/jDD HH:mm")
-            postData.updatedAt = moment(postData.updatedAt, "x").format("jYYYY/jMM/jDD HH:mm")
+            postData.createdAt = moment(postData.createdAt, "X").format("jYYYY/jMM/jDD HH:mm")
+            postData.updatedAt = moment(postData.updatedAt, "X").format("jYYYY/jMM/jDD HH:mm")
             return resBilder.success(res, postData, "")
         } catch (error) {
             console.log("error for find a post === > ", error)
