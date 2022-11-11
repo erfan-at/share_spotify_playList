@@ -16,7 +16,7 @@ module.exports = {
             data.authorId = req.userId
             const post = new Model.Post(data)
             const newPost = await post.save();
-            return resBilder.created(res, newPost, "مطلب شما  با موفقیت ایجاد شد.")
+            return resBilder.created(res, newPost, "مطلب شما با موفقیت ایجاد شد.")
         } catch (err) {
             console.log(err)
             return resBilder.internalFa(res)
@@ -48,8 +48,13 @@ module.exports = {
         try {
             const postData = await Model.Post.findById(req.params.id)
                 .populate('fileIds')
-                .populate('userLikes')
+                // .populate('userLikes')
                 .lean();
+
+            const likePostData = await Model.Post.find({ postId: req.params.id })
+                .lean();
+
+
             if (postData.softDelete == true) { return resBilder.notFound(res, "این پست حدف شده است") }
             delete postData.softDelete
             postData.createdAt = moment(postData.createdAt, "X").format("jYYYY/jMM/jDD HH:mm")
