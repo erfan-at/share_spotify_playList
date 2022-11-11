@@ -1,25 +1,24 @@
 const router = require('express').Router();
-const controller = require('../controllers/index').user
+const controller = require('../controllers/index').post
 const Middleware = require('../middlewares/requestRequirement/commentErrorHandler')
 //=========================================
-router
-    .route("/post")
-    .get(controller.post.getAll)
-    .post(controller.post.create)
-router
-    .route("/post/:id")
-    .get(controller.post.getOne)
-    .put(controller.post.update)
-    .delete(controller.post.delete)
+router.get("/", controller.getAll)
+router.post("/", controller.create)
+router.get("/:id", controller.getOne)
+router.put("/:id", controller.update)
+router.delete("/:id", controller.delete)
 
-// router.put("/post/save/:id")
-// router.put("/post/unSave/:id")
-// router.get("/post/save") //getAll
-// router.get("/posts/user/:userId",)
-router.put("/post/like/:id", controller.post.like)
-router.put("/post/unLike/:id", controller.post.unLike)
+router.put("/save/:id", controller.save)
+router.put("/unSave/:id", controller.unSave)
+router.get("/saved", controller.saved) //getAll
+
+router.get("/user/:userId", controller.otherUserPosts) //other user posts
+
+router.put("/like/:id", controller.like)
+router.put("/unLike/:id", controller.unLike)
+router.get("/liked", controller.unLike) //getAll like posts self
 //=========================================
-router.get('/post/comment/:id', controller.comment.getOne)
+router.get('/comment/:id', controller.comment.getOne)
 //=========================================
 // router.get('/comments/post/:postId', controller.comment.post.getAll)
 // router.post('/comments/post/:postId', Middleware.createRequirementCheckPost, controller.comment.post.create)

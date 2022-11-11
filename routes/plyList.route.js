@@ -1,28 +1,26 @@
 const router = require('express').Router();
-const controller = require('../controllers/index').user
+const controller = require('../controllers/index').playList
 const Middleware = require('../middlewares/requestRequirement/commentErrorHandler')
 
 //=========================================
-router
-    .route("/playList")
-    .get(controller.playList.getAll)
-    .post(controller.playList.create)
 
-router
-    .route('/playList/:id')
-    .get(controller.playList.getOne)
-    .put(controller.playList.update)
-    .post(controller.playList.delete)
+router.get("/", controller.getAll)
+router.post("/", controller.create)
+router.get("/:id", controller.getOne)
+router.put("/:id", controller.update)
+router.delete("/:id", controller.delete)
 
-// router.put("/playList/save/:id")
-// router.put("/playList/unSave/:id")
-// router.get("/playList/save") //getAll
-// router.get("/playLists/user/:userId",)
-router.get("/playLists/user/:userId",)
-router.put('/playList/like/:id', controller.playList.like)
-router.put('/playList/unlike/:id', controller.playList.unLike)
+router.put("/save/:id")
+router.put("/unSave/:id")
+router.get("/saved") //getAll
+
+router.get("/user/:userId", controller.otherUserPlayLists)
+
+router.put('/like/:id', controller.like)
+router.put('/unlike/:id', controller.unLike)
+router.get("/liked") //getAll
 //=========================================
-router.get('/playList/comment/:id', controller.comment.getOne)
+router.get('/comment/:id', controller.comment.getOne)
 //=========================================
 // router.get('/comments/playList/:playListId', controller.comment.playList.getAll)
 // router.post('/comments/playList/:playListId', controller.comment.playList.create)

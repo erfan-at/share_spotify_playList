@@ -88,11 +88,21 @@ module.exports = {
         }
     },
 
+    //=====================================
+
     save: async (req, res) => { },
 
     unSave: async (req, res) => { },
 
+    saved: async (req, res) => { },
+
+    otherUserPlayLists: async (req, res) => { },
+
     like: async (req, res) => { },
+
     unLike: async (req, res) => { },
+
+    liked: async (req, res) => { },
+}
 
 }
