@@ -15,9 +15,10 @@ router.put("/save/:id")
 router.put("/unSave/:id")
 router.get("/saved") //getAll
 //=========================================
+router.get("/usersLiked", controller.usersLiked)
 router.put('/like/:id', controller.like)
 router.put('/unlike/:id', controller.unLike)
-router.get("/liked") //getAll
+router.get("/liked", controller.liked) //getAll
 //=========================================
 // router.get('/comment/:id', controller.comment.getOne)
 //=========================================

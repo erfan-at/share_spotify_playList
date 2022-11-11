@@ -7,7 +7,7 @@ const fs = require("fs-extra")
 const appConfig = require('../config/application')
 const Schema = require('../validation/userProfile.validate')
 
-const { createURL, createSingleURL, createRawUrl, createDirection, createFileUpload } = require('./../functions/uploadFile.function');
+const { createRawUrl, createDirection, createFileUpload } = require('./../functions/uploadFile.function');
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -133,7 +133,7 @@ module.exports = {
         }
     },
 
-    followers: async (req, res) => {
+    followers: async () => {
         // try {
         //     let userData = await Model.User.findById(req.userId)
         //         .select({ softDelete: 0, updatedAt: 0, active: 0, password: 0, role: 0 })
@@ -146,7 +146,7 @@ module.exports = {
         // }
     },
 
-    followings: async (req, res) => {
+    followings: async () => {
         // try {
         //     let userData = await Model.User.findById(req.userId)
         //         .select({ softDelete: 0, updatedAt: 0, active: 0, password: 0, role: 0 })
@@ -159,7 +159,7 @@ module.exports = {
         // }
     },
 
-    follow: async (req, res) => {
+    follow: async () => {
         // try {
         //     const result = await Schema.editSchema.validate(req.body)
         //     if (result.error) { return resBilder.invalidReq(res, req.body, result.error.message) }
@@ -173,7 +173,7 @@ module.exports = {
         // }
     },
 
-    unFollow: async (req, res) => {
+    unFollow: async () => {
         // try {
         //     const result = await Schema.editSchema.validate(req.body)
         //     if (result.error) { return resBilder.invalidReq(res, req.body, result.error.message) }
