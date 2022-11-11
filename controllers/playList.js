@@ -97,7 +97,21 @@ module.exports = {
 
     saved: async (req, res) => { },
 
-    otherUserPlayLists: async (req, res) => { },
+    otherUserPlayLists: async (req, res) => {
+        try {
+            const playLists = await Model.Playlist.find({ softDelete: false, authorId: req.params.userId })
+                // .populate('authorId')
+                // .populate('fileIds')
+                .sort({ 'createdAt': -1 })
+                .select({ softDelete: 0 })
+                .lean();
+            if (playLists.length == 0) { return resBilder.success(res, "", "") }
+            return resBilder.success(res, playLists, "")
+        } catch (err) {
+            console.log(err)
+            return resBilder.internalFa(res)
+        }
+    },
 
     like: async (req, res) => { },
 

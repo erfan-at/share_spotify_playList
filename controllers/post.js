@@ -24,7 +24,6 @@ module.exports = {
         }
     },
 
-
     update: async (req, res) => {
         try {
             const result = await Schema.editSchema.validate(req.body)
@@ -101,7 +100,22 @@ module.exports = {
 
     saved: async (req, res) => { },
 
-    otherUserPosts: async (req, res) => { },
+    otherUserPosts: async (req, res) => {
+
+        try {
+            const posts = await Model.Post.find({ softDelete: false, authorId: req.params.userId })
+                // .populate('authorId')
+                // .populate('fileIds')
+                .sort({ 'createdAt': -1 })
+                .select({ softDelete: 0 })
+                .lean();
+            if (posts.length == 0) { return resBilder.success(res, "", "") }
+            return resBilder.success(res, posts, "")
+        } catch (err) {
+            console.log(err)
+            return resBilder.internalFa(res)
+        }
+    },
 
     like: async (req, res) => { },
 
