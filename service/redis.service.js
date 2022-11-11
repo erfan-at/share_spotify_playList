@@ -1,3 +1,4 @@
+'use strict'
 const cache = require('../connection/redis.connection')
 const appConfig = require('../config/application')
 const cryptography = require("./cryptography.js")

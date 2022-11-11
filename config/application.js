@@ -1,4 +1,4 @@
-// Config App for 3 environment: production, development, test you
+'use strict'
 require('dotenv').config()
 
 const appConfig = {

@@ -1,3 +1,4 @@
+'use strict'
 const mongoose = require('mongoose');
 const moment = require("jalali-moment");
 const fileSchema = new mongoose.Schema({

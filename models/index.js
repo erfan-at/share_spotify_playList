@@ -1,3 +1,4 @@
+'use strict'
 const User = require('./user.model')
 const Activity = require('./activity.model')
 const Comment = require('./comment.model')

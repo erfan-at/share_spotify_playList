@@ -1,5 +1,5 @@
+'use strict'
 module.exports = {
-
   error: function (response, status, error, message) {
     const res = {
       status: status.toString(),

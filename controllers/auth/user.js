@@ -1,3 +1,4 @@
+'use strict'
 const { recordActivity, generateAccessToken } = require('../../functions/functions')
 const Model = require('../../models/index')
 const resBuilder = require('../../functions/responseBuilder')

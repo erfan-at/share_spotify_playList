@@ -1,3 +1,4 @@
+'use strict'
 const router = require('express').Router();
 const user = require('./user.route')
 // const admin = require('./admin/admin.route')

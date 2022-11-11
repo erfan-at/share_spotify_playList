@@ -1,4 +1,4 @@
-
+'use strict'
 module.exports = {
     fileIdErrorHandler: async (req, res, next) => {
         try {

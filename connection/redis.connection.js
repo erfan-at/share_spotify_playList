@@ -1,3 +1,4 @@
+'use strict'
 const appConfig = require('../config/application');
 const Redis = require("ioredis");
 const redisClient = new Redis(appConfig.Redis);

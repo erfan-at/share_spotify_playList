@@ -1,3 +1,4 @@
+'use strict'
 const user = require('./profile')
 const admin = require('./admin/index')
 const auth = require('./auth/index')

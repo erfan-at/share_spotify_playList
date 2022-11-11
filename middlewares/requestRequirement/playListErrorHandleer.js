@@ -1,4 +1,4 @@
-
+'use strict'
 module.exports = {
     playListRegisterRequirementCheck: async (req, res, next) => {
         try {

@@ -1,3 +1,4 @@
+'use strict'
 const jwt = require('jsonwebtoken')
 const md5 = require('md5')
 // const appConfig = require('../../config/application')

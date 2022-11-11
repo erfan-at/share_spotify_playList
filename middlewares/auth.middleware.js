@@ -1,3 +1,4 @@
+'use strict'
 const jwt = require("jsonwebtoken");
 const moment = require('jalali-moment');
 const appConfig = require('../config/application')

@@ -1,4 +1,4 @@
-
+'use strict'
 module.exports = {
     userIdRequirementCheck: async (req, res, next) => {
         if (!req.body.userId) {

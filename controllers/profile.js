@@ -1,3 +1,4 @@
+'use strict'
 const Model = require("../models/index")
 const resBilder = require('../functions/responseBuilder')
 const moment = require("jalali-moment");

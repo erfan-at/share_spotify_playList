@@ -1,4 +1,4 @@
-
+'use strict'
 const resBuilder = require('../../functions/responseBuilder')
 
 module.exports = {

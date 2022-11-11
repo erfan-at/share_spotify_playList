@@ -1,3 +1,4 @@
+'use strict'
 const router = require('express').Router();
 const controller = require('../controllers/index').post
 const Middleware = require('../middlewares/requestRequirement/commentErrorHandler')

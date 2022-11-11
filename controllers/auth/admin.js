@@ -1,3 +1,4 @@
+'use strict'
 const { generateAccessToken } = require("../../functions/functions");
 var { recordActivity } = require("../../functions/functions");
 const md5 = require('md5')

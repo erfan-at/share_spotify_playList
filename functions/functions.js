@@ -1,3 +1,4 @@
+'use strict'
 var moment = require("moment");
 const Activity = require("../models/activity.model")
 const jwt = require("jsonwebtoken");
