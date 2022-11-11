@@ -38,4 +38,4 @@ app.use((err, req, res, next) => {
   res.render('error');
 });
 
-module.exports = { app, redisClient };
+module.exports = { app, redisClient }

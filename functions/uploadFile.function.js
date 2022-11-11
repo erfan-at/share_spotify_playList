@@ -1,7 +1,7 @@
 let appConfig = require('../config/application');
 const path = require('path');
 const Model = require('./../models/index');
-const { async } = require('../controllers/user/profile');
+// const { async } = require('../controllers/index').profile;
 
 module.exports = {
 

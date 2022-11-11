@@ -1,7 +1,7 @@
 const { recordActivity, generateAccessToken } = require('../../functions/functions')
 const Model = require('../../models/index')
 const resBuilder = require('../../functions/responseBuilder')
-const redisHandler = require('../../library/redisHandler')
+const redisHandler = require('../../functions/responseBuilder')
 const cryptography = require('../../library/cryptography')
 module.exports = {
 

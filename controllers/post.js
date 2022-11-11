@@ -1,9 +1,9 @@
-const Model = require('../../models/index')
-const resBilder = require('../../functions/responseBuilder')
+const Model = require('../models/index')
+const resBilder = require('../functions/responseBuilder')
 const moment = require("jalali-moment");
 const Joi = require('joi')
-const appConfig = require('../../config/application')
-const Schema = require('../../validation/post.validation')
+const appConfig = require('../config/application')
+const Schema = require('../validation/post.validation')
 
 module.exports = {
 
@@ -22,6 +22,7 @@ module.exports = {
             return resBilder.internalFa(res)
         }
     },
+
 
     update: async (req, res) => {
         try {
@@ -50,11 +51,8 @@ module.exports = {
                 .populate('fileIds')
                 // .populate('userLikes')
                 .lean();
-
             const likePostData = await Model.Post.find({ postId: req.params.id })
                 .lean();
-
-
             if (postData.softDelete == true) { return resBilder.notFound(res, "این پست حدف شده است") }
             delete postData.softDelete
             postData.createdAt = moment(postData.createdAt, "X").format("jYYYY/jMM/jDD HH:mm")
@@ -109,4 +107,6 @@ module.exports = {
     unLike: async (req, res) => { },
 
     liked: async (req, res) => { },
+
+    usersLiked: async (req, res) => { },
 }

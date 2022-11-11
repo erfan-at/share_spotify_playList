@@ -1,14 +1,13 @@
-const Model = require('../../models/index')
-const resBilder = require('../../functions/responseBuilder')
+const Model = require("../models/index")
+const resBilder = require('../functions/responseBuilder')
 const moment = require("jalali-moment");
 const Joi = require('joi')
 const multer = require('multer');
 const fs = require("fs-extra")
-const appConfig = require('../../config/application')
-const Schema = require('../../validation/userProfile.validate')
+const appConfig = require('../config/application')
+const Schema = require('../validation/userProfile.validate')
 
-const { createURL, createSingleURL, createRawUrl, createDirection, createFileUpload } = require('./../../functions/uploadFile.function');
-
+const { createURL, createSingleURL, createRawUrl, createDirection, createFileUpload } = require('./../functions/uploadFile.function');
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -66,9 +65,7 @@ const upload = multer({
     }
 }).any()
 
-
 module.exports = {
-
     get: async (req, res) => {
         try {
             let userData = await Model.User.findById(req.userId)

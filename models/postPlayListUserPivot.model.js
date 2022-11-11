@@ -6,6 +6,10 @@ const postPlayListUserPivotSchema = new mongoose.Schema({
     playListId: { type: mongoose.Types.ObjectId, ref: 'PlayList', required: true },
     // userLikes: [{ type: mongoose.Types.ObjectId, ref: 'User' }],
     type: { type: String, enum: ["postLike", "playListLike", "postSave", "playListSave"] },
+
+    // tagId: { type: mongoose.Types.ObjectId, ref: 'Tag', required: true },
+    // categoryId: { type: mongoose.Types.ObjectId, ref: 'Category', required: true },
+
     updatedAt: Number,
     deletedAt: Number,
     softDelete: { type: Boolean, default: false }

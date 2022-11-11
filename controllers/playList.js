@@ -1,9 +1,9 @@
-const Model = require('../../models/index')
-const resBilder = require('../../functions/responseBuilder')
+const Model = require('../models/index')
+const resBilder = require('../functions/responseBuilder')
 const moment = require("jalali-moment");
 const Joi = require('joi')
-const appConfig = require('../../config/application')
-const Schema = require('../../validation/playList.validation')
+const appConfig = require('../config/application')
+const Schema = require('../validation/playList.validation')
 
 module.exports = {
 
@@ -103,6 +103,8 @@ module.exports = {
     unLike: async (req, res) => { },
 
     liked: async (req, res) => { },
-}
+
+    usersLiked: async (req, res) => { }
+
 
 }

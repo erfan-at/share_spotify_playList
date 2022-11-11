@@ -1,9 +1,9 @@
-const Model = require('../../models/index')
-const resBilder = require('../../functions/responseBuilder')
+const Model = require('../models/index')
+const resBilder = require('../functions/responseBuilder')
 const moment = require("jalali-moment");
 const Joi = require('joi')
-const appConfig = require('../../config/application')
-const Schema = require('../../validation/index')
+const appConfig = require('../config/application')
+const Schema = require('../validation/index')
 
 module.exports = {
 

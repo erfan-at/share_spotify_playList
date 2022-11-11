@@ -12,6 +12,9 @@ const postSchema = new mongoose.Schema({
     //     type: String, enum: ['football', 'popular', 'Volleyball', 'basketball', 'wrestling', 'handball', 'tennis', 'other', 'CarRacing', 'skate', 'badminton', 'WheelchairBasketball',
     //         'boxing', 'bowling', 'baseball', 'pool', 'taekwondo', 'tableTennis', 'shooting']
     // },
+
+    // tagId: { type: mongoose.Types.ObjectId, ref: 'Tag', required: true },
+    // categoryId: { type: mongoose.Types.ObjectId, ref: 'Category', required: true },
     counter: { type: Number, default: 0 },
     fileIds: [{ type: mongoose.Types.ObjectId, ref: 'File' }],
     isVideo: { type: Boolean, default: false },

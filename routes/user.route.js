@@ -1,7 +1,7 @@
-const router = require('express').Router();
-const controller = require('../controllers/index').user
-const Middleware = require('../middlewares/requestRequirement/commentErrorHandler')
-
+const router = require('express').Router()
+const controller = require("../controllers/index").profile
+// const Middleware = require('../middlewares/requestRequirement/commentErrorHandler')
+// 
 router.get('/profile', controller.get)
 router.put('/profile', controller.edit)
 router.post('/profile/addAvatar', controller.addAvatar)
