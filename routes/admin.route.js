@@ -1,14 +1,11 @@
 const router = require('express').Router();
 const controller = require('../../controllers/index').admin
 
-
 router.post('/user', controller.user.create)
 router.get('/user/:id', controller.user.getOne)
 router.put('/users', controller.user.getAll)
 router.delete('/user/:id', controller.user.delete)
 router.put('/user/:id', controller.user.upadte)
-
-
 
 // router.get('/dashboard/post', controller.post.getAll)
 // router.get('/dashboard/post/:id', controller.post.getOne)
@@ -39,6 +36,5 @@ router.put('/user/:id', controller.user.upadte)
 // //=========
 // router.post('/like/playList/:id', controller.playList.like)
 // router.post('/unLike/playList/:id', controller.playList.unLike)
-
 
 module.exports = router;

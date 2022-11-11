@@ -134,6 +134,60 @@ module.exports = {
             console.log(err)
 
         }
-    }
+    },
+
+    followers: async (req, res) => {
+        // try {
+        //     let userData = await Model.User.findById(req.userId)
+        //         .select({ softDelete: 0, updatedAt: 0, active: 0, password: 0, role: 0 })
+        //         .lean()
+        //     userData.createdAt = moment(userData.createdAt, "X").format("jYYYY/jMM/jDD HH:mm")
+        //     return resBilder.success(res, userData, "")
+        // } catch (err) {
+        //     console.log(err)
+        //     return resBilder.internalFa(res)
+        // }
+    },
+
+    followings: async (req, res) => {
+        // try {
+        //     let userData = await Model.User.findById(req.userId)
+        //         .select({ softDelete: 0, updatedAt: 0, active: 0, password: 0, role: 0 })
+        //         .lean()
+        //     userData.createdAt = moment(userData.createdAt, "X").format("jYYYY/jMM/jDD HH:mm")
+        //     return resBilder.success(res, userData, "")
+        // } catch (err) {
+        //     console.log(err)
+        //     return resBilder.internalFa(res)
+        // }
+    },
+
+    follow: async (req, res) => {
+        // try {
+        //     const result = await Schema.editSchema.validate(req.body)
+        //     if (result.error) { return resBilder.invalidReq(res, req.body, result.error.message) }
+        //     const data = await Joi.attempt(result.value, Schema.editSchema)
+        //     //-----
+        //     const updatedUserData = await Model.User.findByIdAndUpdate(req.userId, data, { new: true })
+        //     return resBilder.success(res, updatedUserData, "ویرایش اطلاعات پروفایل با موفقیت انجام شد.")
+        // } catch (e) {
+        //     console.log(e)
+        //     return res.status(500).send("مشکلی پیش آمده است با پشتیبانی تماس بگیرید.")
+        // }
+    },
+
+    unFollow: async (req, res) => {
+        // try {
+        //     const result = await Schema.editSchema.validate(req.body)
+        //     if (result.error) { return resBilder.invalidReq(res, req.body, result.error.message) }
+        //     const data = await Joi.attempt(result.value, Schema.editSchema)
+        //     //-----
+        //     const updatedUserData = await Model.User.findByIdAndUpdate(req.userId, data, { new: true })
+        //     return resBilder.success(res, updatedUserData, "ویرایش اطلاعات پروفایل با موفقیت انجام شد.")
+        // } catch (e) {
+        //     console.log(e)
+        //     return res.status(500).send("مشکلی پیش آمده است با پشتیبانی تماس بگیرید.")
+        // }
+    },
 
 }
