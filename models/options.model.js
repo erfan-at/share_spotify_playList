@@ -3,8 +3,8 @@ const mongoose = require('mongoose');
 const moment = require("jalali-moment");
 
 const optionSchema = new mongoose.Schema({
-    key: { type: String, unique: true },
-    value: String,
+    key: { type: String, unique: true, required: true },
+    value: { type: String, unique: true, required: true },
     createdAt: { type: Number, required: true, default: moment(new Date()).format('X') },
     updatedAt: Number,
     deletedAt: Number,

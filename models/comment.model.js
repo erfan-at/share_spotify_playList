@@ -5,12 +5,7 @@ const commentSchema = new mongoose.Schema({
     username: String,
     text: { type: String, required: true },
     authorId: { type: mongoose.Types.ObjectId, ref: 'User' },
-
-    postId: {
-        type: mongoose.Types.ObjectId,
-        ref: 'Post'
-    },
-
+    postId: { type: mongoose.Types.ObjectId, ref: 'Post' },
     playListId: { type: mongoose.Types.ObjectId, ref: 'PlayList' },
     // accepted: Boolean,
     email: String,

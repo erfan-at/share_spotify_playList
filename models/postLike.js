@@ -1,9 +1,9 @@
 'use strict'
 const mongoose = require('mongoose');
 const moment = require("jalali-moment");
-const tagSchema = new mongoose.Schema({
-    name: { type: String, required: true },
-    createdAt: { type: Number, required: true, default: moment(new Date()).format('X') },
+const postLikeSchema = new mongoose.Schema({
+    userId: { type: mongoose.Types.ObjectId, ref: 'User', required: true },
+    postId: { type: mongoose.Types.ObjectId, ref: 'Post', required: true },
     updatedAt: Number,
     deletedAt: Number,
     softDelete: { type: Boolean, default: false }
@@ -16,5 +16,5 @@ const tagSchema = new mongoose.Schema({
         versionKey: false
     }
 );
-const Tag = mongoose.model('Tag', tagSchema);
-module.exports = Tag;
+const postLike = mongoose.model('postLike', postLikeSchema);
+module.exports = postLike
