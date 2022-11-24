@@ -24,7 +24,8 @@ const postSchema = new mongoose.Schema({
             createdAt: "createdAt",
             updatedAt: "updatedAt"
         },
-        versionKey: false
+        versionKey: false,
+        strictPopulate: false
     }
 );
 const Post = mongoose.model('Post', postSchema);

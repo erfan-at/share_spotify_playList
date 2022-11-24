@@ -38,11 +38,11 @@ module.exports = {
     return response.status(409).send({ response: res });
   },
 
-  invalidReq: function (response, data, message) {
+  badRequest: function (response, data, message) {
     const res = {
-      status: '412',
+      status: '400',
       data: data ? data : undefined,
-      message,
+      message: message ? message : "bad_request",
     };
     response.status(412).send({ response: res })
   },
@@ -73,16 +73,6 @@ module.exports = {
     };
     // res.message = global.trans(res.message);
     response.status(404).send({ response: res })
-  },
-
-  badRequest: function (response, error) {
-    const res = {
-      status: '400',
-      error: 'bad_request',
-      message: error,
-    };
-    // res.message = global.trans(res.message);
-    response.status(400).send(res);
   },
 
   queued: function (response) {

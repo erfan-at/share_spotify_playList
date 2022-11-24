@@ -8,7 +8,6 @@ const Notification = require('./notification.model')
 const Option = require('./options.model')
 const Playlist = require('./playList.model')
 const Post = require('./post.model')
-const Pivot = require("./postPlayListUserPivot.model")
 
 module.exports = {
     User,
@@ -19,6 +18,5 @@ module.exports = {
     Notification,
     Option,
     Playlist,
-    Post,
-    Pivot
+    Post
 }

@@ -10,7 +10,7 @@ const playListSchema = new mongoose.Schema({
     tagIds: [{ type: mongoose.Types.ObjectId, ref: 'Tag' }],
     categoryIds: [{ type: mongoose.Types.ObjectId, ref: 'Category' }],
     counter: { type: Number, default: 0 },
-    fileId: { type: mongoose.Schema.Types.ObjectId, ref: 'File' },
+    fileIds: { type: mongoose.Schema.Types.ObjectId, ref: 'File' },
     // shareTelegramChannel: Boolean,
     block: { type: Boolean, default: false },
     createdAt: { type: Number, required: true, default: moment(new Date()).format('X') },
@@ -23,7 +23,7 @@ const playListSchema = new mongoose.Schema({
             createdAt: "createdAt",
             updatedAt: "updatedAt"
         },
-        versionKey: false
+        versionKey: false,
     }
 );
 const PlayList = mongoose.model('PlayList', playListSchema);
