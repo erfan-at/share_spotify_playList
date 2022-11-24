@@ -1,8 +1,6 @@
 'use strict'
 const Model = require('../models/index')
 const moment = require("jalali-moment");
-const Schema = require('../validation/post.validation')
-
 
 module.exports = {
 
@@ -20,29 +18,6 @@ module.exports = {
         } catch (err) {
             console.log('err from @create crudService zone')
             console.log(err)
-            throw err
-        }
-    },
-
-    update: async (schema, data, dataId, populate, select) => {
-        try {
-            const dataSchema = Object.keys(Model)
-                .filter(key => schema.includes(key))
-                .reduce((obj, key) => {
-                    obj[key] = Model[key];
-                    // return obj;
-                    return Object.values(obj)[0]
-                }, {});
-            const updatedData = await dataSchema.findByIdAndUpdate(dataId, data)
-                .populate(populate)
-                .select(select)
-                .lean();
-            // updatedData.updatedAt = moment(updatedData.updatedAt, "X").format("jYYYY/jMM/jDD HH:mm")
-            // updatedData.createdAt = moment(updatedData.createdAt, "X").format("jYYYY/jMM/jDD HH:mm")
-            return updatedData
-        } catch (err) {
-            console.log(err)
-            console.log('err from @update crudService zone')
             throw err
         }
     },
@@ -91,24 +66,6 @@ module.exports = {
         }
     },
 
-    delete: async (schema, dataId, data) => {
-        try {
-            const dataSchema = Object.keys(Model)
-                .filter(key => schema.includes(key))
-                .reduce((obj, key) => {
-                    obj[key] = Model[key];
-                    // return obj;
-                    return Object.values(obj)[0]
-                }, {});
-            await dataSchema.findByIdAndUpdate(dataId, data)
-            return true
-        } catch (err) {
-            console.log(err)
-            console.log('err from @delete crudService zone')
-            throw err
-        }
-    },
-
     find: async (schema, condition, populate, sort, select) => {
         try {
             const dataSchema = Object.keys(Model)
@@ -129,6 +86,47 @@ module.exports = {
         } catch (err) {
             console.log(err)
             console.log('err from @find  crudService zone')
+            throw err
+        }
+    },
+
+    update: async (schema, data, dataId, populate, select) => {
+        try {
+            const dataSchema = Object.keys(Model)
+                .filter(key => schema.includes(key))
+                .reduce((obj, key) => {
+                    obj[key] = Model[key];
+                    // return obj;
+                    return Object.values(obj)[0]
+                }, {});
+            const updatedData = await dataSchema.findByIdAndUpdate(dataId, data)
+                .populate(populate)
+                .select(select)
+                .lean();
+            // updatedData.updatedAt = moment(updatedData.updatedAt, "X").format("jYYYY/jMM/jDD HH:mm")
+            // updatedData.createdAt = moment(updatedData.createdAt, "X").format("jYYYY/jMM/jDD HH:mm")
+            return updatedData
+        } catch (err) {
+            console.log(err)
+            console.log('err from @update crudService zone')
+            throw err
+        }
+    },
+
+    delete: async (schema, dataId, data) => {
+        try {
+            const dataSchema = Object.keys(Model)
+                .filter(key => schema.includes(key))
+                .reduce((obj, key) => {
+                    obj[key] = Model[key];
+                    // return obj;
+                    return Object.values(obj)[0]
+                }, {});
+            await dataSchema.findByIdAndUpdate(dataId, data)
+            return true
+        } catch (err) {
+            console.log(err)
+            console.log('err from @delete crudService zone')
             throw err
         }
     },

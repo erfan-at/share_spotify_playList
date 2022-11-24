@@ -134,6 +134,12 @@ module.exports = {
         }
     },
 
+    getOtherUserProfile: async (req, res) => { },
+
+    getOtherUserFollowers: async (req, res) => { },
+
+    getOtherUserFollowings: async (req, res) => { },
+
     followers: async () => {
         // try {
         //     let userData = await Model.User.findById(req.userId)
@@ -187,5 +193,4 @@ module.exports = {
         //     return res.status(500).send("مشکلی پیش آمده است با پشتیبانی تماس بگیرید.")
         // }
     },
-
 }

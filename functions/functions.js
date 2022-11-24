@@ -29,8 +29,6 @@ module.exports = {
         })
     },
 
-
-
     authenticateTokenClinic: function (req, res, next) {
         // Gather the jwt access token from the request header
         const authHeader = req.headers['authorization']
