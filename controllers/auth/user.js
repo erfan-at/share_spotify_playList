@@ -57,10 +57,10 @@ module.exports = {
             if (user) {
                 if (!user.active) { return resBuilder.notFound(res, 'کاربر در سیستم غیر فعال شده است لطفا با پشتیبانی تماس بگیرید') }
                 await recordActivity(user.id, "/auth/userLogin", req.body);
-                await redisHandler.put(user.id, cryptography.base64.encode(JSON.stringify({ user: user })))
+                // await redisHandler.put(user.id, cryptography.base64.encode(JSON.stringify({ user: user })))
                 return resBuilder.success(res,
                     {
-                        token: token = generateAccessToken({ username: user.id }), name: user.name, username: user.username, role: user.role
+                        token: generateAccessToken({ username: user.id }), name: user.name, username: user.username, role: user.role
                     }, "")
             } else { return resBuilder.notFound(res, 'کاربری با این مشخصات در سبستم وجود ندارد') }
         } catch (err) {
