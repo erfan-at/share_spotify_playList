@@ -1,6 +1,5 @@
-'use strict'
-const mongoose = require('mongoose');
-const moment = require("jalali-moment");
+import mongoose  from "mongoose";
+import moment from "jalali-moment";;
 
 const userSchema = new mongoose.Schema({
     name: { type: String, required: true },
@@ -60,4 +59,4 @@ const userSchema = new mongoose.Schema({
 
 const User = mongoose.model('User', userSchema);
 
-module.exports = User;
+export  {User};

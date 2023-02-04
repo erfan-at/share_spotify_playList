@@ -1,6 +1,29 @@
-'use strict'
-const mongoose = require('mongoose');
-const moment = require("jalali-moment");
+import mongoose,{Document}  from "mongoose";
+import moment from "jalali-moment";
+
+
+
+
+export default interface Post extends Document {
+    title: string;
+    body: string;
+    description:string,
+    authorId:string,
+    tagIds:string
+    categoryIds: string,
+    counter: number
+    fileIds: string,
+    isVideo: Boolean
+    slider: Boolean
+    videoLink: String,
+    block: Boolean
+    createdAt: number,
+    updatedAt: number,
+    deletedAt: number,
+    softDelete: Boolean
+}
+
+
 const postSchema = new mongoose.Schema({
     title: { type: String, required: true },
     content: { type: String, required: true },
@@ -28,5 +51,8 @@ const postSchema = new mongoose.Schema({
         strictPopulate: false
     }
 );
-const Post = mongoose.model('Post', postSchema);
-module.exports = Post;
+
+const Post = mongoose.model<Post>('Post', postSchema);
+export  {Post};
+
+

@@ -1,5 +1,4 @@
-'use strict'
-const user = require('./user')
-const admin = require('./admin')
+// import user from './user'
+// import admin from './admin'
 
-module.exports = { user, admin }
+// export default { user, admin }

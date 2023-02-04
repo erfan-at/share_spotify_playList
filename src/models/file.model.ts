@@ -1,6 +1,6 @@
-'use strict'
-const mongoose = require('mongoose');
-const moment = require("jalali-moment");
+import mongoose  from "mongoose";
+import moment from "jalali-moment";
+
 const fileSchema = new mongoose.Schema({
     name: String,
     description: String,
@@ -10,7 +10,7 @@ const fileSchema = new mongoose.Schema({
     rawUrl: String,
     url: String,
     status: String,
-    type: { type: String, enum: ["avatar", "playList", "post", "postCover"] },
+    typee: { type: String, enum: ["avatar", "playList", "post", "postCover"] },
     createdAt: { type: Number, required: true, default: moment(new Date()).format('X') },
     updatedAt: Number,
     deletedAt: Number,
@@ -26,5 +26,6 @@ const fileSchema = new mongoose.Schema({
 );
 
 const File = mongoose.model('File', fileSchema);
-module.exports = File;
+
+export  {File};
 

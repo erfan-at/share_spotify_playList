@@ -1,9 +1,6 @@
-'use strict'
-const chulk=require('chalk')
-const appConfig = require('../config/application');
-const Redis = require("ioredis");
-const redisClient = new Redis(appConfig.Redis);
-const log = console.log;
+import chulk from 'chalk'
+import appConfig from '../config/application'
+import Redis from "ioredis"
+const redisClient = new Redis(appConfig.Redis)
 // console.log('======> appConfig.redis: ', JSON.stringify(appConfig.redis));
-log(chulk.red('======> appConfig.redis: ', JSON.stringify(appConfig.redis)))
-module.exports = { redisClient }
+export default redisClient 

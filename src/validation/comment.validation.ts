@@ -1,5 +1,4 @@
-const Joi = require('joi')
-
+import Joi from 'joi'
 const createPostSchema = Joi.object().keys({
     text: Joi.string().required(),
     // postId: Joi.number().required(),

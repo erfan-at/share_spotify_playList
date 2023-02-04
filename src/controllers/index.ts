@@ -1,14 +1,14 @@
-'use strict'
-const user = require('./profile')
-const admin = require('./admin/index')
-const auth = require('./auth/index')
-module.exports = { user, admin, auth }
+// import user from './profile'
+// import admin from './admin/index'
+// import auth from './auth/index'
+
+// export default{ user, admin, auth }
 
 
 
-const post = require('./post')
-const playList = require('./playList')
-const comment = require('./comment')
-const profile = require('./profile')
+// import post from'./post'
+// import playList from'./playList'
+// import comment from'./comment'
+// import profile from'./profile'
 
-module.exports = { post, playList, comment, profile }
+// export default { post, playList, comment, profile }

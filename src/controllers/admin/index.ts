@@ -1,8 +1,8 @@
-const post = require('./post')
-const playList = require('./playList')
-const comment = require('./comment')
-const user = require('./user')
+// import post from './post'
+// import playList from './playList'
+// import comment from './comment'
+// import user from './user'
 
 
 
-module.exports = { post, playList, comment, user }
+// expoer default{ post, playList, comment, user }

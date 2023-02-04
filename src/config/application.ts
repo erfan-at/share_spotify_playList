@@ -1,7 +1,6 @@
-'use strict'
-require('dotenv').config()
-
-const appConfig = {
+import dotenv from 'dotenv'
+dotenv.config()
+let appConfig = {
   development: {
     CDNPrivate: 'http://localhost:3000/lsdkfjdlfkj/',
     salt: "ffdfvdfdfdg_P:)P_:L(OLIKUJ",
@@ -104,4 +103,5 @@ const appConfig = {
   }
 };
 
-module.exports = appConfig[process.env.NODE_ENV || 'production'];
+
+export default appConfig[process.env.NODE_ENV || 'production']

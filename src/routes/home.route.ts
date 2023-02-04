@@ -1,4 +1,3 @@
-'use strict'
 /**
  * ! in this file i write  route that about same as a instagram explore
  * ! for exampe post and play List for banner , top posts and other ,..

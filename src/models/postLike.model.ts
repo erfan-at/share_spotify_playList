@@ -1,6 +1,6 @@
-'use strict'
-const mongoose = require('mongoose');
-const moment = require("jalali-moment");
+import mongoose  from "mongoose";
+import moment from "jalali-moment";
+
 const postLikeSchema = new mongoose.Schema({
     userId: { type: mongoose.Types.ObjectId, ref: 'User', required: true },
     postId: { type: mongoose.Types.ObjectId, ref: 'Post', required: true },
@@ -17,4 +17,4 @@ const postLikeSchema = new mongoose.Schema({
     }
 );
 const postLike = mongoose.model('postLike', postLikeSchema);
-module.exports = postLike
+export  {postLike}

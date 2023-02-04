@@ -1,6 +1,5 @@
-'use strict'
-const mongoose = require('mongoose');
-const moment = require("jalali-moment");
+import mongoose  from "mongoose";
+import moment from "jalali-moment";
 const notificationSchema = new mongoose.Schema({
     userId: { type: mongoose.Types.ObjectId, ref: 'User' },
     title: String,
@@ -21,4 +20,4 @@ const notificationSchema = new mongoose.Schema({
 );
 
 const Notification = mongoose.model('Notification', notificationSchema);
-module.exports = Notification;
+export  {Notification};

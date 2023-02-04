@@ -1,6 +1,5 @@
-'use strict'
-const mongoose = require('mongoose');
-const moment = require("jalali-moment");
+import mongoose  from "mongoose";
+import moment from "jalali-moment";
 
 const optionSchema = new mongoose.Schema({
     key: { type: String, unique: true, required: true },
@@ -20,4 +19,4 @@ const optionSchema = new mongoose.Schema({
 );
 
 const Option = mongoose.model('Option', optionSchema);
-module.exports = Option;
+export  {Option};

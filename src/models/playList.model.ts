@@ -1,6 +1,6 @@
-'use strict'
-const mongoose = require('mongoose');
-const moment = require("jalali-moment");
+import mongoose  from "mongoose";
+import moment from "jalali-moment";
+
 const playListSchema = new mongoose.Schema({
     title: { type: String, required: true },
     content: String,
@@ -27,4 +27,4 @@ const playListSchema = new mongoose.Schema({
     }
 );
 const PlayList = mongoose.model('PlayList', playListSchema);
-module.exports = PlayList;
+export {PlayList};

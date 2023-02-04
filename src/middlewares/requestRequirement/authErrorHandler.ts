@@ -1,8 +1,7 @@
-'use strict'
-const resBuilder = require('../../functions/responseBuilder')
+import resBuilder from '../../functions/responseBuilder'
 
-module.exports = {
-	authSignupRequirementCheck: async (req, res, next) => {
+export default {
+	async  authSignupRequirementCheck (req:Request, res:Response, next:any)  {
 		try {
 			if (!req.body.mobile) { return res.status(412).send("ارسال کردن شماره موبایل ضروری است!") }
 			if (!req.body.email) { return res.status(412).send("ارسال کردن ایمیل ضروری است!") }
@@ -12,27 +11,28 @@ module.exports = {
 
 		} catch (error) { res.status(500).send("مشکلی پیش آمده است با پشتسبانی تماس بگیرید") }
 	},
-	authLoginRequirementCheck: async (req, res, next) => {
+	async authLoginRequirementCheck (req:Request, res:Response, next:any) {
 		try {
 			if (!req.body.email && !req.body.mobile) { return resBuilder.invalidReq(res, "", "ارسال شماره موبایل یا آدرس ایمیل ضرروی است") }
 			if (!req.body.password) { return resBuilder.invalidReq(res, "", "ارسال رمز عبور ضرروی است") }
 			return next();
 		} catch (error) { return resBuilder.internalFa(res) }
 	},
-	authEntranceRequirementCheck: async (req, res, next) => {
+	async authEntranceRequirementCheck (req:Request, res:Response, next:any)  {
 		try {
 			if (!req.body.mobile) { return resBuilder.invalidReq(res, "", "ارسال شماره موبایل ضروری است") }
 			if (!req.body.activationCode) { return resBuilder.invalidReq(res, "", "ارسال کد ارسال شده ضروری است") }
 			return next();
 		} catch (error) { return resBuilder.internalFa(res) }
 	},
-	authResetPasswordActivatiobCodeRequirementCheck: async (req, res, next) => {
+
+	async authResetPasswordActivatiobCodeRequirementCheck (req:Request, res:Response, next:any) {
 		try {
 			if (!req.body.mobile) { return resBuilder.invalidReq(res, "", "ارسال شماره موبایل ضروری است") }
 			return next();
 		} catch (error) { return resBuilder.internalFa(res) }
 	},
-	authResetPasswordRequirementCheck: async (req, res, next) => {
+	async authResetPasswordRequirementCheck (req:Request, res:Response, next:any)  {
 		try {
 			if (!req.body.mobile) { return resBuilder.invalidReq(res, "", "ارسال شماره موبایل ضروری است") }
 			if (!req.body.password) { return resBuilder.invalidReq(res, "", "ارسال رمز عبور ضروری است") }
