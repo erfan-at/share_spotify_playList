@@ -56,7 +56,5 @@ const userSchema = new mongoose.Schema({
 // userSchema.post('findOneAndUpdate', handleE11000);
 // userSchema.post('insertMany', handleE11000);
 
-
 const User = mongoose.model('User', userSchema);
-
 export  {User};

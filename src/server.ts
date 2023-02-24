@@ -1,95 +1,65 @@
 #!/usr/bin/env node
-
-/**
- * Module dependencies.
- */
-
 import http from "http";
-import {app} from './app';
-
-
-/**
- * Get port from environment and store in Express.
- */
+import mongoose from 'mongoose'
+import Redis from "ioredis"
+import chalk from 'chalk';
+import { connectWithRetry } from './connection/db.connection'
+// import { redisConnectretry } from './connection/redis.connection'
+import { app } from './app';
 
 // const port = normalizePort(process.env.PORT || '3000');
 const port = (process.env.PORT || '3000');
-// 
 app.set('port', port);
-
-/**
- * Create HTTP server.
- */
-
 const server = http.createServer(app);
-
-/**
- * Listen on provided port, on all network interfaces.
- */
-
-server.listen(port,()=>{
-  console.log('server listen to',port)
-});
-
-server.on('error', onError);
-server.on('listening', onListening);
-
-/**
- * Normalize a port into a number, string, or false.
- */
-
-// function normalizePort(val) {
-//   const port = parseInt(val, 10);
-
-//   if (isNaN(port)) {
-//     // named pipe
-//     return val;
-//   }
-
-//   if (port >= 0) {
-//     // port number
-//     return port;
-//   }
-
-//   return false;
-// }
-
-/**
- * Event listener for HTTP server "error" event.
- */
-
-function onError(error:any) {
-  if (error.syscall !== 'listen') {
-    throw error;
-  }
-
-  const bind = typeof port === 'string'
-    ? 'Pipe ' + port
-    : 'Port ' + port;
-
-  // handle specific listen errors with friendly messages
-  switch (error.code) {
-    case 'EACCES':
-      console.error(bind + ' requires elevated privileges');
-      process.exit(1);
-      break;
-    case 'EADDRINUSE':
-      console.error(bind + ' is already in use');
-      process.exit(1);
-      break;
-    default:
-      throw error;
-  }
+async function bootstrap(): Promise<any> {
+  // try {
+  // console.clear()
+  // await connectWithRetry()
+  const DBconnectionsuccessfull = await connectWithRetry()
+  // await redisConnectretry()
+  if (DBconnectionsuccessfull.statusCode == 200) {
+    // console.log(DBconnectionsuccessfull)
+    // connection = DBconnectionsuccessfull.connection
+    return server.listen(port, () => {
+      // console.clear()
+      console.log(chalk.white.bgGreen.bold('💥 clg: server listen to', port,), '\n \n \n')
+    });
+  } else { server.close() }
 }
+bootstrap()
 
-/**
- * Event listener for HTTP server "listening" event.
- */
 
-function onListening() {
-  const addr = server.address();
-  const bind = typeof addr === 'string'
-    ? 'pipe ' + addr
-    : 'port ' + addr.port;
+mongoose.connection.on('connecting', function () {
+  console.log(chalk.blue.bold("trying to establish a connection to mongo"));
+});
+mongoose.connection.on('connected', function () {
+  console.log(chalk.green.bold('mongo connected successfully '));
+  // return bootstrap()
+});
+mongoose.connection.on('disconnected', async (err) => {
+  console.log(chalk.red.bold("mongoose 'disconnected !!  server closed "))
+  server.close()
+  return setTimeout(bootstrap, 4000);
+  // return setTimeout(connectWithRetry, 4000);
+});
+// mongoose.connection.on('reconnected', function () {
+//   console.log('++Reconnected to MongoDB++');
+// });
 
-  }
+process.on('SIGINT', () => {
+  mongoose.connection.close(() => {
+    console.log('Force to close the MongoDB conection');
+    process.exit(0);
+  });
+});
+process.on('unhandledRejection', (err) => {
+  console.log('UNHANDLED REJECTION! 💥');
+  // console.error({ message: err.message, stack: err.stack });
+});
+// Handle uncaughtException errors globally
+process.on('uncaughtException', (err) => {
+  console.log('Uncaught Exception!  Sutting down...');
+  console.error({ message: err.message, stack: err.stack });
+  // Shutdown application
+  process.exit(1);
+});

@@ -1,6 +1,5 @@
 // import user from './profile'
-// import admin from './admin/index'
-// import auth from './auth/index'
+import auth from './auth'
 
 // export default{ user, admin, auth }
 
@@ -11,4 +10,5 @@
 // import comment from'./comment'
 // import profile from'./profile'
 
-// export default { post, playList, comment, profile }
+// export default { auth,  post, playList, comment, profile}
+export default { auth }

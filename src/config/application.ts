@@ -10,6 +10,7 @@ let appConfig = {
     redis: {
       host: process.env.DEV_REDIS_HOST,
       port: process.env.DEV_REDIS_PORT,
+      password:process.env.DEV_REDIS_PASSWORD,
     },
     rsmq: {
       messageQueue: 'message-queue',
@@ -104,4 +105,6 @@ let appConfig = {
 };
 
 
-export default appConfig[process.env.NODE_ENV || 'production']
+// export default appConfig[process.env.NODE_ENV || 'production']
+
+export default appConfig['development']
