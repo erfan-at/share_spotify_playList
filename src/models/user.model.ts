@@ -1,5 +1,5 @@
-import mongoose  from "mongoose";
-import moment from "jalali-moment";;
+import mongoose from "mongoose";
+import moment from "jalali-moment";
 
 const userSchema = new mongoose.Schema({
     name: { type: String, required: true },
@@ -36,25 +36,5 @@ const userSchema = new mongoose.Schema({
     }
 );
 
-
-// var handleE11000 = function (error, res, next) {
-//     console.log("*******----------***********---------")
-//     console.log(error)
-//     console.log("*******----------***********---------")
-//     if (error.name === 'MongoServerError' && error.code === 11000) {
-//         next(new Error
-//             (`قبلا استفاده شده است ${Object.keys(error.keyPattern)[0]} این`)
-//             );
-
-
-//     } else {
-//         next();
-//     }
-// };
-// userSchema.post('save', handleE11000);
-// userSchema.post('update', handleE11000);
-// userSchema.post('findOneAndUpdate', handleE11000);
-// userSchema.post('insertMany', handleE11000);
-
 const User = mongoose.model('User', userSchema);
-export  {User};
+export { User };

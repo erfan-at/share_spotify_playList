@@ -38,14 +38,13 @@ export default {
     // res.message = global.trans(res.message);
     return response.status(409).send({ response: res });
   },
-
   badRequest(response: Response, data: any, message: any) {
     const res = {
       status: '400',
       data: data ? data : undefined,
       message: message ? message : "bad_request",
     };
-    response.status(412).send({ response: res })
+    response.status(400).send({ response: res })
   },
 
   internal(response: Response, message: any) {

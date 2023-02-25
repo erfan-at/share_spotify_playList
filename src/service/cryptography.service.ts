@@ -4,21 +4,15 @@ import md5 from 'md5'
 import appConfig from '../config/application'
 export default {
     generateAccessToken(username) {
-        return jwt.sign(username, "manageContactSalt", { expiresIn: '100d' });
+        return jwt.sign(username, appConfig.jwt.secret, { expiresIn: appConfig.jwt.expire });
     },
 
-    generateUserJwtToken: function (data) {
-        return jwt.sign({ data }, appConfig.jwt.secret, { expiresIn: appConfig.jwt.expire })
-    },
     async ecodeUserJwtToken(token) {
         return jwt.verify(token, appConfig.jwt.secret)
     },
     password: {
         hash: async (password) =>
-            await bcrypt.hash(password.toString(), 12),
-
-        compare: async (foundPassword, encryptedPassword) =>
-            await bcrypt.compare(foundPassword, encryptedPassword)
+            await md5(password)
     },
     base64: {
         encode: (data) => {
