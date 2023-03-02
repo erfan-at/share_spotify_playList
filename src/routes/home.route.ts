@@ -6,6 +6,3 @@ router.get('/ping', controller.home.ping)
 router.get("/home", controller.home.home)
 
 export default router
-
-
-

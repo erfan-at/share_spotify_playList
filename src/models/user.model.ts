@@ -29,8 +29,8 @@ const userSchema = new mongoose.Schema({
 },
     {
         timestamps: {
-            createdAt: "createdAt",
-            updatedAt: "updatedAt"
+            createdAt: "created_at",
+            updatedAt: "updated_at"
         },
         versionKey: false
     }

@@ -1,4 +1,4 @@
-import mongoose  from "mongoose";
+import mongoose from "mongoose";
 import moment from "jalali-moment";
 
 const playListSchema = new mongoose.Schema({
@@ -7,10 +7,10 @@ const playListSchema = new mongoose.Schema({
     description: String,
     link: { type: String, required: true },
     authorId: { type: mongoose.Types.ObjectId, ref: 'User', required: true },
-    tagIds: [{ type: mongoose.Types.ObjectId, ref: 'Tag' }],
-    categoryIds: [{ type: mongoose.Types.ObjectId, ref: 'Category' }],
+    // tagIds: [{ type: mongoose.Types.ObjectId, ref: 'Tag' }],
+    // categoryIds: [{ type: mongoose.Types.ObjectId, ref: 'Category' }],
     counter: { type: Number, default: 0 },
-    fileIds: { type: mongoose.Schema.Types.ObjectId, ref: 'File' },
+    // fileIds: { type: mongoose.Schema.Types.ObjectId, ref: 'File' },
     // shareTelegramChannel: Boolean,
     block: { type: Boolean, default: false },
     createdAt: { type: Number, required: true, default: moment(new Date()).format('X') },
@@ -27,4 +27,4 @@ const playListSchema = new mongoose.Schema({
     }
 );
 const PlayList = mongoose.model('PlayList', playListSchema);
-export {PlayList};
+export { PlayList };

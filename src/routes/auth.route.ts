@@ -18,6 +18,6 @@ router.post("/entrance", controller.auth.Entrance)
 router.post("/resetPassword", controller.auth.ResetPassword)
 
 // router.post("/resetPasswordActivationCode", Middlware.authResetPasswordActivatiobCodeRequirementCheck, controller.admin.userResetPasswordActivationCode);
-router.post("/resetPasswordActivationCode",  controller.auth.ResetPasswordActivationCode);
+router.post("/sendActivationCode",  controller.auth.sendActivationCode);
 
 export default router;
