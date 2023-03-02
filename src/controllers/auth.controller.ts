@@ -61,24 +61,24 @@ export default {
     },
 
     Login: async (req: any, res: any) => {
+        if (!req.body.email && !req.body.mobile) {
+            return resBuilder.badRequest(res, "", "ارسال شماره موبایل یا آدرس ایمیل ضرروی است")
+        }
+        if (!req.body.password) {
+            return resBuilder.badRequest(res, "", "ارسال رمز عبور ضرروی است")
+        }
         try {
-            if (!req.body.email && !req.body.mobile) {
-                return resBuilder.badRequest(res, "", "ارسال شماره موبایل یا آدرس ایمیل ضرروی است")
-            }
-            if (!req.body.password) {
-                return resBuilder.badRequest(res, "", "ارسال رمز عبور ضرروی است")
-            }
             const userData = {
                 email: req.body.email ? req.body.email : undefined,
                 mobile: req.body.mobile ? req.body.mobile : undefined,
-                password: Service.CRYPTOGRAPHY.md5(req.body.password),
+                password: await Service.CRYPTOGRAPHY.md5(req.body.password),
                 softDelete: false
             }
             const user = await Service.CRUD.findOneRecord("User", userData, [])
             if (user) {
                 if (!user.active) { return resBuilder.notFound(res, 'کاربر در سیستم غیر فعال شده است لطفا با پشتیبانی تماس بگیرید') }
                 await functions.recordActivity(user._id, "/auth/Login", req.body);
-                await Service.REDIS.put(user._id, Service.CRYPTOGRAPHY.base64.encode(JSON.stringify({ user: user })))
+                await Service.REDIS.put(user._id, Service.CRYPTOGRAPHY.base64.encode(JSON.stringify(user)))
                 const responseData = {
                     token: Service.CRYPTOGRAPHY.generateAccessToken({ username: user._id }),
                     name: user.name,

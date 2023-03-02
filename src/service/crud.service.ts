@@ -17,16 +17,21 @@ export default {
     findById: async (schema: any, dataId: any, populate: any) => {
         try {
             const dataSchema = Model[schema]
-            const data = await dataSchema.findById(dataId)
+            // const data = await dataSchema.findById(dataId)
+                const data = await dataSchema.findOne({ _id: dataId })
+
                 .populate(populate)
-                .lean();
+            // .lean();
             // data.createdAt = moment(data.createdAt, "X").format("jYYYY/jMM/jDD HH:mm")
             // data.updatedAt = moment(data.updatedAt, "X").format("jYYYY/jMM/jDD HH:mm")
-            return data
+            if (data) {
+                return data
+            } else { return undefined }
         } catch (err) {
             console.log(err)
             console.log('err from @getOne crudService zone')
-            throw err
+            // throw err
+            return undefined 
         }
     },
 

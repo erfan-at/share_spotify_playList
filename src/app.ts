@@ -3,8 +3,8 @@ import createError from 'http-errors';
 import path from 'path';
 import cookieParser from 'cookie-parser';
 import morgan from 'morgan';
-import indexRouter  from './routes/index';
-
+import indexRouter from './routes/index';
+import middlewares from './middlewares';
 const app: Application = express();
 
 // // view engine setup
@@ -16,7 +16,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
+app.use('/api/v1', middlewares.auth.authenticateToken, indexRouter);
 
 
 // // catch 404 and forward to error handler

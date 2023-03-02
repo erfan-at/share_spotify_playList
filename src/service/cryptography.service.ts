@@ -7,8 +7,17 @@ export default {
         return jwt.sign(username, appConfig.jwt.secret, { expiresIn: appConfig.jwt.expire });
     },
 
-    async ecodeUserJwtToken(token) {
-        return jwt.verify(token, appConfig.jwt.secret)
+    verifyJwtToken(token: string) {
+        // return jwt.verify(token:string, appConfig.jwt.secret)
+        jwt.verify(token, appConfig.jwt.secret, (err: any, data: any) => {
+            console.log(new Date())
+            if (!err) {
+                return  data.username.toString() }
+            // } else {
+            //     return { status: "success", username: data.username }
+            // }
+        })
+
     },
     password: {
         hash: async (password) =>

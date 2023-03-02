@@ -13,19 +13,19 @@ export default {
         } catch (err) { console.log(err) }
     },
 
-    checkUserExist: async (req: any, res: any, next: any) => {
-        try {
-            const user = await Model.User.findById(req.userId);
-            req.adminData = user
-            next()
-            // } else { return res.status(404).send('کاربر غیر فعال است') }
+    // checkUserExist: async (req: any, res: any, next: any) => {
+    //     try {
+    //         const user = await Model.User.findById(req.userId);
+    //         req.adminData = user
+    //         next()
+    //         // } else { return res.status(404).send('کاربر غیر فعال است') }
 
-            // } else { return res.status(404).send('کاربر ادمین وجود ندارد') }
-        } catch (error) {
-            console.log(error);
-            return res.status(404).send('کاربر ادمین در سامانه وجود ندارد')
-        }
-    },
+    //         // } else { return res.status(404).send('کاربر ادمین وجود ندارد') }
+    //     } catch (error) {
+    //         console.log(error);
+    //         return res.status(404).send('کاربر ادمین در سامانه وجود ندارد')
+    //     }
+    // },
 
 
     checkAdminExist: async (req: any, res: any, next: any) => {
@@ -43,25 +43,25 @@ export default {
         }
     },
 
-    authenticateToken: (req: any, res: any, next: any) => {
-        // Gather the jwt access token from the request header
-        const authHeader = req.headers['authorization']
-        const token = authHeader.split(' ')[0]
-        if (token == null) return res.sendStatus(401) // if there isn't any token
-        // console.log('token', res.locals.TOKEN_SECRET)
-        jwt.verify(token, appConfig.jwt.secret, (err: any, data: any) => {
-            if (err) console.log(err)
-            console.log(new Date())
-            if (err) return res.status(403).send('نشست شما در سامانه منقضی شده است، لطفا مجددا به سامانه ورود نمایید.')
-            req.userId = data.username
-            return next() // pass the execution off to whatever request the client intended
-        })
-    },
+    // authenticateToken: (req: any, res: any, next: any) => {
+    //     // Gather the jwt access token from the request header
+    //     const authHeader = req.headers['authorization']
+    //     const token = authHeader.split(' ')[0]
+    //     if (token == null) return res.sendStatus(401) // if there isn't any token
+    //     // console.log('token', res.locals.TOKEN_SECRET)
+    //     jwt.verify(token, appConfig.jwt.secret, (err: any, data: any) => {
+    //         if (err) console.log(err)
+    //         console.log(new Date())
+    //         if (err) return res.status(403).send('نشست شما در سامانه منقضی شده است، لطفا مجددا به سامانه ورود نمایید.')
+    //         req.userId = data.username
+    //         return next() // pass the execution off to whatever request the client intended
+    //     })
+    // },
 
     recordActivityMid: async (req: any, res: any, next: any) => {
         try {
             const data = {
-                userId: req.userId,
+                userId: req.userData._id,
                 body: JSON.stringify(req.body),
                 endPoint: req.originalUrl
             }

@@ -1,11 +1,11 @@
-import { Router, Response } from 'express';
+import { Response } from 'express';
 
 export default {
   error(response: Response, status: any, error: any, message: any) {
     const res = {
       status: status.toString(),
-      error: error,
-      message: message
+      error: error ? error : undefined,
+      message: message ? message : undefined
     };
     // res.message = global.trans(res.message);
     return response.status(status).send(res);
@@ -32,6 +32,7 @@ export default {
   conflict(response: Response, data: any, message: any) {
     const res = {
       status: '409',
+      error: 'Conflict',
       data: data ? data : undefined,
       message: message ? message : undefined,
     };
@@ -42,7 +43,8 @@ export default {
     const res = {
       status: '400',
       data: data ? data : undefined,
-      message: message ? message : "bad_request",
+      error: "bad_request",
+      message: message ? message : undefined,
     };
     response.status(400).send({ response: res })
   },
@@ -69,7 +71,7 @@ export default {
     const res = {
       status: '404',
       error: 'not_found',
-      message: message,
+      message: message ? message : undefined,
     };
     // res.message = global.trans(res.message);
     response.status(404).send({ response: res })
@@ -83,43 +85,44 @@ export default {
     return response.status(200).send({ response: res });
   },
 
-  unauthorized(response: Response, error: any) {
+  unauthorized(response: Response, message: any) {
     const res = {
       status: '401',
       error: 'unauthorized',
-      message: error,
+      message: message ? message : undefined,
     };
     // res.message = global.trans(res.message);
     response.status(401).send(res);
   },
-  forbidden(response: Response, error: any) {
+  forbidden(response: Response, message: any) {
     const res = {
       status: '403',
       error: 'forbidden',
-      message: error,
+      message: message ? message : undefined,
     };
     // res.message = global.trans(res.message);
     return response.status(403).send(res);
   },
 
-  notAcceptable(response: Response, error: any) {
+  notAcceptable(response: Response, message: any) {
     const res = {
       status: '406',
       error: 'not_acceptable',
-      message: error,
+      message: message ? message : undefined,
+
     };
     // res.message = global.trans(res.message);
-    response.status(406).send(res);
+    return response.status(406).send(res);
   },
 
-  respHandler(response: Response, error: any, code: any) {
-    const res = {
-      status: code,
-      error: code == 404 ? 'not_found' : code == 401 ? 'unauthorized' : code == 200 ? 'success' : code == 409 ? 'conflict' : code == 500 ? 'internal' : code == 400 ? 'badRequest' : code == 403 ? 'forbidden' : code == 406 ? 'notAcceptable' : 500,
-      message: error,
-    };
-    response.status(parseInt(code)).send({ response: res })
-  }
+  // respHandler(response: Response, error: any, code: any) {
+  //   const res = {
+  //     status: code,
+  //     error: code == 404 ? 'not_found' : code == 401 ? 'unauthorized' : code == 200 ? 'success' : code == 409 ? 'conflict' : code == 500 ? 'internal' : code == 400 ? 'badRequest' : code == 403 ? 'forbidden' : code == 406 ? 'notAcceptable' : 500,
+  //     message: error,
+  //   };
+  //   response.status(parseInt(code)).send({ response: res })
+  // }
 }
 
 // export default{error,success,internal,internalFa,notAcceptable

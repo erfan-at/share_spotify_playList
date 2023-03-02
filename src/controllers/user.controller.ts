@@ -6,7 +6,7 @@ import Service from '../service/index'
 
 // const storage = multer.diskStorage({
 //     destination: (req, file, cb) => {
-//         let createDirectionPromise = createDirection(req.userRole, "avatar", req.userId)
+//         let createDirectionPromise = createDirection(req.userRole, "avatar", req.userData._id)
 //         createDirectionPromise.then(resultDirection => {
 //             if (resultDirection.code == 200) {
 //                 var final = resultDirection.final
@@ -64,7 +64,7 @@ export default {
 
     get: async (req: any, res: any) => {
         try {
-            const userData = await Service.CRUD.findOneRecord('User', req.userId, [])
+            const userData = await Service.CRUD.findOneRecord('User', req.userData._id, [])
             return resBuilder.success(res, userData, "")
         } catch (err) {
             console.log(err)
@@ -77,7 +77,7 @@ export default {
         if (result.error) { return resBuilder.badRequest(res, req.body, result.error.message) }
         try {
             const data = await Joi.attempt(result.value, Schema.userProfieValidation.editSchema)
-            const updatedUserData = await Service.CRUD.updateById('User', data, req.userId, [], "",)
+            const updatedUserData = await Service.CRUD.updateById('User', data, req.userData._id, [], "",)
             return resBuilder.success(res, updatedUserData, "ویرایش اطلاعات پروفایل با موفقیت انجام شد.")
         } catch (err) {
             console.log(err)
@@ -106,16 +106,16 @@ export default {
     //                 size: x.size,
     //                 type: x.mimetype,
     //                 showName: x.filename.slice(13),
-    //                 rawUrl: createRawUrl(req.userRole, "avatar", req.userId, req.userId, x.filename),
+    //                 rawUrl: createRawUrl(req.userRole, "avatar", req.userData._id, req.userData._id, x.filename),
     //                 status: "avatar",
-    //                 url: appConfig.CDNPrivate + createRawUrl(req.userRole, "avatar", req.userId, req.userId, x.filename),
+    //                 url: appConfig.CDNPrivate + createRawUrl(req.userRole, "avatar", req.userData._id, req.userData._id, x.filename),
     //             }
     //         })[0]
     //         let createFileUploadPromise = createFileUpload(file)
     //         if (createFileUploadPromise.code == 201) {
     //             Model.user.findByIdAndUpdate(req.id, { avatarId: createFileUploadPromise.id })
     //             res.status(200).send(new Object({
-    //                 "avatarUrl": appConfig.CDNPrivate + createRawUrl(req.userRole, "avatar", req.userId, req.userId, file.name),
+    //                 "avatarUrl": appConfig.CDNPrivate + createRawUrl(req.userRole, "avatar", req.userData._id, req.userData._id, file.name),
     //                 "text": "عکس شما با موفقیت آپلود شد"
     //             }))
     //         } else res.status(createFileUploadPromise.code).send(createFileUploadPromise.text)
@@ -134,7 +134,7 @@ export default {
 
     followers: async () => {
         // try {
-        //     let userData = await Model.User.findById(req.userId)
+        //     let userData = await Model.User.findById(req.userData._id)
         //         .select({ softDelete: 0, updatedAt: 0, active: 0, password: 0, role: 0 })
         //         .lean()
         //     userData.createdAt = moment(userData.createdAt, "X").format("jYYYY/jMM/jDD HH:mm")
@@ -147,7 +147,7 @@ export default {
 
     followings: async () => {
         // try {
-        //     let userData = await Model.User.findById(req.userId)
+        //     let userData = await Model.User.findById(req.userData._id)
         //         .select({ softDelete: 0, updatedAt: 0, active: 0, password: 0, role: 0 })
         //         .lean()
         //     userData.createdAt = moment(userData.createdAt, "X").format("jYYYY/jMM/jDD HH:mm")
@@ -164,7 +164,7 @@ export default {
         //     if (result.error) { return resBuilder.invalidReq(res, req.body, result.error.message) }
         //     const data = await Joi.attempt(result.value, Schema.editSchema)
         //     //-----
-        //     const updatedUserData = await Model.User.findByIdAndUpdate(req.userId, data, { new: true })
+        //     const updatedUserData = await Model.User.findByIdAndUpdate(req.userData._id, data, { new: true })
         //     return resBuilder.success(res, updatedUserData, "ویرایش اطلاعات پروفایل با موفقیت انجام شد.")
         // } catch (e) {
         //     console.log(e)
@@ -172,7 +172,7 @@ export default {
         // }
     },
     // try {
-    //     let userData = await Model.User.findById(req.userId)
+    //     let userData = await Model.User.findById(req.userData._id)
     //         .select({ softDelete: 0, updatedAt: 0, active: 0, password: 0, role: 0 })
     //         .lean()
     //     userData.createdAt = moment(userData.createdAt, "X").format("jYYYY/jMM/jDD HH:mm")
@@ -187,7 +187,7 @@ export default {
         //     if (result.error) { return resBuilder.invalidReq(res, req.body, result.error.message) }
         //     const data = await Joi.attempt(result.value, Schema.editSchema)
         //     //-----
-        //     const updatedUserData = await Model.User.findByIdAndUpdate(req.userId, data, { new: true })
+        //     const updatedUserData = await Model.User.findByIdAndUpdate(req.userData._id, data, { new: true })
         //     return resBuilder.success(res, updatedUserData, "ویرایش اطلاعات پروفایل با موفقیت انجام شد.")
         // } catch (e) {
         //     console.log(e)

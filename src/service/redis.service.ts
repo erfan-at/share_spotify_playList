@@ -1,5 +1,4 @@
 import { redisClient } from '../connection/redis.connection'
-import appConfig from '../config/application'
 
 export default {
     async put(key, value, timeout = null) {

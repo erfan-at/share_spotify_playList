@@ -1,17 +1,10 @@
 // import user from './profile'
-import auth from './auth'
-import home from './home'
-import post from './post'
-import user from './user'
-
-
-// export default{ user, admin, auth }
-
-
-
-import playList from'./playList'
+import auth from './auth.controller'
+import home from './home.controller'
+import post from './post.controller'
+import user from './user.controller'
+import playList from'./playList.controller'
 // import comment from'./comment'
 // import profile from'./profile'
-
 // export default { auth,  post, playList, comment, profile}
 export default { auth, home, post, user ,playList}

@@ -10,7 +10,7 @@ export default {
         if (result.error) { return resBuilder.badRequest(res, req.body, result.error.message) }
         try {
             const data = await Joi.attempt(result.value, Schema.postValidation.createSchema)
-            data.authorId = req.userId
+            data.authorId = req.userData._id
             const newPost = await Service.CRUD.create("Post", data)
             return resBuilder.created(res, newPost, "مطلب شما با موفقیت ایجاد شد.")
         } catch (err) {
@@ -19,41 +19,21 @@ export default {
         }
     },
 
-
     update: async (req: any, res: any) => {
-        // try {
-        //     const result = await Schema.editSchema.validate(req.body)
-        //     if (result.error) { return resBuilder.badRequest(res, req.body, result.error.message) }
-        //     const data = await Joi.attempt(result.value, Schema.editSchema)
-        //     const updatedPost = await Service.CRUD.update("Post", data, req.params.id, "", ['authorId', 'tagIds', 'categoryIds', 'fileIds'], { softDelete: 0 })
-        //     return resBuilder.success(res, updatedPost, ".مطلب شما با موفقیت ویرایش شد")
-        // } catch (err) {
-        //     console.log(err)
-        //     return resBuilder.internal(res, "مشکلی پیش آمده است لطفا با پشتیبانی تماس بگیرید")
+        const result = Schema.postValidation.editSchema.validate(req.body)
+        if (result.error) { return resBuilder.badRequest(res, req.body, result.error.message) }
+        try {
+            const data = await Joi.attempt(result.value, Schema.postValidation.editSchema)
+            const postExist = await Service.CRUD.findById('Post', req.params.id, [])
+            if (!postExist) { return resBuilder.notFound(res, 'پست یافت نشد') }
+            const updatedPost = await Service.CRUD.updateById("Post", data, req.params.id, ['authorId', 'tagIds', 'categoryIds', 'fileIds'], { softDelete: 0 })
+            return resBuilder.success(res, updatedPost, ".مطلب شما با موفقیت ویرایش شد")
+        } catch (err) {
+            console.log(err)
+            return resBuilder.internal(res, "مشکلی پیش آمده است لطفا با پشتیبانی تماس بگیرید")
 
-        // }
+        }
     },
-
-    //     // getOne: async (req, res) => {
-    //     //     try {
-    //     //         const postData = await Model.Post.findById(req.params.id)
-    //     //             .populate('fileIds')
-    //     //             // .populate('userLikes')
-    //     //             .lean();
-    //     //         const likePostData = await Model.Post.find({ postId: req.params.id })
-    //     //             .lean();
-    //     //         if (postData.softDelete == true) { return resBuilder.notFound(res, "این پست حدف شده است") }
-    //     //         delete postData.softDelete
-    //     //         postData.createdAt = moment(postData.createdAt, "X").format("jYYYY/jMM/jDD HH:mm")
-    //     //         postData.updateByIddAt = moment(postData.updatedAt, "X").format("jYYYY/jMM/jDD HH:mm")
-    //     //         return resBuilder.success(res, postData, "")
-    //     //     } catch (error) {
-    //     //         console.log("error for find a post === > ", error)
-    //     //                    return resBuilder.internal(res, "مشکلی پیش آمده است لطفا با پشتیبانی تماس بگیرید")
-
-
-    //     //     }
-    //     // },
 
     getOne: async (req: any, res: any) => {
         try {
@@ -69,11 +49,10 @@ export default {
         }
     },
 
-
     getAll: async (req: any, res: any) => {
         try {
             const posts = await Service.CRUD.getAll('Post',
-                { softDelete: false, authorId: req.userId }, "",
+                { softDelete: false, authorId: req.userData._id }, "",
                 { 'createdAt': -1 }, { softDelete: 0 })
             if (posts.length == 0) { return resBuilder.success(res, [], "") }
             return resBuilder.success(res, posts, "")
