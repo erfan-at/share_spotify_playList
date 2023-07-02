@@ -17,12 +17,12 @@ export default {
         console.log(new Date())
         const authHeader = req.headers['authorization']
         const token = authHeader.split(' ')[0]
-        if (token == null) { resBuilder.unauthorized(res, "") }
+        if (token == null) { resBuilder.unauthorized(res, "","") }
         let username: string = ""
         jwt.verify(token, appConfig.jwt.secret, (err: any, data: any) => {
             if (err) {
                 console.log(err)
-                return resBuilder.forbidden(res, 'نشست شما در سامانه منقضی شده است، لطفا مجددا به سامانه ورود نمایید.')
+                return resBuilder.forbidden(res, "",'نشست شما در سامانه منقضی شده است، لطفا مجددا به سامانه ورود نمایید.')
             }
             username = data.username
         })
@@ -38,7 +38,7 @@ export default {
             return next()
         } catch (err) {
             console.log(err)
-            return resBuilder.unauthorized(res, "")
+            return resBuilder.unauthorized(res, "","")
         }
     },
 }

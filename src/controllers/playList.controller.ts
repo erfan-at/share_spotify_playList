@@ -2,6 +2,7 @@ import Service from '../service/index'
 import resBuilder from '../library/responseBuilder'
 import Joi from 'joi'
 import Schema from '../validation/index'
+import chalk from 'chalk';
 
 export default {
 
@@ -24,7 +25,7 @@ export default {
         try {
             // const playlistData = await Service.CRUD.findById('PlayList', req.params.id, ['fileIds', 'authorId', 'tagIds', 'categoryIds'])
             const playlistData = await Service.CRUD.findById('PlayList', req.params.id, [])
-            if (!playlistData || playlistData.softDelete) { return resBuilder.notFound(res, "این پلی لیست حدف شده است") }
+            if (!playlistData || playlistData.softDelete) { return resBuilder.notFound(res, '',"این پلی لیست حدف شده است") }
             delete playlistData.softDelete
             return resBuilder.success(res, playlistData, "")
         } catch (error) {
@@ -53,7 +54,7 @@ export default {
         if (result.error) { return resBuilder.badRequest(res, req.body, result.error.message) }
         try {
             const postExist = await Service.CRUD.findById('PlayList', req.params.id, [])
-            if (!postExist) { return resBuilder.notFound(res, 'پلی لیست یافت نشد') }
+            if (!postExist) { return resBuilder.notFound(res, "",'پلی لیست یافت نشد') }
             const data = await Joi.attempt(result.value, Schema.playListValidation.editSchema)
             const updatedPlayList = await Service.CRUD.updateById("PlayList",
                 data,

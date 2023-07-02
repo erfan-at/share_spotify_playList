@@ -2,7 +2,7 @@ import resBuilder from '../library/responseBuilder'
 import Joi from 'joi'
 import Schema from '../validation'
 import Service from '../service/index'
-
+import chalk from 'chalk';
 
 // const storage = multer.diskStorage({
 //     destination: (req, file, cb) => {

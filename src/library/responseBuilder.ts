@@ -5,7 +5,7 @@ export default {
     const res = {
       status: status.toString(),
       error: error ? error : undefined,
-      message: message ? message : undefined
+      message: message ? message : undefined,
     };
     // res.message = global.trans(res.message);
     return response.status(status).send(res);
@@ -43,62 +43,58 @@ export default {
     const res = {
       status: '400',
       data: data ? data : undefined,
-      error: "bad_request",
+      error: 'bad_request',
       message: message ? message : undefined,
     };
-    response.status(400).send({ response: res })
+    response.status(400).send({ response: res });
   },
 
   internal(response: Response, message: any) {
     const res = {
       status: '500',
-      error: 'internal',
-      message: message ? message : 'internal server error'
+      error: 'internal_server_error',
+      message: message ? message : 'internal server error',
     };
-    return response.status(500).send({ response: res })
+    return response.status(500).send({ response: res });
   },
 
   internalFa(response: Response, message: any) {
     const res = {
       status: '500',
       error: 'internal',
-      message: message ? message : ".مشکلی پیش آمده است با پشتسبانی تماس بگیرید"
+      message: message ? message : '.مشکلی پیش آمده است با پشتسبانی تماس بگیرید',
     };
-    return response.status(500).send({ response: res })
+    return response.status(500).send({ response: res });
   },
 
-  notFound(response: Response, message: any) {
+  notFound(response: Response, data: any, message: any) {
     const res = {
       status: '404',
       error: 'not_found',
       message: message ? message : undefined,
+      data: data ? data : undefined,
     };
     // res.message = global.trans(res.message);
-    response.status(404).send({ response: res })
+    response.status(404).send({ response: res });
   },
 
-  queued(response: Response) {
-    const res = {
-      status: 'queued',
-    };
-    // res.message = global.trans(res.message);
-    return response.status(200).send({ response: res });
-  },
-
-  unauthorized(response: Response, message: any) {
+  unauthorized(response: Response, data: any, message: any) {
     const res = {
       status: '401',
       error: 'unauthorized',
       message: message ? message : undefined,
+      data: data ? data : undefined,
     };
     // res.message = global.trans(res.message);
     response.status(401).send(res);
   },
-  forbidden(response: Response, message: any) {
+
+  forbidden(response: Response, data: any, message: any) {
     const res = {
       status: '403',
       error: 'forbidden',
       message: message ? message : undefined,
+      data: data ? data : undefined,
     };
     // res.message = global.trans(res.message);
     return response.status(403).send(res);
@@ -109,7 +105,6 @@ export default {
       status: '406',
       error: 'not_acceptable',
       message: message ? message : undefined,
-
     };
     // res.message = global.trans(res.message);
     return response.status(406).send(res);
@@ -123,7 +118,4 @@ export default {
   //   };
   //   response.status(parseInt(code)).send({ response: res })
   // }
-}
-
-// export default{error,success,internal,internalFa,notAcceptable
-//     ,notFound,respHandler,forbidden,queued,badRequest,conflict,created}
+};

@@ -4,9 +4,9 @@
   "private": true,
   "main": "dist/server.js",
   "scripts": {
-    "build": "tsc -W",
-    "start": "tsc -W & node .",
-    "dev": "tsc -W & nodemon ."
+    "build": "tsc",
+    "dev": "tsc-watch --onSuccess \"node ./dist/server.js\"",
+    "start": "node dist/server.js"
   },
   "dependencies": {
     "@types/cookie-parser": "^1.4.3",
@@ -18,9 +18,9 @@
     "crypto-js": "^4.1.1",
     "debug": "~2.6.9",
     "dotenv": "^16.0.2",
-    "ejs": "^3.1.8",
     "express": "^4.18.2",
     "fs-extra": "^10.1.0",
+    "helmet": "^7.0.0",
     "ioredis": "^5.2.4",
     "jalali-moment": "^3.3.11",
     "joi": "^17.7.0",
@@ -55,7 +55,6 @@
     "jest": "^26.0.1",
     "lint-staged": "^11.0.0",
     "node-mocks-http": "^1.8.0",
-    "nodemon": "^2.0.0",
     "prettier": "^2.0.5",
     "supertest": "^6.0.1",
     "tslint": "^6.1.3",

@@ -2,6 +2,7 @@ import Service from '../service/index'
 import resBuilder from '../library/responseBuilder'
 import Joi from 'joi'
 import Schema from '../validation/index'
+import chalk from 'chalk';
 
 export default {
 
@@ -25,7 +26,7 @@ export default {
         try {
             const data = await Joi.attempt(result.value, Schema.postValidation.editSchema)
             const postExist = await Service.CRUD.findById('Post', req.params.id, [])
-            if (!postExist) { return resBuilder.notFound(res, 'پست یافت نشد') }
+            if (!postExist) { return resBuilder.notFound(res, "",'پست یافت نشد') }
             const updatedPost = await Service.CRUD.updateById("Post", data, req.params.id, ['authorId', 'tagIds', 'categoryIds', 'fileIds'], { softDelete: 0 })
             return resBuilder.success(res, updatedPost, ".مطلب شما با موفقیت ویرایش شد")
         } catch (err) {
@@ -39,7 +40,7 @@ export default {
         try {
             // const postData = await Service.CRUD.findById('Post', req.params.id, ['fileIds', 'authorId', 'tagIds', 'categoryIds'])
             const postData = await Service.CRUD.findById('Post', req.params.id, ["fileIds", "authorId", "tagIds"])
-            if (postData.softDelete == true) { return resBuilder.notFound(res, "این پست حدف شده است") }
+            if (postData.softDelete == true) { return resBuilder.notFound(res,"", "این پست حدف شده است") }
             delete postData.softDelete
             return resBuilder.success(res, postData, "")
         } catch (error) {

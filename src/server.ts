@@ -1,12 +1,10 @@
 #!/usr/bin/env node
 import http from "http";
 import mongoose from 'mongoose'
-import Redis from "ioredis"
 import chalk from 'chalk';
 import { connectWithRetry } from './connection/db.connection'
 // import { redisConnectretry } from './connection/redis.connection'
 import { app } from './app';
-
 // const port = normalizePort(process.env.PORT || '3000');
 const port = (process.env.PORT || '3000');
 app.set('port', port);
@@ -22,22 +20,23 @@ async function bootstrap(): Promise<any> {
     // connection = DBconnectionsuccessfull.connection
     return server.listen(port, () => {
       // console.clear()
-      console.log(chalk.white.bgGreen.bold('💥 clg: server listen to', port,), '\n \n \n')
+      console.log(chalk.white.green.bold('✔ [success] server listen to', port,'💥'), '\n \n \n')
     });
   } else { server.close() }
 }
 bootstrap()
 
 
+
 mongoose.connection.on('connecting', function () {
-  console.log(chalk.blue.bold("trying to establish a connection to mongo"));
+  console.log(chalk.blue("trying to establish a connection to mongo"));
 });
 mongoose.connection.on('connected', function () {
-  console.log(chalk.green.bold('mongo connected successfully '));
+  console.log(chalk.green('mongo connected successfully '));
   // return bootstrap()
 });
 mongoose.connection.on('disconnected', async (err) => {
-  console.log(chalk.red.bold("mongoose 'disconnected !!  server closed "))
+  console.log(chalk.red("mongoose 'disconnected !!  server closed "))
   server.close()
   return setTimeout(bootstrap, 4000);
   // return setTimeout(connectWithRetry, 4000);
