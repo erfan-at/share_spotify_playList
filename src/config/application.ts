@@ -1,23 +1,22 @@
-import dotenv from 'dotenv'
-dotenv.config()
+import dotenv from 'dotenv';
+dotenv.config();
 const appConfig = {
-  jwt:{
-    secret:"secret",
-    expire:'2d'
+  jwt: {
+    secret: 'secret',
+    expire: '2d',
   },
   development: {
     CDNPrivate: 'http://localhost:3000/lsdkfjdlfkj/',
-    salt: "ffdfvdfdfdg_P:)P_:L(OLIKUJ",
+    salt: 'ffdfvdfdfdg_P:)P_:L(OLIKUJ',
     serviceName: 'CONTENT',
     port: process.env.DEV_PORT,
-
     redis: {
-      host: process.env.DEV_REDIS_HOST,
-      port: process.env.DEV_REDIS_PORT,
-      password: process.env.DEV_REDIS_PASSWORD,
-    },
-    rsmq: {
-      messageQueue: 'message-queue',
+      port: 6379,
+      host: '127.0.0.1',
+      connectTimeout: 4000,
+      lazyConnect: true,
+      // connectTimeout: 1000,
+      // maxRetriesPerRequest: 3,
     },
     timeoutRetry: 15000,
     kafka: {
@@ -28,7 +27,7 @@ const appConfig = {
 
     jwt: {
       secret: 'secret',
-      expire: '1m'
+      expire: '1m',
     },
     // salt: 'Segment!n0',
   },
@@ -77,7 +76,6 @@ const appConfig = {
   //     topic_prefix: process.env.STAGE_KAFKA_TOPIC_PREFIX,
   //   },
 
-
   //   jwt: {
   //     secret: 'secret',
   //     expire: '1m'
@@ -108,8 +106,7 @@ const appConfig = {
   // }
 };
 
-
-// export default appConfig[process.env.NODE_ENV || 'production']
+export default appConfig[process.env.NODE_ENV || 'production'];
 
 // export appConfig['development']
-export default appConfig
+// export default appConfig

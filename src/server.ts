@@ -6,26 +6,21 @@ import { connectWithRetry } from './connection/db.connection';
 // import { redisConnectretry } from './connection/redis.connection'
 import app from './app';
 // const port = normalizePort(process.env.PORT || '3000');
-const port = process.env.PORT || '3000';
+const port: string = process.env.PORT || '3000';
 app.set('port', port);
-const server = http.createServer(app);
+let server:any
 async function bootstrap(): Promise<any> {
-  // try {
-  // console.clear()
-  // await connectWithRetry()
   const DBconnectionsuccessfull = await connectWithRetry();
-  // await redisConnectretry()
   if (DBconnectionsuccessfull.statusCode == 200) {
-    // console.log(DBconnectionsuccessfull)
-    // connection = DBconnectionsuccessfull.connection
+     server = http.createServer(app);
     return server.listen(port, () => {
-      // console.clear()
       console.log(chalk.white.green.bold('✔ [success] server listen to', port, '💥'), '\n \n \n');
     });
   } else {
     server.close();
   }
 }
+
 bootstrap();
 
 mongoose.connection.on('connecting', function () {
@@ -53,12 +48,12 @@ process.on('SIGINT', () => {
 });
 process.on('unhandledRejection', (err) => {
   console.log('UNHANDLED REJECTION! 💥');
-  // console.error({ message: err.message, stack: err.stack });
+  // console.lof({ message: err.message, stack: err.stack });
 });
 // Handle uncaughtException errors globally
 process.on('uncaughtException', (err) => {
   console.log('Uncaught Exception!  Sutting down...');
-  console.error({ message: err.message, stack: err.stack });
+  console.log({ message: err.message, stack: err.stack });
   // Shutdown application
   process.exit(1);
 });

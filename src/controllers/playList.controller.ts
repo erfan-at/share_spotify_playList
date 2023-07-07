@@ -1,5 +1,5 @@
 import Service from '../service/index'
-import resBuilder from '../library/responseBuilder'
+import responseBuilder from '../library/responseBuilder'
 import Joi from 'joi'
 import Schema from '../validation/index'
 import chalk from 'chalk';
@@ -8,15 +8,15 @@ export default {
 
     create: async (req: any, res: any) => {
         const result = Schema.playListValidation.createSchema.validate(req.body)
-        if (result.error) { return resBuilder.badRequest(res, req.body, result.error.message) }
+        if (result.error) { return responseBuilder.badRequest(res, req.body, result.error.message) }
         try {
             const data = await Joi.attempt(result.value, Schema.playListValidation.createSchema)
             data.authorId = req.userData._id
             const newplayList = await Service.CRUD.create("PlayList", data)
-            return resBuilder.created(res, newplayList, " پلی لیست شما با موفقیت ایجاد شد.")
+            return responseBuilder.created(res, newplayList, " پلی لیست شما با موفقیت ایجاد شد.")
         } catch (err) {
             console.log(err)
-            return resBuilder.internal(res, "مشکلی پیش آمده است لطفا با پشتیبانی تماس بگیرید")
+            return responseBuilder.internal(res, "مشکلی پیش آمده است لطفا با پشتیبانی تماس بگیرید")
 
         }
     },
@@ -25,12 +25,12 @@ export default {
         try {
             // const playlistData = await Service.CRUD.findById('PlayList', req.params.id, ['fileIds', 'authorId', 'tagIds', 'categoryIds'])
             const playlistData = await Service.CRUD.findById('PlayList', req.params.id, [])
-            if (!playlistData || playlistData.softDelete) { return resBuilder.notFound(res, '',"این پلی لیست حدف شده است") }
+            if (!playlistData || playlistData.softDelete) { return responseBuilder.notFound(res, '',"این پلی لیست حدف شده است") }
             delete playlistData.softDelete
-            return resBuilder.success(res, playlistData )
+            return responseBuilder.success(res, playlistData )
         } catch (error) {
             console.log("error for find a post === > ", error)
-            return resBuilder.internal(res, "مشکلی پیش آمده است لطفا با پشتیبانی تماس بگیرید")
+            return responseBuilder.internal(res, "مشکلی پیش آمده است لطفا با پشتیبانی تماس بگیرید")
 
         }
     },
@@ -41,30 +41,30 @@ export default {
                 { softDelete: false, authorId: req.userData._id},
                 "",
                 { 'createdAt': -1 }, { softDelete: 0 })
-            if (playLists.length == 0) { return resBuilder.success(res, "") }
-            return resBuilder.success(res, playLists)
+            if (playLists.length == 0) { return responseBuilder.success(res, "") }
+            return responseBuilder.success(res, playLists)
         } catch (err) {
             console.log(err)
-            return resBuilder.internal(res, "مشکلی پیش آمده است لطفا با پشتیبانی تماس بگیرید")
+            return responseBuilder.internal(res, "مشکلی پیش آمده است لطفا با پشتیبانی تماس بگیرید")
         }
     },
 
     update: async (req: any, res: any) => {
         const result = Schema.playListValidation.editSchema.validate(req.body)
-        if (result.error) { return resBuilder.badRequest(res, req.body, result.error.message) }
+        if (result.error) { return responseBuilder.badRequest(res, req.body, result.error.message) }
         try {
             const postExist = await Service.CRUD.findById('PlayList', req.params.id, [])
-            if (!postExist) { return resBuilder.notFound(res, "",'پلی لیست یافت نشد') }
+            if (!postExist) { return responseBuilder.notFound(res, "",'پلی لیست یافت نشد') }
             const data = await Joi.attempt(result.value, Schema.playListValidation.editSchema)
             const updatedPlayList = await Service.CRUD.updateById("PlayList",
                 data,
                 req.params.id,
                 ['authorId', 'tagIds', 'categoryIds', 'fileIds'],
                 { softDelete: 0 })
-            return resBuilder.success(res, updatedPlayList, ".پلی لیست شما با موفقیت ویرایش شد")
+            return responseBuilder.success(res, updatedPlayList, ".پلی لیست شما با موفقیت ویرایش شد")
         } catch (err) {
             console.log(err)
-            return resBuilder.internal(res, "مشکلی پیش آمده است لطفا با پشتیبانی تماس بگیرید")
+            return responseBuilder.internal(res, "مشکلی پیش آمده است لطفا با پشتیبانی تماس بگیرید")
 
         }
     },
@@ -72,10 +72,10 @@ export default {
     delete: async (req: any, res: any) => {
         try {
             await Service.CRUD.delete("PlayList", req.params.id, { softDelete: true })
-            return resBuilder.success(res, "", ".پلی لیست با موفقیت حذف شد")
+            return responseBuilder.success(res, "", ".پلی لیست با موفقیت حذف شد")
         } catch (err) {
             console.log(err)
-            return resBuilder.internal(res, "مشکلی پیش آمده است لطفا با پشتیبانی تماس بگیرید")
+            return responseBuilder.internal(res, "مشکلی پیش آمده است لطفا با پشتیبانی تماس بگیرید")
         }
     },
 
@@ -95,11 +95,11 @@ export default {
     //                 .sort({ 'createdAt': -1 })
     //                 .select({ softDelete: 0 })
     //                 .lean();
-    //             if (playLists.length == 0) { return resBuilder.success(res, "", "") }
-    //             return resBuilder.success(res, playLists, "")
+    //             if (playLists.length == 0) { return responseBuilder.success(res, "", "") }
+    //             return responseBuilder.success(res, playLists, "")
     //         } catch (err) {
     //             console.log(err)
-    //                         return resBuilder.internal(res, "مشکلی پیش آمده است لطفا با پشتیبانی تماس بگیرید")
+    //                         return responseBuilder.internal(res, "مشکلی پیش آمده است لطفا با پشتیبانی تماس بگیرید")
 
     //         }
     //     },

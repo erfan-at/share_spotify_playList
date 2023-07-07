@@ -1,5 +1,6 @@
+import { Request, Response, NextFunction } from 'express';
 import Service from '../service/index';
-import resBuilder from '../library/responseBuilder';
+import responseBuilder from '../library/responseBuilder';
 import jwt from 'jsonwebtoken';
 import appConfig from '../config/application';
 const ignoredPath = [
@@ -7,11 +8,11 @@ const ignoredPath = [
   'POST /api/v1/auth/login',
   'POST /api/v1/auth/entrance',
   'POST /api/v1/auth/resetPassword',
-  'POST /api/v1/auth/ sendActivationCode',
+  'POST /api/v1/auth/sendActivationCode',
 ];
 
 export default {
-  authenticateToken: async (req: any, res: any, next: any) => {
+  authenticateToken: async (req: any, res: Response, next: NextFunction) => {
     if (ignoredPath.includes(`${req.method} ${req.originalUrl}`)) {
       return next();
     }
@@ -19,13 +20,13 @@ export default {
     const authHeader = req.headers['authorization'];
     const token = authHeader.split(' ')[0];
     if (token == null) {
-      resBuilder.unauthorized(res, '');
+      responseBuilder.unauthorized(res, '');
     }
     let username: string = '';
     jwt.verify(token, appConfig.jwt.secret, (err: any, data: any) => {
       if (err) {
         console.log(err);
-        return resBuilder.forbidden(res, '', 'نشست شما در سامانه منقضی شده است، لطفا مجددا به سامانه ورود نمایید.');
+        return responseBuilder.forbidden(res, '', 'نشست شما در سامانه منقضی شده است، لطفا مجددا به سامانه ورود نمایید.');
       }
       username = data.username;
     });
@@ -41,7 +42,7 @@ export default {
       return next();
     } catch (err) {
       console.log(err);
-      return resBuilder.unauthorized(res, '');
+      return responseBuilder.unauthorized(res, '');
     }
   },
 };

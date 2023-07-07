@@ -1,4 +1,4 @@
-import resBuilder from '../library/responseBuilder'
+import responseBuilder from '../library/responseBuilder'
 import Joi from 'joi'
 import Schema from '../validation'
 import Service from '../service/index'
@@ -65,23 +65,23 @@ export default {
     get: async (req: any, res: any) => {
         try {
             const userData = await Service.CRUD.findOneRecord('User', req.userData._id, [])
-            return resBuilder.success(res, userData, "")
+            return responseBuilder.success(res, userData, "")
         } catch (err) {
             console.log(err)
-            return resBuilder.internal(res, "مشکلی پیش آمده است لطفا با پشتیبانی تماس بگیرید")
+            return responseBuilder.internal(res, "مشکلی پیش آمده است لطفا با پشتیبانی تماس بگیرید")
         }
     },
 
     edit: async (req: any, res: any) => {
         const result = Schema.userProfieValidation.editSchema.validate(req.body)
-        if (result.error) { return resBuilder.badRequest(res, req.body, result.error.message) }
+        if (result.error) { return responseBuilder.badRequest(res, req.body, result.error.message) }
         try {
             const data = await Joi.attempt(result.value, Schema.userProfieValidation.editSchema)
             const updatedUserData = await Service.CRUD.updateById('User', data, req.userData._id, [], "",)
-            return resBuilder.success(res, updatedUserData, "ویرایش اطلاعات پروفایل با موفقیت انجام شد.")
+            return responseBuilder.success(res, updatedUserData, "ویرایش اطلاعات پروفایل با موفقیت انجام شد.")
         } catch (err) {
             console.log(err)
-            return resBuilder.internal(res, "مشکلی پیش آمده است لطفا با پشتیبانی تماس بگیرید")
+            return responseBuilder.internal(res, "مشکلی پیش آمده است لطفا با پشتیبانی تماس بگیرید")
 
         }
     },
@@ -138,10 +138,10 @@ export default {
         //         .select({ softDelete: 0, updatedAt: 0, active: 0, password: 0, role: 0 })
         //         .lean()
         //     userData.createdAt = moment(userData.createdAt, "X").format("jYYYY/jMM/jDD HH:mm")
-        //     return resBuilder.success(res, userData, "")
+        //     return responseBuilder.success(res, userData, "")
         // } catch (err) {
         //     console.log(err)
-        //     return resBuilder.internalFa(res)
+        //     return responseBuilder.internalFa(res)
         // }
     },
 
@@ -151,21 +151,21 @@ export default {
         //         .select({ softDelete: 0, updatedAt: 0, active: 0, password: 0, role: 0 })
         //         .lean()
         //     userData.createdAt = moment(userData.createdAt, "X").format("jYYYY/jMM/jDD HH:mm")
-        //     return resBuilder.success(res, userData, "")
+        //     return responseBuilder.success(res, userData, "")
         // } catch (err) {
         //     console.log(err)
-        //     return resBuilder.internalFa(res)
+        //     return responseBuilder.internalFa(res)
         // }
     },
 
     follow: async () => {
         // try {
         //     const result = await Schema.editSchema.validate(req.body)
-        //     if (result.error) { return resBuilder.invalidReq(res, req.body, result.error.message) }
+        //     if (result.error) { return responseBuilder.invalidReq(res, req.body, result.error.message) }
         //     const data = await Joi.attempt(result.value, Schema.editSchema)
         //     //-----
         //     const updatedUserData = await Model.User.findByIdAndUpdate(req.userData._id, data, { new: true })
-        //     return resBuilder.success(res, updatedUserData, "ویرایش اطلاعات پروفایل با موفقیت انجام شد.")
+        //     return responseBuilder.success(res, updatedUserData, "ویرایش اطلاعات پروفایل با موفقیت انجام شد.")
         // } catch (e) {
         //     console.log(e)
         //     return res.status(500).send("مشکلی پیش آمده است با پشتیبانی تماس بگیرید.")
@@ -176,19 +176,19 @@ export default {
     //         .select({ softDelete: 0, updatedAt: 0, active: 0, password: 0, role: 0 })
     //         .lean()
     //     userData.createdAt = moment(userData.createdAt, "X").format("jYYYY/jMM/jDD HH:mm")
-    //     return resBuilder.success(res, userData, "")
+    //     return responseBuilder.success(res, userData, "")
     // } catch (err) {
     //     console.log(err)
-    //     return resBuilder.internalFa(res)
+    //     return responseBuilder.internalFa(res)
     // }
     unFollow: async () => {
         // try {
         //     const result = await Schema.editSchema.validate(req.body)
-        //     if (result.error) { return resBuilder.invalidReq(res, req.body, result.error.message) }
+        //     if (result.error) { return responseBuilder.invalidReq(res, req.body, result.error.message) }
         //     const data = await Joi.attempt(result.value, Schema.editSchema)
         //     //-----
         //     const updatedUserData = await Model.User.findByIdAndUpdate(req.userData._id, data, { new: true })
-        //     return resBuilder.success(res, updatedUserData, "ویرایش اطلاعات پروفایل با موفقیت انجام شد.")
+        //     return responseBuilder.success(res, updatedUserData, "ویرایش اطلاعات پروفایل با موفقیت انجام شد.")
         // } catch (e) {
         //     console.log(e)
         //     return res.status(500).send("مشکلی پیش آمده است با پشتیبانی تماس بگیرید.")

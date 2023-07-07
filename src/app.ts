@@ -1,4 +1,4 @@
-import express, { Application } from 'express';
+import express, { Application, Request, Response } from 'express';
 import path from 'path';
 import cookieParser from 'cookie-parser';
 import morgan from 'morgan';
@@ -16,12 +16,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/api/v1', middlewares.auth.authenticateToken, indexRouter);
 
-
-app.get('/health', (req, res) => {
+app.get('/health', (req: Request, res: Response) => {
   return res.send('ok');
 });
 // // catch 404 and forward to error handler
-// app.use((req, res, next) => { next(createError(404)) });
+// app.use((req:Request, res:Response, next) => { next(createError(404)) });
 // // error handler
 
 // app.use((err:any, req:Request, res:Response) => {
@@ -35,4 +34,4 @@ app.get('/health', (req, res) => {
 
 // export default { app, redisClient }
 // export { app, redisClient }
-export default app 
+export default app;
