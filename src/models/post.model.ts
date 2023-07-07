@@ -1,29 +1,28 @@
-import mongoose, { Document } from "mongoose";
-import moment from "jalali-moment";
+import mongoose, { Document } from 'mongoose';
+import moment from 'jalali-moment';
 
+// export default interface Post extends Document {
+//   title: string;
+//   body: string;
+//   description: string;
+//   authorId: string;
+//   tagIds: string;
+//   categoryIds: string;
+//   counter: number;
+//   fileIds: string;
+//   isVideo: Boolean;
+//   slider: Boolean;
+//   videoLink: String;
+//   block: Boolean;
+//   createdAt: number;
+//   updatedAt: number;
+//   deletedAt: number;
+//   softDelete: Boolean;
+//   strictPopulate: any;
+// }
 
-export default interface Post extends Document {
-    title: string;
-    body: string;
-    description: string,
-    authorId: string,
-    tagIds: string
-    categoryIds: string,
-    counter: number
-    fileIds: string,
-    isVideo: Boolean
-    slider: Boolean
-    videoLink: String,
-    block: Boolean
-    createdAt: number,
-    updatedAt: number,
-    deletedAt: number,
-    softDelete: Boolean,
-    strictPopulate: any
-}
-
-
-const postSchema = new mongoose.Schema({
+const postSchema = new mongoose.Schema(
+  {
     title: { type: String, required: true },
     content: { type: String, required: true },
     description: { type: String, required: true },
@@ -39,20 +38,18 @@ const postSchema = new mongoose.Schema({
     createdAt: { type: Number, required: true, default: moment(new Date()).format('X') },
     updatedAt: Number,
     deletedAt: Number,
-    softDelete: { type: Boolean, default: false }
-},
-    {
-        timestamps: {
-            createdAt: "createdAt",
-            updatedAt: "updatedAt"
-        },
-        strictPopulate: false,
-        versionKey: false
-    }
+    softDelete: { type: Boolean, default: false },
+  },
+  {
+    timestamps: {
+      createdAt: 'createdAt',
+      updatedAt: 'updatedAt',
+    },
+    strictPopulate: false,
+    versionKey: false,
+  }
 );
-mongoose.set("strictPopulate", false)
+mongoose.set('strictPopulate', false);
 // const Post = mongoose.model<Post>('Post', postSchema);
 const Post = mongoose.model('Post', postSchema);
-export { Post };
-
-
+export default Post;

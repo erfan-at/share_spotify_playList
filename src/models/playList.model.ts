@@ -27,4 +27,4 @@ const playListSchema = new mongoose.Schema({
     }
 );
 const PlayList = mongoose.model('PlayList', playListSchema);
-export { PlayList };
+export default PlayList 

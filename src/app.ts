@@ -16,6 +16,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/api/v1', middlewares.auth.authenticateToken, indexRouter);
 
+
 app.get('/health', (req, res) => {
   return res.send('ok');
 });
@@ -34,4 +35,4 @@ app.get('/health', (req, res) => {
 
 // export default { app, redisClient }
 // export { app, redisClient }
-export { app };
+export default app 

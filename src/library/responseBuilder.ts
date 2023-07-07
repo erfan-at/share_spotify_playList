@@ -1,7 +1,7 @@
 import { Response } from 'express';
 
 export default {
-  error(response: Response, status: any, error: any, message: any) {
+  error(response: Response, status: any, error: any, message?: string | undefined) {
     const res = {
       status: status.toString(),
       error: error ? error : undefined,
@@ -11,7 +11,7 @@ export default {
     return response.status(status).send(res);
   },
 
-  success(response: Response, data: any, message: any) {
+  success(response: Response, data: any, message?: string | undefined) {
     const res = {
       status: '200',
       data: data ? data : undefined,
@@ -20,7 +20,7 @@ export default {
     return response.status(200).send({ response: res });
   },
 
-  created(response: Response, data: any, message: any) {
+  created(response: Response, data: any, message?: string | undefined) {
     const res = {
       status: '201',
       data: data ? data : undefined,
@@ -29,7 +29,7 @@ export default {
     return response.status(201).send({ response: res });
   },
 
-  conflict(response: Response, data: any, message: any) {
+  conflict(response: Response, data: any, message?: string | undefined) {
     const res = {
       status: '409',
       error: 'Conflict',
@@ -39,7 +39,7 @@ export default {
     // res.message = global.trans(res.message);
     return response.status(409).send({ response: res });
   },
-  badRequest(response: Response, data: any, message: any) {
+  badRequest(response: Response, data: any, message?: string | undefined) {
     const res = {
       status: '400',
       data: data ? data : undefined,
@@ -49,7 +49,7 @@ export default {
     response.status(400).send({ response: res });
   },
 
-  internal(response: Response, message: any) {
+  internal(response: Response, message?: string | undefined) {
     const res = {
       status: '500',
       error: 'internal_server_error',
@@ -58,7 +58,7 @@ export default {
     return response.status(500).send({ response: res });
   },
 
-  internalFa(response: Response, message: any) {
+  internalFa(response: Response, message?: string | undefined) {
     const res = {
       status: '500',
       error: 'internal',
@@ -67,7 +67,7 @@ export default {
     return response.status(500).send({ response: res });
   },
 
-  notFound(response: Response, data: any, message: any) {
+  notFound(response: Response, data: any, message?: string | undefined) {
     const res = {
       status: '404',
       error: 'not_found',
@@ -78,7 +78,7 @@ export default {
     response.status(404).send({ response: res });
   },
 
-  unauthorized(response: Response, data: any, message: any) {
+  unauthorized(response: Response, data: any, message?: string | undefined) {
     const res = {
       status: '401',
       error: 'unauthorized',
@@ -89,7 +89,7 @@ export default {
     response.status(401).send(res);
   },
 
-  forbidden(response: Response, data: any, message: any) {
+  forbidden(response: Response, data: any, message?: string | undefined) {
     const res = {
       status: '403',
       error: 'forbidden',
@@ -100,7 +100,7 @@ export default {
     return response.status(403).send(res);
   },
 
-  notAcceptable(response: Response, message: any) {
+  notAcceptable(response: Response, message?: string | undefined) {
     const res = {
       status: '406',
       error: 'not_acceptable',

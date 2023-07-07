@@ -3,7 +3,7 @@ import moment from "jalali-moment"
 
 export default {
 
-    create: async (schema: any, data: any) => {
+    create: async (schema: string, data: any) => {
         try {
             const newData = new Model[schema](data)
             return await newData.save();
@@ -14,7 +14,7 @@ export default {
         }
     },
 
-    findById: async (schema: any, dataId: any, populate: any) => {
+    findById: async (schema: string, dataId: any, populate: any) => {
         try {
             const dataSchema = Model[schema]
             // const data = await dataSchema.findById(dataId)
@@ -35,7 +35,7 @@ export default {
         }
     },
 
-    findOneRecord: async (schema: any, condotion: any, populate: any) => {
+    findOneRecord: async (schema: string, condotion: any, populate: any) => {
         try {
             const dataSchema = Model[schema]
             const data = await dataSchema.findOne(condotion)
@@ -51,7 +51,7 @@ export default {
         }
     },
 
-    getAll: async (schema: any, condition: any, populate: any, sort: any, select: any) => {
+    getAll: async (schema: string, condition: any, populate: any, sort: any, select: any) => {
         try {
             const dataSchema = Model[schema]
             const posts = await dataSchema.find(condition)
@@ -67,7 +67,7 @@ export default {
         }
     },
 
-    find: async (schema: any, condition: any, populate: any, sort: any, select: any) => {
+    find: async (schema: string, condition: any, populate: any, sort: any, select: any) => {
         try {
             const dataSchema = Model[schema]
             const data = await dataSchema.find(condition)
@@ -85,7 +85,7 @@ export default {
         }
     },
 
-    updateById: async (schema: any, data: any, dataId: any, populate: any, select: any) => {
+    updateById: async (schema: string, data: any, dataId: any, populate: any, select: any) => {
         try {
             const dataSchema = Model[schema]
             const updatedData = await dataSchema.findByIdAndUpdate(dataId, data, { new: true })
@@ -102,7 +102,7 @@ export default {
         }
     },
 
-    delete: async (schema: any, dataId: any, data: any) => {
+    delete: async (schema: string, dataId: any, data: any) => {
         try {
             const dataSchema = Model[schema]
             await dataSchema.findByIdAndUpdate(dataId, data)

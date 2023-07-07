@@ -1,10 +1,11 @@
 import functions from '../library/functions';
 import Service from '../service/index';
 import Model from '../models/index';
-import resBuilder from '../library/responseBuilder';
+import responseBuilder from '../library/responseBuilder';
 import chalk from 'chalk';
+import { Request, Response } from 'express';
 export default {
-  createData: async (req: any, res: any) => {
+  createData: async (req: Request, res: Response) => {
     try {
       const user = await Model.User.create({
         name: 'erfan',
@@ -18,11 +19,11 @@ export default {
       res.status(201).send(user);
     } catch (err) {
       console.log(err);
-      return resBuilder.internal(res, 'مشکلی پیش آمده است لطفا با پشتیبانی تماس بگیرید');
+      return responseBuilder.internal(res, 'مشکلی پیش آمده است لطفا با پشتیبانی تماس بگیرید');
     }
   },
 
-  Signup: async (req: any, res: any) => {
+  Signup: async (req: Request, res: Response) => {
     try {
       const userExist = await Service.CRUD.findOneRecord(
         'User',
@@ -39,7 +40,7 @@ export default {
           mobile: userExist.mobile ? userExist.mobile : undefined,
           email: userExist.email == req.body.email ? userExist.email : undefined,
         };
-        return resBuilder.conflict(res, user, '.کاربری با این مشحصات وارده در سیستم وجود دارد ');
+        return responseBuilder.conflict(res, user, '.کاربری با این مشحصات وارده در سیستم وجود دارد ');
       }
       const user = await Service.CRUD.create('User', {
         name: req.body.name,
@@ -50,7 +51,7 @@ export default {
         role: 'user',
       });
       await functions.recordActivity(user._id, '/auth/userSignup', req.body);
-      return resBuilder.success(
+      return responseBuilder.success(
         res,
         {
           token: Service.CRYPTOGRAPHY.generateAccessToken({ username: user._id }),
@@ -62,19 +63,19 @@ export default {
       );
     } catch (err) {
       if (err.name === 'MongoServerError' && err.code === 11000) {
-        return resBuilder.conflict(res, '', `قبلا استفاده شده است ${Object.keys(err.keyPattern)[0]} این`);
+        return responseBuilder.conflict(res, '', `قبلا استفاده شده است ${Object.keys(err.keyPattern)[0]} این`);
       }
       console.log(err);
-      return resBuilder.internal(res, 'مشکلی پیش آمده است لطفا با پشتیبانی تماس بگیرید');
+      return responseBuilder.internal(res, 'مشکلی پیش آمده است لطفا با پشتیبانی تماس بگیرید');
     }
   },
 
-  Login: async (req: any, res: any) => {
+  Login: async (req: Request, res: Response) => {
     if (!req.body.email && !req.body.mobile) {
-      return resBuilder.badRequest(res, '', 'ارسال شماره موبایل یا آدرس ایمیل ضرروی است');
+      return responseBuilder.badRequest(res, '', 'ارسال شماره موبایل یا آدرس ایمیل ضرروی است');
     }
     if (!req.body.password) {
-      return resBuilder.badRequest(res, '', 'ارسال رمز عبور ضرروی است');
+      return responseBuilder.badRequest(res, '', 'ارسال رمز عبور ضرروی است');
     }
     try {
       const userData = {
@@ -86,7 +87,7 @@ export default {
       const user = await Service.CRUD.findOneRecord('User', userData, []);
       if (user) {
         if (!user.active) {
-          return resBuilder.notFound(res, '', 'کاربر در سیستم غیر فعال شده است لطفا با پشتیبانی تماس بگیرید');
+          return responseBuilder.notFound(res, '', 'کاربر در سیستم غیر فعال شده است لطفا با پشتیبانی تماس بگیرید');
         }
         await functions.recordActivity(user._id, '/auth/Login', req.body);
         await Service.REDIS.put(user._id, Service.CRYPTOGRAPHY.base64.encode(JSON.stringify(user)));
@@ -96,31 +97,31 @@ export default {
           username: user.username,
           role: user.role,
         };
-        return resBuilder.success(res, responseData, '');
+        return responseBuilder.success(res, responseData, '');
       } else {
-        return resBuilder.notFound(res, '', 'کاربری با این مشخصات در سبستم وجود ندارد');
+        return responseBuilder.notFound(res, '', 'کاربری با این مشخصات در سبستم وجود ندارد');
       }
     } catch (err) {
       console.log(err);
-      return resBuilder.internal(res, 'مشکلی پیش آمده است لطفا با پشتیبانی تماس بگیرید');
+      return responseBuilder.internal(res, 'مشکلی پیش آمده است لطفا با پشتیبانی تماس بگیرید');
     }
   },
 
   //login with mibile and activationCode
-  Entrance: async (req: any, res: any) => {
+  Entrance: async (req: Request, res: Response) => {
     try {
       const user = await Service.CRUD.findOneRecord('User', { mobile: req.body.mobile, softDelete: false }, []);
       if (user) {
         if (user.activationCode != req.body.activationCode) {
-          return resBuilder.badRequest(res, '', ' شماره موبایل یا کد ارسالی اشتباه است');
+          return responseBuilder.badRequest(res, '', ' شماره موبایل یا کد ارسالی اشتباه است');
         }
         if (!user.active) {
-          return resBuilder.notFound(res, '', 'کاربر در سیستم غیر فعال شده است لطفا با پشتیبانی تماس بگیرید');
+          return responseBuilder.notFound(res, '', 'کاربر در سیستم غیر فعال شده است لطفا با پشتیبانی تماس بگیرید');
         }
         await Service.CRUD.updateById('User', { activationCode: '' }, user._id, [], '');
         await Service.REDIS.put(user._id, Service.CRYPTOGRAPHY.base64.encode(JSON.stringify({ user: user })));
         await functions.recordActivity(user._id, '/auth/userEntrance', req.body);
-        return resBuilder.success(
+        return responseBuilder.success(
           res,
           {
             token: Service.CRYPTOGRAPHY.generateAccessToken({ username: user._id }),
@@ -131,34 +132,34 @@ export default {
           ''
         );
       } else {
-        return resBuilder.notFound(res, '', 'کاربری با این شماره موبایل در سبستم وجود ندارد');
+        return responseBuilder.notFound(res, '', 'کاربری با این شماره موبایل در سبستم وجود ندارد');
       }
     } catch (err) {
       console.log(err);
-      return resBuilder.internal(res, 'مشکلی پیش آمده است لطفا با پشتیبانی تماس بگیرید');
+      return responseBuilder.internal(res, 'مشکلی پیش آمده است لطفا با پشتیبانی تماس بگیرید');
     }
   },
 
-  ResetPassword: async (req: any, res: any) => {
+  ResetPassword: async (req: Request, res: Response) => {
     if (!req.body.mobile) {
-      return resBuilder.badRequest(res, '', 'ارسال شماره موبایل ضروری است');
+      return responseBuilder.badRequest(res, '', 'ارسال شماره موبایل ضروری است');
     }
     if (!req.body.password) {
-      return resBuilder.badRequest(res, '', 'ارسال رمز عبور ضروری است');
+      return responseBuilder.badRequest(res, '', 'ارسال رمز عبور ضروری است');
     }
     if (!req.body.activationCode) {
-      return resBuilder.badRequest(res, '', 'ارسال کد فعال سازی ضروری است');
+      return responseBuilder.badRequest(res, '', 'ارسال کد فعال سازی ضروری است');
     }
     try {
       const user = await Service.CRUD.findOneRecord('User', { mobile: req.body.mobile, softDelete: false }, []);
       if (!user) {
-        return resBuilder.notFound(res, '', 'کاربری با این شماره موبایل وجود ندارد');
+        return responseBuilder.notFound(res, '', 'کاربری با این شماره موبایل وجود ندارد');
       }
       if (!user.active) {
-        return resBuilder.notFound(res, '', 'کاربر در سیستم غیر فعال شده است لطفا با پشتیبانی تماس بگیرید');
+        return responseBuilder.notFound(res, '', 'کاربر در سیستم غیر فعال شده است لطفا با پشتیبانی تماس بگیرید');
       }
       if (user.activationCode != req.body.activationCode) {
-        return resBuilder.badRequest(res, '', 'کد بازیابی رمز عبور اشتباه است');
+        return responseBuilder.badRequest(res, '', 'کد بازیابی رمز عبور اشتباه است');
       }
       await Service.CRUD.updateById(
         'User',
@@ -168,17 +169,17 @@ export default {
         ''
       );
       await functions.recordActivity(user._id, '/auth/adminResetPassword', req.body);
-      return resBuilder.success(res, '', 'رمز عبور با موفقیت ویرایش گردید');
+      return responseBuilder.success(res, '', 'رمز عبور با موفقیت ویرایش گردید');
     } catch (err) {
       console.log(err);
-      return resBuilder.internal(res, 'مشکلی پیش آمده است لطفا با پشتیبانی تماس بگیرید');
+      return responseBuilder.internal(res, 'مشکلی پیش آمده است لطفا با پشتیبانی تماس بگیرید');
     }
   },
 
   //send activationCode
-  sendActivationCode: async (req: any, res: any) => {
+  sendActivationCode: async (req: Request, res: Response) => {
     if (!req.body.mobile) {
-      return resBuilder.badRequest(res, '', 'ارسال شماره موبایل ضروری است');
+      return responseBuilder.badRequest(res, '', 'ارسال شماره موبایل ضروری است');
     }
     try {
       const user = await Service.CRUD.findOneRecord(
@@ -188,7 +189,7 @@ export default {
       );
       if (user) {
         if (!user.active) {
-          return resBuilder.notFound(res, '', 'کاربر در سیستم غیر فعال شده است لطفا با پشتیبانی تماس بگیرید');
+          return responseBuilder.notFound(res, '', 'کاربر در سیستم غیر فعال شده است لطفا با پشتیبانی تماس بگیرید');
         }
         await Service.CRUD.updateById(
           'User',
@@ -199,13 +200,13 @@ export default {
         );
         await functions.recordActivity(user._id, '/auth/adminResetPasswordActivationCode', req.body);
         // let smsPromise = await smsAuth('taleghan', req.body.mobile, activationCode)
-        return resBuilder.success(res, '', ' کد بازیابی برای شما از طریق پیامک ارسال گردید.');
+        return responseBuilder.success(res, '', ' کد بازیابی برای شما از طریق پیامک ارسال گردید.');
       } else {
-        return resBuilder.notFound(res, '', 'کاربر فعالی با این شماره موبایل وجود ندارد');
+        return responseBuilder.notFound(res, '', 'کاربر فعالی با این شماره موبایل وجود ندارد');
       }
     } catch (err) {
       console.log(err);
-      return resBuilder.internal(res, 'مشکلی پیش آمده است لطفا با پشتیبانی تماس بگیرید');
+      return responseBuilder.internal(res, 'مشکلی پیش آمده است لطفا با پشتیبانی تماس بگیرید');
     }
   },
 };

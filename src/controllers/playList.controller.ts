@@ -27,7 +27,7 @@ export default {
             const playlistData = await Service.CRUD.findById('PlayList', req.params.id, [])
             if (!playlistData || playlistData.softDelete) { return resBuilder.notFound(res, '',"این پلی لیست حدف شده است") }
             delete playlistData.softDelete
-            return resBuilder.success(res, playlistData, "")
+            return resBuilder.success(res, playlistData )
         } catch (error) {
             console.log("error for find a post === > ", error)
             return resBuilder.internal(res, "مشکلی پیش آمده است لطفا با پشتیبانی تماس بگیرید")
@@ -41,8 +41,8 @@ export default {
                 { softDelete: false, authorId: req.userData._id},
                 "",
                 { 'createdAt': -1 }, { softDelete: 0 })
-            if (playLists.length == 0) { return resBuilder.success(res, "", "") }
-            return resBuilder.success(res, playLists, "")
+            if (playLists.length == 0) { return resBuilder.success(res, "") }
+            return resBuilder.success(res, playLists)
         } catch (err) {
             console.log(err)
             return resBuilder.internal(res, "مشکلی پیش آمده است لطفا با پشتیبانی تماس بگیرید")
