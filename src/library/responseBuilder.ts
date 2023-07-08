@@ -58,6 +58,15 @@ export default {
     return response.status(500).send({ response: res });
   },
 
+  internalErr(response: Response, message?: string | undefined) {
+    const res = {
+      status: '500',
+      error: 'internal_server_error',
+      message: message ? message : 'Sorry!, Something went wrong',
+    };
+    return response.status(500).send(res);
+  },
+
   internalFa(response: Response, message?: string | undefined) {
     const res = {
       status: '500',

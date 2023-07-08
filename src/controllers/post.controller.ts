@@ -15,8 +15,10 @@ export default {
             const newPost = await Service.CRUD.create("Post", data)
             return responseBuilder.created(res, newPost, "مطلب شما با موفقیت ایجاد شد.")
         } catch (err) {
-            console.log(err)
-            return responseBuilder.internal(res, "مشکلی پیش آمده است لطفا با پشتیبانی تماس بگیرید")
+            console.log(chalk.underline.red("✖ err from catch of controller : "))
+            console.log(chalk.red(err))
+            console.log(chalk.underline.red("✖ err from catch of controller : "))
+            return responseBuilder.internalErr(res)
         }
     },
 
@@ -30,9 +32,10 @@ export default {
             const updatedPost = await Service.CRUD.updateById("Post", data, req.params.id, ['authorId', 'tagIds', 'categoryIds', 'fileIds'], { softDelete: 0 })
             return responseBuilder.success(res, updatedPost, ".مطلب شما با موفقیت ویرایش شد")
         } catch (err) {
-            console.log(err)
-            return responseBuilder.internal(res, "مشکلی پیش آمده است لطفا با پشتیبانی تماس بگیرید")
-
+            console.log(chalk.underline.red("✖ err from catch of controller : "))
+            console.log(chalk.red(err))
+            console.log(chalk.underline.red("✖ err from catch of controller : "))
+            return responseBuilder.internalErr(res)
         }
     },
 
@@ -43,10 +46,11 @@ export default {
             if (postData.softDelete == true) { return responseBuilder.notFound(res,"", "این پست حدف شده است") }
             delete postData.softDelete
             return responseBuilder.success(res, postData, "")
-        } catch (error) {
-            console.log("error for find a post === > ", error)
-            return responseBuilder.internal(res, "مشکلی پیش آمده است لطفا با پشتیبانی تماس بگیرید")
-
+        } catch (err) {
+            console.log(chalk.underline.red("✖ err from catch of controller : "))
+            console.log(chalk.red(err))
+            console.log(chalk.underline.red("✖ err from catch of controller : "))
+            return responseBuilder.internalErr(res)
         }
     },
 
@@ -58,8 +62,10 @@ export default {
             if (posts.length == 0) { return responseBuilder.success(res, [], "") }
             return responseBuilder.success(res, posts, "")
         } catch (err) {
-            console.log(err)
-            return responseBuilder.internal(res, "مشکلی پیش آمده است لطفا با پشتیبانی تماس بگیرید")
+            console.log(chalk.underline.red("✖ err from catch of controller : "))
+            console.log(chalk.red(err))
+            console.log(chalk.underline.red("✖ err from catch of controller : "))
+            return responseBuilder.internalErr(res)
         }
     },
 
@@ -67,9 +73,11 @@ export default {
         try {
             await Service.CRUD.delete("Post", req.params.id, { softDelete: true })
             return responseBuilder.success(res, "", "مطلب با موفقیت حذف شد")
-        } catch (e) {
-            console.log(e)
-            return responseBuilder.internal(res, "مشکلی پیش آمده است لطفا با پشتیبانی تماس بگیرید")
+        } catch (err) {
+            console.log(chalk.underline.red("✖ err from catch of controller : "))
+            console.log(chalk.red(err))
+            console.log(chalk.underline.red("✖ err from catch of controller : "))
+            return responseBuilder.internalErr(res)
         }
     },
 

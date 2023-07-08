@@ -4,7 +4,7 @@ import cookieParser from 'cookie-parser';
 import morgan from 'morgan';
 import helmet from 'helmet';
 import indexRouter from './routes/index';
-import middlewares from './middlewares';
+import Middlewares from './middlewares/index';
 const app: Application = express();
 
 app.use(morgan('dev'));
@@ -14,7 +14,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/api/v1', middlewares.auth.authenticateToken, indexRouter);
+app.use('/api/v1', Middlewares.auth, indexRouter);
 
 app.get('/health', (req: Request, res: Response) => {
   return res.send('ok');

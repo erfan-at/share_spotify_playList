@@ -1,5 +1,4 @@
-import CRYPTOGRAPHY from './cryptography.service'
-import REDIS from "./redis.service"
-import CRUD from "./crud.service"
+import REDIS from './redis.service';
+import CRUD from './crud.service';
 
-export default { CRYPTOGRAPHY, REDIS, CRUD }
+export default { REDIS, CRUD };

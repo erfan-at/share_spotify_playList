@@ -67,8 +67,10 @@ export default {
             const userData = await Service.CRUD.findOneRecord('User', req.userData._id, [])
             return responseBuilder.success(res, userData, "")
         } catch (err) {
-            console.log(err)
-            return responseBuilder.internal(res, "مشکلی پیش آمده است لطفا با پشتیبانی تماس بگیرید")
+            console.log(chalk.underline.red("✖ err from catch of controller : "))
+            console.log(chalk.red(err))
+            console.log(chalk.underline.red("✖ err from catch of controller : "))
+            return responseBuilder.internalErr(res)
         }
     },
 
@@ -80,9 +82,10 @@ export default {
             const updatedUserData = await Service.CRUD.updateById('User', data, req.userData._id, [], "",)
             return responseBuilder.success(res, updatedUserData, "ویرایش اطلاعات پروفایل با موفقیت انجام شد.")
         } catch (err) {
-            console.log(err)
-            return responseBuilder.internal(res, "مشکلی پیش آمده است لطفا با پشتیبانی تماس بگیرید")
-
+            console.log(chalk.underline.red("✖ err from catch of controller : "))
+            console.log(chalk.red(err))
+            console.log(chalk.underline.red("✖ err from catch of controller : "))
+            return responseBuilder.internalErr(res)
         }
     },
 

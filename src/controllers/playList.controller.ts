@@ -15,9 +15,10 @@ export default {
             const newplayList = await Service.CRUD.create("PlayList", data)
             return responseBuilder.created(res, newplayList, " پلی لیست شما با موفقیت ایجاد شد.")
         } catch (err) {
-            console.log(err)
-            return responseBuilder.internal(res, "مشکلی پیش آمده است لطفا با پشتیبانی تماس بگیرید")
-
+            console.log(chalk.underline.red("✖ err from catch of controller : "))
+            console.log(chalk.red(err))
+            console.log(chalk.underline.red("✖ err from catch of controller : "))
+            return responseBuilder.internalErr(res)
         }
     },
 
@@ -28,10 +29,11 @@ export default {
             if (!playlistData || playlistData.softDelete) { return responseBuilder.notFound(res, '',"این پلی لیست حدف شده است") }
             delete playlistData.softDelete
             return responseBuilder.success(res, playlistData )
-        } catch (error) {
-            console.log("error for find a post === > ", error)
-            return responseBuilder.internal(res, "مشکلی پیش آمده است لطفا با پشتیبانی تماس بگیرید")
-
+        } catch (err) {
+            console.log(chalk.underline.red("✖ err from catch of controller : "))
+            console.log(chalk.red(err))
+            console.log(chalk.underline.red("✖ err from catch of controller : "))
+            return responseBuilder.internalErr(res)
         }
     },
 
@@ -44,8 +46,10 @@ export default {
             if (playLists.length == 0) { return responseBuilder.success(res, "") }
             return responseBuilder.success(res, playLists)
         } catch (err) {
-            console.log(err)
-            return responseBuilder.internal(res, "مشکلی پیش آمده است لطفا با پشتیبانی تماس بگیرید")
+            console.log(chalk.underline.red("✖ err from catch of controller : "))
+            console.log(chalk.red(err))
+            console.log(chalk.underline.red("✖ err from catch of controller : "))
+            return responseBuilder.internalErr(res)
         }
     },
 
@@ -63,9 +67,10 @@ export default {
                 { softDelete: 0 })
             return responseBuilder.success(res, updatedPlayList, ".پلی لیست شما با موفقیت ویرایش شد")
         } catch (err) {
-            console.log(err)
-            return responseBuilder.internal(res, "مشکلی پیش آمده است لطفا با پشتیبانی تماس بگیرید")
-
+            console.log(chalk.underline.red("✖ err from catch of controller : "))
+            console.log(chalk.red(err))
+            console.log(chalk.underline.red("✖ err from catch of controller : "))
+            return responseBuilder.internalErr(res)
         }
     },
 
@@ -74,8 +79,10 @@ export default {
             await Service.CRUD.delete("PlayList", req.params.id, { softDelete: true })
             return responseBuilder.success(res, "", ".پلی لیست با موفقیت حذف شد")
         } catch (err) {
-            console.log(err)
-            return responseBuilder.internal(res, "مشکلی پیش آمده است لطفا با پشتیبانی تماس بگیرید")
+            console.log(chalk.underline.red("✖ err from catch of controller : "))
+            console.log(chalk.red(err))
+            console.log(chalk.underline.red("✖ err from catch of controller : "))
+            return responseBuilder.internalErr(res)
         }
     },
 

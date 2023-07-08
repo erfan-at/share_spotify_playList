@@ -2,6 +2,7 @@ import functions from '../library/functions';
 import Service from '../service/index';
 import Model from '../models/index';
 import responseBuilder from '../library/responseBuilder';
+import CRYPTOGRAPHY from './../library/cryptography';
 import chalk from 'chalk';
 import { Request, Response } from 'express';
 export default {
@@ -18,9 +19,11 @@ export default {
       });
       res.status(201).send(user);
     } catch (err) {
-      console.log(err);
-      return responseBuilder.internal(res, 'مشکلی پیش آمده است لطفا با پشتیبانی تماس بگیرید');
-    }
+      console.log(chalk.underline.red("✖ err from catch of controller : "))
+      console.log(chalk.red(err))
+      console.log(chalk.underline.red("✖ err from catch of controller : "))
+      return responseBuilder.internalErr(res)
+  }
   },
 
   Signup: async (req: Request, res: Response) => {
@@ -44,7 +47,7 @@ export default {
       }
       const user = await Service.CRUD.create('User', {
         name: req.body.name,
-        password: Service.CRYPTOGRAPHY.md5(req.body.password),
+        password: CRYPTOGRAPHY.md5(req.body.password),
         email: req.body.email,
         mobile: req.body.mobile,
         username: req.body.username,
@@ -54,7 +57,7 @@ export default {
       return responseBuilder.success(
         res,
         {
-          token: Service.CRYPTOGRAPHY.generateAccessToken({ username: user._id }),
+          token: CRYPTOGRAPHY.generateAccessToken({ username: user._id }),
           name: user.name,
           username: user.username,
           role: user.role,
@@ -62,12 +65,11 @@ export default {
         'حساب کاربری شما با موفقیت ایجاد شد'
       );
     } catch (err) {
-      if (err.name === 'MongoServerError' && err.code === 11000) {
-        return responseBuilder.conflict(res, '', `قبلا استفاده شده است ${Object.keys(err.keyPattern)[0]} این`);
-      }
-      console.log(err);
-      return responseBuilder.internal(res, 'مشکلی پیش آمده است لطفا با پشتیبانی تماس بگیرید');
-    }
+      console.log(chalk.underline.red("✖ err from catch of controller : "))
+      console.log(chalk.red(err))
+      console.log(chalk.underline.red("✖ err from catch of controller : "))
+      return responseBuilder.internalErr(res)
+  }
   },
 
   Login: async (req: Request, res: Response) => {
@@ -81,7 +83,7 @@ export default {
       const userData = {
         email: req.body.email ? req.body.email : undefined,
         mobile: req.body.mobile ? req.body.mobile : undefined,
-        password: await Service.CRYPTOGRAPHY.md5(req.body.password),
+        password: await CRYPTOGRAPHY.md5(req.body.password),
         softDelete: false,
       };
       const user = await Service.CRUD.findOneRecord('User', userData, []);
@@ -90,9 +92,9 @@ export default {
           return responseBuilder.notFound(res, '', 'کاربر در سیستم غیر فعال شده است لطفا با پشتیبانی تماس بگیرید');
         }
         await functions.recordActivity(user._id, '/auth/Login', req.body);
-        await Service.REDIS.put(user._id, Service.CRYPTOGRAPHY.base64.encode(JSON.stringify(user)));
+        await Service.REDIS.put(user._id, CRYPTOGRAPHY.base64.encode(JSON.stringify(user)));
         const responseData = {
-          token: Service.CRYPTOGRAPHY.generateAccessToken({ username: user._id }),
+          token: CRYPTOGRAPHY.generateAccessToken({ username: user._id }),
           name: user.name,
           username: user.username,
           role: user.role,
@@ -102,9 +104,11 @@ export default {
         return responseBuilder.notFound(res, '', 'کاربری با این مشخصات در سبستم وجود ندارد');
       }
     } catch (err) {
-      console.log(err);
-      return responseBuilder.internal(res, 'مشکلی پیش آمده است لطفا با پشتیبانی تماس بگیرید');
-    }
+      console.log(chalk.underline.red("✖ err from catch of controller : "))
+      console.log(chalk.red(err))
+      console.log(chalk.underline.red("✖ err from catch of controller : "))
+      return responseBuilder.internalErr(res)
+  }
   },
 
   //login with mibile and activationCode
@@ -119,12 +123,12 @@ export default {
           return responseBuilder.notFound(res, '', 'کاربر در سیستم غیر فعال شده است لطفا با پشتیبانی تماس بگیرید');
         }
         await Service.CRUD.updateById('User', { activationCode: '' }, user._id, [], '');
-        await Service.REDIS.put(user._id, Service.CRYPTOGRAPHY.base64.encode(JSON.stringify({ user: user })));
+        await Service.REDIS.put(user._id, CRYPTOGRAPHY.base64.encode(JSON.stringify({ user: user })));
         await functions.recordActivity(user._id, '/auth/userEntrance', req.body);
         return responseBuilder.success(
           res,
           {
-            token: Service.CRYPTOGRAPHY.generateAccessToken({ username: user._id }),
+            token: CRYPTOGRAPHY.generateAccessToken({ username: user._id }),
             name: user.name,
             username: user.username,
             role: user.role,
@@ -135,9 +139,11 @@ export default {
         return responseBuilder.notFound(res, '', 'کاربری با این شماره موبایل در سبستم وجود ندارد');
       }
     } catch (err) {
-      console.log(err);
-      return responseBuilder.internal(res, 'مشکلی پیش آمده است لطفا با پشتیبانی تماس بگیرید');
-    }
+      console.log(chalk.underline.red("✖ err from catch of controller : "))
+      console.log(chalk.red(err))
+      console.log(chalk.underline.red("✖ err from catch of controller : "))
+      return responseBuilder.internalErr(res)
+  }
   },
 
   ResetPassword: async (req: Request, res: Response) => {
@@ -163,7 +169,7 @@ export default {
       }
       await Service.CRUD.updateById(
         'User',
-        { password: Service.CRYPTOGRAPHY.md5(req.body.password), activationCode: '' },
+        { password: CRYPTOGRAPHY.md5(req.body.password), activationCode: '' },
         user._id,
         [],
         ''
@@ -171,9 +177,11 @@ export default {
       await functions.recordActivity(user._id, '/auth/adminResetPassword', req.body);
       return responseBuilder.success(res, '', 'رمز عبور با موفقیت ویرایش گردید');
     } catch (err) {
-      console.log(err);
-      return responseBuilder.internal(res, 'مشکلی پیش آمده است لطفا با پشتیبانی تماس بگیرید');
-    }
+      console.log(chalk.underline.red("✖ err from catch of controller : "))
+      console.log(chalk.red(err))
+      console.log(chalk.underline.red("✖ err from catch of controller : "))
+      return responseBuilder.internalErr(res)
+  }
   },
 
   //send activationCode
@@ -205,8 +213,10 @@ export default {
         return responseBuilder.notFound(res, '', 'کاربر فعالی با این شماره موبایل وجود ندارد');
       }
     } catch (err) {
-      console.log(err);
-      return responseBuilder.internal(res, 'مشکلی پیش آمده است لطفا با پشتیبانی تماس بگیرید');
-    }
+      console.log(chalk.underline.red("✖ err from catch of controller : "))
+      console.log(chalk.red(err))
+      console.log(chalk.underline.red("✖ err from catch of controller : "))
+      return responseBuilder.internalErr(res)
+  }
   },
 };
