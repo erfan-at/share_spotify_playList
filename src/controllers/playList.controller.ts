@@ -24,6 +24,7 @@ export default {
 
     getOne: async (req: any, res: any) => {
         try {
+            
             // const playlistData = await Service.CRUD.findById('PlayList', req.params.id, ['fileIds', 'authorId', 'tagIds', 'categoryIds'])
             const playlistData = await Service.CRUD.findById('PlayList', req.params.id, [])
             if (!playlistData || playlistData.softDelete) { return responseBuilder.notFound(res, '',"این پلی لیست حدف شده است") }
@@ -115,6 +116,7 @@ export default {
 
     unLike: async (req: any, res: any) => { },
 
+    
     liked: async (req: any, res: any) => { },
 
     usersLiked: async (req: any, res: any) => { }

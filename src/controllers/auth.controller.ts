@@ -5,6 +5,7 @@ import responseBuilder from '../library/responseBuilder';
 import CRYPTOGRAPHY from './../library/cryptography';
 import chalk from 'chalk';
 import { Request, Response } from 'express';
+import { v4 as uuidv4 } from 'uuid';
 export default {
   createData: async (req: Request, res: Response) => {
     try {
@@ -19,11 +20,11 @@ export default {
       });
       res.status(201).send(user);
     } catch (err) {
-      console.log(chalk.underline.red("✖ err from catch of controller : "))
-      console.log(chalk.red(err))
-      console.log(chalk.underline.red("✖ err from catch of controller : "))
-      return responseBuilder.internalErr(res)
-  }
+      console.log(chalk.underline.red('✖ err from catch of controller : '));
+      console.log(chalk.red(err));
+      console.log(chalk.underline.red('✖ err from catch of controller : '));
+      return responseBuilder.internalErr(res);
+    }
   },
 
   Signup: async (req: Request, res: Response) => {
@@ -46,6 +47,7 @@ export default {
         return responseBuilder.conflict(res, user, '.کاربری با این مشحصات وارده در سیستم وجود دارد ');
       }
       const user = await Service.CRUD.create('User', {
+        uuid: uuidv4().replace(/-/g, ''),
         name: req.body.name,
         password: CRYPTOGRAPHY.md5(req.body.password),
         email: req.body.email,
@@ -65,11 +67,11 @@ export default {
         'حساب کاربری شما با موفقیت ایجاد شد'
       );
     } catch (err) {
-      console.log(chalk.underline.red("✖ err from catch of controller : "))
-      console.log(chalk.red(err))
-      console.log(chalk.underline.red("✖ err from catch of controller : "))
-      return responseBuilder.internalErr(res)
-  }
+      console.log(chalk.underline.red('✖ err from catch of controller : '));
+      console.log(chalk.red(err));
+      console.log(chalk.underline.red('✖ err from catch of controller : '));
+      return responseBuilder.internalErr(res);
+    }
   },
 
   Login: async (req: Request, res: Response) => {
@@ -104,11 +106,11 @@ export default {
         return responseBuilder.notFound(res, '', 'کاربری با این مشخصات در سبستم وجود ندارد');
       }
     } catch (err) {
-      console.log(chalk.underline.red("✖ err from catch of controller : "))
-      console.log(chalk.red(err))
-      console.log(chalk.underline.red("✖ err from catch of controller : "))
-      return responseBuilder.internalErr(res)
-  }
+      console.log(chalk.underline.red('✖ err from catch of controller : '));
+      console.log(chalk.red(err));
+      console.log(chalk.underline.red('✖ err from catch of controller : '));
+      return responseBuilder.internalErr(res);
+    }
   },
 
   //login with mibile and activationCode
@@ -139,11 +141,11 @@ export default {
         return responseBuilder.notFound(res, '', 'کاربری با این شماره موبایل در سبستم وجود ندارد');
       }
     } catch (err) {
-      console.log(chalk.underline.red("✖ err from catch of controller : "))
-      console.log(chalk.red(err))
-      console.log(chalk.underline.red("✖ err from catch of controller : "))
-      return responseBuilder.internalErr(res)
-  }
+      console.log(chalk.underline.red('✖ err from catch of controller : '));
+      console.log(chalk.red(err));
+      console.log(chalk.underline.red('✖ err from catch of controller : '));
+      return responseBuilder.internalErr(res);
+    }
   },
 
   ResetPassword: async (req: Request, res: Response) => {
@@ -177,11 +179,11 @@ export default {
       await functions.recordActivity(user._id, '/auth/adminResetPassword', req.body);
       return responseBuilder.success(res, '', 'رمز عبور با موفقیت ویرایش گردید');
     } catch (err) {
-      console.log(chalk.underline.red("✖ err from catch of controller : "))
-      console.log(chalk.red(err))
-      console.log(chalk.underline.red("✖ err from catch of controller : "))
-      return responseBuilder.internalErr(res)
-  }
+      console.log(chalk.underline.red('✖ err from catch of controller : '));
+      console.log(chalk.red(err));
+      console.log(chalk.underline.red('✖ err from catch of controller : '));
+      return responseBuilder.internalErr(res);
+    }
   },
 
   //send activationCode
@@ -213,10 +215,10 @@ export default {
         return responseBuilder.notFound(res, '', 'کاربر فعالی با این شماره موبایل وجود ندارد');
       }
     } catch (err) {
-      console.log(chalk.underline.red("✖ err from catch of controller : "))
-      console.log(chalk.red(err))
-      console.log(chalk.underline.red("✖ err from catch of controller : "))
-      return responseBuilder.internalErr(res)
-  }
+      console.log(chalk.underline.red('✖ err from catch of controller : '));
+      console.log(chalk.red(err));
+      console.log(chalk.underline.red('✖ err from catch of controller : '));
+      return responseBuilder.internalErr(res);
+    }
   },
 };

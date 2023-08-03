@@ -32,7 +32,8 @@
     "npm": "^8.19.1",
     "redis": "^4.3.1",
     "tsc-watch": "^6.0.0",
-    "twilio": "^4.8.0"
+    "twilio": "^4.8.0",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "@types/cors": "^2.8.13",

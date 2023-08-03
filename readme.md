@@ -1,3 +1,3 @@
 ### comming soon ...
 
-![alt text](https://github.com/erfan0798/share_spotify_playList/blob/master/demo.png)
+![alt text](https://github.com/erfuuan/MelodConnect/blob/master/demo.png)

@@ -2,12 +2,12 @@
   "compilerOptions": {
     "module": "commonjs", /* Specify what module code is generated. */
     "esModuleInterop": true, /* Emit additional JavaScript to ease support for importing CommonJS modules. This enables `allowSyntheticDefaultImports` for type compatibility. */
-    "target": "ES6", /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */
+    "target": "es2021", /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */
     "noImplicitAny": false, /* Enable error reporting for expressions and declarations with an implied `any` type.. */
     // "noImplicitAny":false,
     "moduleResolution": "node",
-    "sourceMap": true, /* Create source map files for emitted JavaScript files. */
-    "outDir": "dist", /* Specify an output folder for all emitted files. */
+    "sourceMap": false, /* Create source map files for emitted JavaScript files. */
+    "outDir": "./dist", /* Specify an output folder for all emitted files. */
     "baseUrl": ".",                                  /* Specify the base directory to resolve non-relative module names. */
     "paths": {
       "*": ["node_modules/*"]
@@ -32,7 +32,7 @@
     // "noLib": true,                                    /* Disable including any library files, including the default lib.d.ts. */
     // "useDefineForClassFields": true,                  /* Emit ECMAScript-standard-compliant class fields. */
     /* Modules */
-    // "rootDir": "./",                                  /* Specify the root folder within your source files. */
+    "rootDir": "./src",                                  /* Specify the root folder within your source files. */
 
     /* Specify a set of entries that re-map imports to additional lookup locations. */
     // "rootDirs": [],                                   /* Allow multiple folders to be treated as one when resolving modules. */
@@ -50,7 +50,7 @@
     // "declarationMap": true,                           /* Create sourcemaps for d.ts files. */
     // "emitDeclarationOnly": true,                      /* Only output d.ts files and not JavaScript files. */
     // "outFile": "./",                                  /* Specify a file that bundles all outputs into one JavaScript file. If `declaration` is true, also designates a file that bundles all .d.ts output. */
-    // "removeComments": true,                           /* Disable emitting comments. */
+    "removeComments": true,                           /* Disable emitting comments. */
     // "noEmit": true,                                   /* Disable emitting files from a compilation. */
     // "importHelpers": true,                            /* Allow importing helper functions from tslib once per project, instead of including them per-file. */
     // "importsNotUsedAsValues": "remove",               /* Specify emit/checking behavior for imports that are only used for types */
@@ -63,7 +63,7 @@
     // "newLine": "crlf",                                /* Set the newline character for emitting files. */
     // "stripInternal": true,                            /* Disable emitting declarations that have `@internal` in their JSDoc comments. */
     // "noEmitHelpers": true,                            /* Disable generating custom helper functions like `__extends` in compiled output. */
-    // "noEmitOnError": true,                            /* Disable emitting files if any type checking errors are reported. */
+    "noEmitOnError": true,                            /* Disable emitting files if any type checking errors are reported. */
     // "preserveConstEnums": true,                       /* Disable erasing `const enum` declarations in generated code. */
     // "declarationDir": "./",                           /* Specify the output directory for generated declaration files. */
     // "preserveValueImports": true,                     /* Preserve unused imported values in the JavaScript output that would otherwise be removed. */
@@ -73,14 +73,14 @@
     // "preserveSymlinks": true,                         /* Disable resolving symlinks to their realpath. This correlates to the same flag in node. */
     // "forceConsistentCasingInFileNames": true, /* Ensure that casing is correct in imports. */
     /* Type Checking */
-    // "strict": true, /* Enable all strict type-checking options. */
-    // "strictNullChecks": true,                         /* When type checking, take into account `null` and `undefined`. */
-    // "strictFunctionTypes": true,                      /* When assigning functions, check to ensure parameters and the return values are subtype-compatible. */
-    // "strictBindCallApply": true,                      /* Check that the arguments for `bind`, `call`, and `apply` methods match the original function. */
-    // "strictPropertyInitialization": true,             /* Check for class properties that are declared but not set in the constructor. */
-    // "noImplicitThis": true,                           /* Enable error reporting when `this` is given the type `any`. */
-    // "useUnknownInCatchVariables": true,               /* Type catch clause variables as 'unknown' instead of 'any'. */
-    // "alwaysStrict": true,                             /* Ensure 'use strict' is always emitted. */
+    "strict": true, /* Enable all strict type-checking options. */
+    "strictNullChecks": true,                         /* When type checking, take into account `null` and `undefined`. */
+    "strictFunctionTypes": true,                      /* When assigning functions, check to ensure parameters and the return values are subtype-compatible. */
+    "strictBindCallApply": true,                      /* Check that the arguments for `bind`, `call`, and `apply` methods match the original function. */
+    "strictPropertyInitialization": true,             /* Check for class properties that are declared but not set in the constructor. */
+    "noImplicitThis": true,                           /* Enable error reporting when `this` is given the type `any`. */
+    "useUnknownInCatchVariables": true,               /* Type catch clause variables as 'unknown' instead of 'any'. */
+    "alwaysStrict": true,                             /* Ensure 'use strict' is always emitted. */
     // "noUnusedLocals": true,                           /* Enable error reporting when a local variables aren't read. */
     // "noUnusedParameters": true,                       /* Raise an error when a function parameter isn't read */
     // "exactOptionalPropertyTypes": true,               /* Interpret optional property types as written, rather than adding 'undefined'. */
