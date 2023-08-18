@@ -4,7 +4,8 @@ import home from './home.controller'
 import post from './post.controller'
 import user from './user.controller'
 import playList from'./playList.controller'
+import action from'./action.controller'
 // import comment from'./comment'
 // import profile from'./profile'
 // export default { auth,  post, playList, comment, profile}
-export default { auth, home, post, user ,playList}
+export default { auth, home, post, user ,playList,action}

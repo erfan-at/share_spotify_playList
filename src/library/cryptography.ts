@@ -9,7 +9,7 @@ export default {
   verifyJwtToken(token: string) {
     // return jwt.verify(token:string, appConfig.jwt.secret)
     jwt.verify(token, appConfig.jwt.secret, (err: any, data: any) => {
-      console.log(new Date());
+      // console.log(new Date());
       if (!err) {
         return data.username.toString();
       }

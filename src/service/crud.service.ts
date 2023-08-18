@@ -35,10 +35,10 @@ export default {
         }
     },
 
-    findOneRecord: async (schema: string, condotion: any, populate: any) => {
+    findOneRecord: async (schema: string, condition: any, populate: any) => {
         try {
             const dataSchema = Model[schema]
-            const data = await dataSchema.findOne(condotion)
+            const data = await dataSchema.findOne(condition)
                 .populate(populate)
                 .lean();
             // data.createdAt = moment(data.createdAt, "X").format("jYYYY/jMM/jDD HH:mm")

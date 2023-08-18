@@ -1,5 +1,6 @@
-import express, { Application, Request, Response } from 'express';
+import express, { Application, NextFunction, Request, Response } from 'express';
 import path from 'path';
+import * as Sentry from '@sentry/node';
 import cookieParser from 'cookie-parser';
 import morgan from 'morgan';
 import helmet from 'helmet';
@@ -19,19 +20,36 @@ app.use('/api/v1', Middlewares.auth, indexRouter);
 app.get('/health', (req: Request, res: Response) => {
   return res.send('ok');
 });
-// // catch 404 and forward to error handler
-// app.use((req:Request, res:Response, next) => { next(createError(404)) });
-// // error handler
 
-// app.use((err:any, req:Request, res:Response) => {
-//   // set locals, only providing error in development
-//   res.locals.message = err.message;
-//   res.locals.error = req.app.get('env') === 'development' ? err : {};
-//   // render the error page
-//  res.status(err.status || 500);
-//   return res.render('error');
-// });
+Sentry.init({
+  dsn: 'https://5f23820fb9a338adcd42a4e10c6c5329@o4505693895786496.ingest.sentry.io/4505693899456512',
+  integrations: [
+    // enable HTTP calls tracing
+    new Sentry.Integrations.Http({ tracing: true }),
+    // enable Express.js middleware tracing
+    new Sentry.Integrations.Express({ app }),
+  ],
+  // Performance Monitoring
+  tracesSampleRate: 1.0, // Capture 100% of the transactions, reduce in production!,
+});
 
-// export default { app, redisClient }
-// export { app, redisClient }
+// Trace incoming requests
+app.use(Sentry.Handlers.requestHandler());
+app.use(Sentry.Handlers.tracingHandler());
+
+// All your controllers should live here
+app.get('/', function rootHandler(req, res) {
+  res.end('Hello world!');
+});
+
+app.use(Sentry.Handlers.errorHandler());
+
+// Optional fallthrough error handler
+app.use(function onError(err: any, req: Request, res: any, next: NextFunction) {
+  // The error id is attached to `res.sentry` to be returned
+  // and optionally displayed to the user for support.
+  res.statusCode = 500;
+  res.end(res.sentry + '\n');
+});
+
 export default app;

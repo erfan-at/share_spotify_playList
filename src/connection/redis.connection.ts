@@ -4,7 +4,7 @@ import chalk from 'chalk';
 
 const redis = new Redis(appConfig.redis);
 
-redis.on('connect', (message) => {
+redis.on('connect', () => {
   console.log('✔  [success] redis connected successfully :', JSON.stringify(appConfig.redis));
 });
 
@@ -13,4 +13,4 @@ redis.on('error', (error) => {
   console.log(chalk.red(`Redis Client error ${error}`));
 });
 
-export default redis 
+export default redis;

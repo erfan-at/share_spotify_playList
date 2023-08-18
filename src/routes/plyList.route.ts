@@ -1,15 +1,15 @@
 import { Router } from 'express';
 
-import controller from '../controllers/index'
+import controller from '../controllers/index';
 
 // import Middleware from '../middlewares/requestRequirement/commentErrorHandler'
-const router=Router()
+const router = Router();
 // //=========================================
-router.get("/", controller.playList.getAll)
-router.post("/", controller.playList.create)
-router.get("/:id", controller.playList.getOne)
-router.put("/:id", controller.playList.update)
-router.delete("/:id", controller.playList.delete)
+router.get('/', controller.playList.getAll);
+router.post('/', controller.playList.create);
+router.get('/:id', controller.playList.getOne);
+router.put('/:id', controller.playList.update);
+router.delete('/:id', controller.playList.delete);
 // //=========================================
 // router.get("/user/:userId", controller.playList.otherUserPlayLists)
 // //=========================================
@@ -29,4 +29,4 @@ router.delete("/:id", controller.playList.delete)
 // // router.put('/comments/playList/:playListId', controller.playList.comment.playList.upadte)
 // // router.delete('/comments/playList/:playListId', controller.playList.comment.playList.delete)
 // //=========================================
-export default router
+export default router;

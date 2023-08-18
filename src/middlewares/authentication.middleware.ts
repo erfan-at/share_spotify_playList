@@ -6,6 +6,7 @@ import jwt from 'jsonwebtoken';
 import appConfig from '../config/application';
 const ignoredPath = [
   'POST /api/v1/auth/signup',
+  'POST /api/v1/auth/createData',
   'POST /api/v1/auth/login',
   'POST /api/v1/auth/entrance',
   'POST /api/v1/auth/resetPassword',
@@ -16,7 +17,7 @@ export default async (req: any, res: Response, next: NextFunction) => {
   if (ignoredPath.includes(`${req.method} ${req.originalUrl}`)) {
     return next();
   }
-  console.log(new Date());
+  // console.log(new Date());
   const authHeader = req.headers['authorization'];
   const token = authHeader.split(' ')[0];
   if (token == null) {

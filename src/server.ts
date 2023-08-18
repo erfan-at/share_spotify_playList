@@ -40,6 +40,7 @@ mongoose.connection.on('disconnected', async (err) => {
 //   console.log('++Reconnected to MongoDB++');
 // });
 
+
 process.on('SIGINT', () => {
   mongoose.connection.close(() => {
     console.log('Force to close the MongoDB conection');

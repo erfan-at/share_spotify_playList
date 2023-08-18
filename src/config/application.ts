@@ -6,9 +6,7 @@ const appConfig = {
     expire: '2d',
   },
   development: {
-    CDNPrivate: 'http://localhost:3000/lsdkfjdlfkj/',
     salt: 'ffdfvdfdfdg_P:)P_:L(OLIKUJ',
-    serviceName: 'CONTENT',
     port: process.env.DEV_PORT,
     redis: {
       port: 6379,
@@ -18,18 +16,11 @@ const appConfig = {
       // connectTimeout: 1000,
       // maxRetriesPerRequest: 3,
     },
-    timeoutRetry: 15000,
-    kafka: {
-      host: process.env.DEV_KAFKA_HOST,
-      topic_prefix: process.env.DEV_KAFKA_TOPIC_PREFIX,
-    },
     dbConnection: process.env.DEV_DB_CONNECTION,
-
     jwt: {
       secret: 'secret',
       expire: '1m',
     },
-    // salt: 'Segment!n0',
   },
   // staging: {
   //   serviceName: 'CONTENT',

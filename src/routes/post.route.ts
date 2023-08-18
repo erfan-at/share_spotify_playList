@@ -1,15 +1,15 @@
 import { Router } from 'express';
 
-import controller from '../controllers/index'
+import controller from '../controllers/index';
 
 // import Middleware from '../middlewares/requestRequirement/commentErrorHandler'
-const router = Router()
+const router = Router();
 // //=========================================
-router.get("/", controller.post.getAll)
-router.post("/", controller.post.create)
-router.get("/:id", controller.post.getOne)
-router.put("/:id", controller.post.update)
-router.delete("/:id", controller.post.delete)
+router.get('/?comment', controller.post.getAll);
+router.post('/', controller.post.create);
+router.get('/:id', controller.post.getOne);
+router.put('/:id', controller.post.update);
+router.delete('/:id', controller.post.delete);
 // //=========================================
 // router.get("/user/:userId", controller.otherUserPosts) //other user posts
 // //=========================================
