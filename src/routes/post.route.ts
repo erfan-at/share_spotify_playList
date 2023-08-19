@@ -5,7 +5,9 @@ import controller from '../controllers/index';
 // import Middleware from '../middlewares/requestRequirement/commentErrorHandler'
 const router = Router();
 // //=========================================
-router.get('/?comment', controller.post.getAll);
+// router.get('/?comment', controller.post.getAll);
+router.get('/', controller.post.getAll);
+
 router.post('/', controller.post.create);
 router.get('/:id', controller.post.getOne);
 router.put('/:id', controller.post.update);

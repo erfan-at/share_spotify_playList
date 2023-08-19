@@ -21,7 +21,7 @@ export default {
     }
   },
 
-  async setExpire(key: string, value: string) {
+  async setExpire(key: string, value: number) {
     try {
       await cache.expire(key, value);
     } catch (e) {

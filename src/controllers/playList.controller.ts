@@ -44,7 +44,7 @@ export default {
                 { softDelete: false, authorId: req.userData._id},
                 "",
                 { 'createdAt': -1 }, { softDelete: 0 })
-            if (playLists.length == 0) { return responseBuilder.success(res, "") }
+            if (playLists.length == 0) { return responseBuilder.success(res, []) }
             return responseBuilder.success(res, playLists)
         } catch (err) {
             console.log(chalk.underline.red("✖ err from catch of controller : "))

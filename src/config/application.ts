@@ -19,7 +19,7 @@ const appConfig = {
     dbConnection: process.env.DEV_DB_CONNECTION,
     jwt: {
       secret: 'secret',
-      expire: '1m',
+      expire: '1d',
     },
   },
   // staging: {

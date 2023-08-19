@@ -2,7 +2,7 @@
   "compilerOptions": {
     "module": "commonjs", /* Specify what module code is generated. */
     "esModuleInterop": true, /* Emit additional JavaScript to ease support for importing CommonJS modules. This enables `allowSyntheticDefaultImports` for type compatibility. */
-    "target": "es6", /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */
+    "target": "es2021", /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */
     "noImplicitAny": false, /* Enable error reporting for expressions and declarations with an implied `any` type.. */
     // "noImplicitAny":false,
     "moduleResolution": "node",

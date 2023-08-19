@@ -17,8 +17,25 @@ const login = Joi.object()
 
 const Entrance = Joi.object().keys({
   email: Joi.string().trim(),
-  mobile: Joi.string().required().trim(),
-  activationCode: Joi.number().required(),
+  mobile: Joi.number().required().min(11),
+  // .max(11),
+  // activationCode: Joi.number().required(),
+  activationCode: Joi.string().required()
+
 });
 
-export default { signup, login, Entrance };
+const resetPassword = Joi.object().keys({
+  password: Joi.string().required().min(8).trim(),
+  mobile: Joi.number().required().min(11),
+  // .max(11),
+  // activationCode: Joi.number().required()
+  activationCode: Joi.string().required()
+
+});
+
+const sendActivationCode = Joi.object().keys({
+  mobile: Joi.number().required().min(11)
+  // .max(11),
+});
+
+export default { signup, login, Entrance, resetPassword, sendActivationCode };

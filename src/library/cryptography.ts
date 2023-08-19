@@ -1,8 +1,11 @@
 import jwt from 'jsonwebtoken';
 import md5 from 'md5';
 import appConfig from '../config/application';
+// import {nanoid} from "nanoid";
+import { faker } from '@faker-js/faker';
+
 export default {
-  generateAccessToken(username:any) {
+  generateAccessToken(username: any) {
     return jwt.sign(username, appConfig.jwt.secret, { expiresIn: appConfig.jwt.expire });
   },
 
@@ -18,6 +21,24 @@ export default {
       // }
     });
   },
+
+  usernameGenerator(firstName: string, lastName: string) {
+    return (
+      faker.internet.userName({ firstName: firstName, lastName: lastName }) + faker.finance.accountNumber({ length: 7 })
+    );
+  },
+
+  // activeCodegenerator() {
+  //   return faker.music.genre();
+  //   faker.music.songName();
+  // },
+
+  activeCodegeneratorMusic() {
+    // return faker.music.genre();
+    return faker.music.songName().replaceAll(' ', '-');
+    // .replace(/" "/g, "-")
+  },
+
   password: {
     hash: async (password: number | string) => await md5(password),
   },

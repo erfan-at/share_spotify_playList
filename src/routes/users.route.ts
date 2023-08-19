@@ -5,7 +5,7 @@ import controller from '../controllers/index';
 const router = Router();
 
 router.get('/:userId/profile'); // GET /api/users/:userId/profile (مشاهده پروفایل کاربر خاص)
-router.post('/:userId/fallow'); // POST /api/users/:userId/follow (فالو کردن کاربر خاص)
+router.post('/:userId/follow'); // POST /api/users/:userId/follow (فالو کردن کاربر خاص)
 router.delete('/:userId/unfollow'); // DELETE /api/users/:userId/unfollow (عدم فالو کردن کاربر خاص)
 
 

@@ -6,11 +6,11 @@ import CRYPTOGRAPHY from './../library/cryptography';
 import chalk from 'chalk';
 import { Request, Response } from 'express';
 import { v4 as uuidv4 } from 'uuid';
-import { faker } from '@faker-js/faker';
 import Schema from '../validation/index';
 import Joi from 'joi';
 
 export default {
+	
   createData: async (req: Request, res: Response) => {
     // if (result.error) { return responseBuilder.badRequest(res, req.body, result.error.message) }
     try {
@@ -22,7 +22,7 @@ export default {
         username: 'erfuuan',
         mobile: '09305087411',
         email: 'erfan.at799@gmail.com',
-        password: '12345678',
+        password: CRYPTOGRAPHY.md5('12345678'),
         gender: 'male',
         role: 'admin',
       });
@@ -54,7 +54,7 @@ export default {
       );
       if (userExist) {
         const user = {
-          email: userExist.email == req.body.email ? userExist.email : undefined,
+          email: userExist.email == data.email ? userExist.email : undefined,
         };
         return responseBuilder.conflict(res, user, '.کاربری با این ایمیل وارده در سیستم وجود دارد ');
       }
@@ -62,13 +62,11 @@ export default {
         uuid: uuidv4().replace(/-/g, ''),
         firstName: data.firstName,
         lastName: data.lastName,
-        password: CRYPTOGRAPHY.md5(req.body.password),
-        email: req.body.email,
+        password: CRYPTOGRAPHY.md5(data.password),
+        email: data.email,
         // mobile: req.body.mobile,
         // username: req.body.username,
-        username:
-          faker.internet.userName({ firstName: data.firstName, lastName: data.lastName }) +
-          faker.finance.accountNumber({ length: 7 }),
+        username: CRYPTOGRAPHY.usernameGenerator(data.firstName, data.lastName),
         role: 'user',
       });
       await functions.recordActivity(user._id, '/auth/userSignup', req.body);
@@ -166,34 +164,30 @@ export default {
   },
 
   ResetPassword: async (req: Request, res: Response) => {
-    if (!req.body.mobile) {
-      return responseBuilder.badRequest(res, '', 'ارسال شماره موبایل ضروری است');
-    }
-    if (!req.body.password) {
-      return responseBuilder.badRequest(res, '', 'ارسال رمز عبور ضروری است');
-    }
-    if (!req.body.activationCode) {
-      return responseBuilder.badRequest(res, '', 'ارسال کد فعال سازی ضروری است');
+    const result = Schema.auth.Entrance.validate(req.body);
+    if (result.error) {
+      return responseBuilder.badRequest(res, req.body, result.error.message);
     }
     try {
-      const user = await Service.CRUD.findOneRecord('User', { mobile: req.body.mobile, softDelete: false }, []);
+      const data = await Joi.attempt(result.value, Schema.auth.Entrance);
+      const user = await Service.CRUD.findOneRecord('User', { mobile: data.mobile, softDelete: false }, []);
       if (!user) {
         return responseBuilder.notFound(res, '', 'کاربری با این شماره موبایل وجود ندارد');
       }
       if (!user.active) {
         return responseBuilder.notFound(res, '', 'کاربر در سیستم غیر فعال شده است لطفا با پشتیبانی تماس بگیرید');
       }
-      if (user.activationCode != req.body.activationCode) {
+      if (user.activationCode != data.activationCode) {
         return responseBuilder.badRequest(res, '', 'کد بازیابی رمز عبور اشتباه است');
       }
       await Service.CRUD.updateById(
         'User',
-        { password: CRYPTOGRAPHY.md5(req.body.password), activationCode: '' },
+        { password: CRYPTOGRAPHY.md5(data.password), activationCode: '' },
         user._id,
         [],
         ''
       );
-      await functions.recordActivity(user._id, '/auth/adminResetPassword', req.body);
+      await functions.recordActivity(user._id, '/auth/adminResetPassword', data);
       return responseBuilder.success(res, '', 'رمز عبور با موفقیت ویرایش گردید');
     } catch (err) {
       console.log(chalk.underline.red('✖ err from catch of controller : '));
@@ -205,23 +199,24 @@ export default {
 
   //send activationCode
   sendActivationCode: async (req: Request, res: Response) => {
-    if (!req.body.mobile) {
-      return responseBuilder.badRequest(res, '', 'ارسال شماره موبایل ضروری است');
+    const result = Schema.auth.sendActivationCode.validate(req.body);
+    if (result.error) {
+      return responseBuilder.badRequest(res, req.body, result.error.message);
     }
     try {
-      const user = await Service.CRUD.findOneRecord(
-        'User',
-        { mobile: req.body.mobile, role: 'admin', softDelete: false },
-        []
-      );
+      const data = await Joi.attempt(result.value, Schema.auth.sendActivationCode);
+      const user = await Service.CRUD.findOneRecord('User', { mobile: data.mobile, role: 'admin', softDelete: false }, []);
       if (!user) {
         return responseBuilder.notFound(res, '', 'کاربر فعالی با این شماره موبایل وجود ندارد');
       }
       if (!user.active) {
         return responseBuilder.notFound(res, '', 'کاربر در سیستم غیر فعال شده است لطفا با پشتیبانی تماس بگیرید');
       }
-      await Service.REDIS.put(Math.floor(Math.random() * 89999 + 10000).toString(), user);
-      await functions.recordActivity(user._id, '/auth/adminResetPasswordActivationCode', req.body);
+      const avtiveCode = CRYPTOGRAPHY.activeCodegeneratorMusic();
+      await Service.REDIS.put(avtiveCode, user);
+      await Service.REDIS.setExpire(avtiveCode, 60 * 10); //10 minute
+      console.log({ activeCode: avtiveCode });
+      await functions.recordActivity(user._id, '/auth/adminResetPasswordActivationCode', data);
       // let smsPromise = await smsAuth('taleghan', req.body.mobile, activationCode)
       return responseBuilder.success(res, '', ' کد بازیابی برای شما از طریق پیامک ارسال گردید.');
     } catch (err) {

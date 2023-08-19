@@ -19,7 +19,8 @@ export default async (req: any, res: Response, next: NextFunction) => {
   }
   // console.log(new Date());
   const authHeader = req.headers['authorization'];
-  const token = authHeader.split(' ')[0];
+  const token = authHeader.split(' ')[0].trim();
+  // const token = authHeader.trim();
   if (token == null) {
     responseBuilder.unauthorized(res, '');
   }
