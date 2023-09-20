@@ -3,16 +3,16 @@ import http from 'http';
 import mongoose from 'mongoose';
 import chalk from 'chalk';
 import { connectWithRetry } from './connection/db.connection';
-// import { redisConnectretry } from './connection/redis.connection'
+// import { redisConnectRetry } from './connection/redis.connection'
 import app from './app';
 // const port = normalizePort(process.env.PORT || '3000');
 const port: string = process.env.PORT || '3000';
 app.set('port', port);
-let server:any
+let server: any;
 async function bootstrap(): Promise<any> {
-  const DBconnectionsuccessfull = await connectWithRetry();
-  if (DBconnectionsuccessfull.statusCode == 200) {
-     server = http.createServer(app);
+  const DBconnectionSuccessfully = await connectWithRetry();
+  if (DBconnectionSuccessfully.statusCode == 200) {
+    server = http.createServer(app);
     return server.listen(port, () => {
       console.log(chalk.white.green.bold('✔ [success] server listen to', port, '💥'), '\n \n \n');
     });
@@ -40,7 +40,6 @@ mongoose.connection.on('disconnected', async (err) => {
 //   console.log('++Reconnected to MongoDB++');
 // });
 
-
 process.on('SIGINT', () => {
   mongoose.connection.close(() => {
     console.log('Force to close the MongoDB conection');
@@ -53,7 +52,7 @@ process.on('unhandledRejection', (err) => {
 });
 // Handle uncaughtException errors globally
 process.on('uncaughtException', (err) => {
-  console.log('Uncaught Exception!  Sutting down...');
+  console.log('Uncaught Exception!  Shutting down...');
   console.log({ message: err.message, stack: err.stack });
   // Shutdown application
   process.exit(1);
